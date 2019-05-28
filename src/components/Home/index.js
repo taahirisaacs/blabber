@@ -119,7 +119,7 @@ class MessageForm extends Component {
           />
         <InputGroup.Append>
           <Button variant="primary" disabled={isInvalid} type="submit" block>
-            Blabber
+            Blabber 👉
           </Button>
         </InputGroup.Append>
         </InputGroup>
