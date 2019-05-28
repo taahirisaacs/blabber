@@ -1,5 +1,5 @@
 html, #root {
-  background: #09001a;
+  background: #080a27;
 }
 body {
   margin: 0;
@@ -17,7 +17,7 @@ code {
 
 
 ul {
-    padding: 50px 0 100px;
+    padding: 50px 20px 100px;
 }
 
 li.messages {
@@ -27,19 +27,22 @@ li.messages {
 p {
     padding: 20px;
     display: inline-block;
-    margin: 0px 0 20px;
+    margin: 0px!important;
     line-height: 1;
-    background: #6144e5;
+    background: #343ee6;
     color: #fff;
     font-weight: bold;
     border-radius: 100px;
 }
 
 span.timestamp {
-    font-size: 0.85rem;
+    display: block;
+    font-size: 0.7rem;
     font-weight: bold;
     padding-left: 20px;
-    color: #3a2b56;
+    color: #414690;
+    margin-top: 15px;
+    margin-bottom: 30px;
 }
 
 form.FormInput {
@@ -51,7 +54,7 @@ form.FormInput {
 }
 
 form.FormInput input.form-control {
-    padding: 31px;
+    padding: 30px;
     border-radius: 4px;
     border: none;
 }
@@ -59,6 +62,6 @@ form.FormInput input.form-control {
 button.btn.btn-primary.btn-block {
     padding: 0px 25px 0px;
     font-weight: bold;
-    background: #31189e;
-    border: #31189e;
+    background: #343ee6;
+    border: #343ee6;
 }

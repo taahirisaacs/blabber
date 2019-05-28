@@ -90,7 +90,7 @@ class MessageForm extends Component {
 
     const messageList = this.state.dataId.map((dataList, index) =>
 
-        <li className="messages">
+        <li key={dataList} className="messages">
           <p>{this.state.data[index]}</p>
              <span className="timestamp">
                {new Intl.DateTimeFormat('en-GB', {
@@ -109,7 +109,7 @@ class MessageForm extends Component {
       <div>
       <ul>{messageList}</ul>
       <Form className="FormInput" onSubmit={this.onSubmit}>
-        <InputGroup controlId="formMessage">
+        <InputGroup controlid="formMessage">
           <Form.Control
             name="message"
             value={message}
