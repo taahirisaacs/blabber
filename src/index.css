@@ -1,3 +1,6 @@
+html, #root {
+  background: #09001a;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -10,4 +13,52 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+
+ul {
+    padding: 50px 0 100px;
+}
+
+li.messages {
+    list-style: none;
+}
+
+p {
+    padding: 20px;
+    display: inline-block;
+    margin: 0px 0 20px;
+    line-height: 1;
+    background: #6144e5;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 100px;
+}
+
+span.timestamp {
+    font-size: 0.85rem;
+    font-weight: bold;
+    padding-left: 20px;
+    color: #3a2b56;
+}
+
+form.FormInput {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin-bottom: 0px;
+}
+
+form.FormInput input.form-control {
+    padding: 31px;
+    border-radius: 4px;
+    border: none;
+}
+
+button.btn.btn-primary.btn-block {
+    padding: 0px 25px 0px;
+    font-weight: bold;
+    background: #31189e;
+    border: #31189e;
 }
