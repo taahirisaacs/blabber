@@ -5,6 +5,7 @@ import { compose } from 'recompose';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
+import Spinner from 'react-bootstrap/Spinner';
 
 import firebase from 'firebase';
 
@@ -20,6 +21,7 @@ const HomePage = () => (
 );
 
 const INITIAL_STATE = {
+  loading: false,
   message: '',
   error: null,
 };
@@ -48,7 +50,7 @@ class MessageForm extends Component {
         })
       .then(authUser => {
         this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.HOME);
+
       })
       .catch(error => {
         this.setState({ error });
@@ -62,15 +64,17 @@ class MessageForm extends Component {
   };
 
   componentDidMount(){
+    this.setState({ loading: true });
+
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         firebase.database().ref('messages/users/' + user.uid) //reference uid of logged in user like so
             .on('value', (snapshot) => {
-              console.log(snapshot);
               snapshot.forEach(child =>{
                   this.setState({
                     dataId: this.state.dataId.concat([child.val().timestamp]),
-                    data: this.state.data.concat([child.val().message])
+                    data: this.state.data.concat([child.val().message]),
+                    loading: false
                   })
               });
             })
@@ -78,9 +82,14 @@ class MessageForm extends Component {
    });
   }
 
+  componentWillUnmount() {
+    this.props.firebase.users().off();
+  }
+
   render() {
 
     const {
+      loading,
       message,
       error,
     } = this.state;
@@ -91,7 +100,7 @@ class MessageForm extends Component {
     const messageList = this.state.dataId.map((dataList, index) =>
 
         <li key={dataList} className="messages">
-          <p>{this.state.data[index]}</p>
+          <p className="chat">{this.state.data[index]}</p>
              <span className="timestamp">
                {new Intl.DateTimeFormat('en-GB', {
                 hour: 'numeric',
@@ -107,6 +116,7 @@ class MessageForm extends Component {
 
     return (
       <div>
+      {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" />Loading...</div>}
       <ul>{messageList}</ul>
       <Form className="FormInput" onSubmit={this.onSubmit}>
         <InputGroup controlid="formMessage">
@@ -118,8 +128,8 @@ class MessageForm extends Component {
             placeholder="Write a blab..."
           />
         <InputGroup.Append>
-          <Button variant="primary" disabled={isInvalid} type="submit" block>
-            Blabber 👉
+          <Button className="chatBtn" variant="primary" disabled={isInvalid} type="submit" block>
+            👉
           </Button>
         </InputGroup.Append>
         </InputGroup>

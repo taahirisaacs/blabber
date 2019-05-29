@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { LinkContainer } from "react-router-bootstrap";
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -12,41 +13,43 @@ import * as ROUTES from '../../constants/routes';
 import { AuthUserContext } from '../Session';
 
 const Navigation = () => (
-  <div>
+  <Col>
     <AuthUserContext.Consumer>
       {authUser =>
         authUser ? <NavigationAuth /> : <NavigationNonAuth />
       }
     </AuthUserContext.Consumer>
-  </div>
+  </Col>
 );
 
 const NavigationAuth = () => (
-  <Navbar sticky="top" bg="light" variant="light">
-    <Navbar.Brand href={ROUTES.LANDING}>Navbar</Navbar.Brand>
-    <Nav className="justify-content-end" activeKey={ROUTES.HOME}>
-      <Nav.Item>
-        <Link to={ROUTES.LANDING}>Landing</Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Link to={ROUTES.HOME}>Home</Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Link to={ROUTES.ACCOUNT}>Account</Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Link to={ROUTES.ADMIN}>Admin</Link>
-      </Nav.Item>
-      <Nav.Item>
-        <SignOutButton />
-      </Nav.Item>
-    </Nav>
+  <Navbar fluid sticky="top">
+    <Navbar.Brand href={ROUTES.LANDING}><p style={{color:`#fff`,}}>Blabber</p></Navbar.Brand>
+    <Navbar.Collapse>
+      <Nav className="justify-content-end">
+        <LinkContainer to={ROUTES.LANDING}>
+          <Nav.Item>Landing</Nav.Item>
+        </LinkContainer>
+        <LinkContainer to={ROUTES.HOME}>
+          <Nav.Item>Home</Nav.Item>
+        </LinkContainer>
+        <LinkContainer to={ROUTES.ACCOUNT}>
+        <Nav.Item>Account</Nav.Item>
+        </LinkContainer>
+        <LinkContainer to={ROUTES.ADMIN}>
+          <Nav.Item>Admin</Nav.Item>
+        </LinkContainer>
+        <Nav.Item>
+          <SignOutButton />
+        </Nav.Item>
+      </Nav>
+    </Navbar.Collapse>
   </Navbar>
 );
 
 const NavigationNonAuth = () => (
-  <Navbar sticky="top" bg="light" variant="light">
-    <Navbar.Brand href={ROUTES.LANDING}>Navbar</Navbar.Brand>
+  <Navbar sticky="top">
+    <Navbar.Brand href={ROUTES.LANDING}><p style={{color:`#fff`,}}>Blabber</p></Navbar.Brand>
       <Nav className="justify-content-end" activeKey={ROUTES.HOME}>
         <Nav.Item>
           <Link to={ROUTES.LANDING}>Landing</Link>

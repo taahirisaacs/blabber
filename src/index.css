@@ -1,5 +1,6 @@
 html, #root {
   background: #080a27;
+  color: #fff;
 }
 body {
   margin: 0;
@@ -17,14 +18,14 @@ code {
 
 
 ul {
-    padding: 50px 20px 100px;
+    padding: 50px 10px 100px;
 }
 
 li.messages {
     list-style: none;
 }
 
-p {
+p.chat {
     padding: 12px 20px;
     display: inline-block;
     margin: 0px!important;
@@ -39,7 +40,8 @@ p {
 span.timestamp {
     display: block;
     font-size: 0.7rem;
-    padding-left: 20px;
+    font-weight: bold;
+    padding-left: 10px;
     color: #414690;
     margin-top: 10px;
     margin-bottom: 30px;
@@ -66,7 +68,8 @@ form.FormInput input.form-control {
     padding: 7px 10px;
 }
 
-button.btn.btn-primary.btn-block {
+button.btn.btn-primary.btn-block.chatBtn {
+    z-index: 100;
     padding: 0px 25px 0px;
     font-weight: bold;
     background: #343ee6;
