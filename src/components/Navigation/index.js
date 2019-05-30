@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route, Switch, Redirect } from 'react-router-dom';
 import { LinkContainer } from "react-router-bootstrap";
 
 import Container from 'react-bootstrap/Container';
@@ -40,7 +40,7 @@ const NavigationAuth = () => (
           <Nav.Item>Admin</Nav.Item>
         </LinkContainer>
         <Nav.Item>
-          <SignOutButton />
+          <SignOutButton to={ROUTES.SIGN_IN} />
         </Nav.Item>
       </Nav>
     </Navbar.Collapse>
