@@ -138,7 +138,7 @@ class MessageForm extends Component {
         <InputGroup controlid="formMessage">
           <Form.Control
             name="message"
-            value={message}
+            value={this.state.message || ''}
             onChange={this.onChange}
             type="text"
             placeholder="Write a blab..."
