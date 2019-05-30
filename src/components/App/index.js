@@ -2,10 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Route, } from 'react-router-dom';
 
 import '../bootstrap.min.css';
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Nav from 'react-bootstrap/Nav'
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import Navigation from '../Navigation';
 import LandingPage from '../Landing';

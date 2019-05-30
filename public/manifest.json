@@ -1,10 +1,11 @@
 {
   "short_name": "Blabber",
   "name": "Blabber",
+  "description": "A simple microblog, journaling, note taking, list making app thing",
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "512x512 192x192 144x144 64x64 32x32 24x24 16x16",
+      "sizes": "512x512 192x192 64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
@@ -13,7 +14,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/",
+  "start_url": "/home",
   "scope": "/",
   "background_color": "#080a27",
   "display": "standalone",

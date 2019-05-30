@@ -1,13 +1,8 @@
 import React from 'react';
-import { Link, Route, Switch, Redirect } from 'react-router-dom';
 import { LinkContainer } from "react-router-bootstrap";
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 
 import SignOutButton from '../SignOut';
 import * as ROUTES from '../../constants/routes';
@@ -22,43 +17,42 @@ const Navigation = () => (
 );
 
 const NavigationAuth = () => (
+  <Navbar sticky="top" expand="lg">
+    <Navbar.Brand href="/home">Blabber</Navbar.Brand>
+    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+    <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
       <Nav>
-        <NavDropdown title="Menu" id="nav-dropdown">
-          <NavDropdown.Item eventKey="4.3">
-            <LinkContainer to={ROUTES.HOME}>
-              <Nav.Item>Home</Nav.Item>
-            </LinkContainer>
-          </NavDropdown.Item>
-          <NavDropdown.Item eventKey="4.1">
-            <LinkContainer to={ROUTES.ACCOUNT}>
-            <Nav.Item>Account</Nav.Item>
-            </LinkContainer>
-          </NavDropdown.Item>
-          <NavDropdown.Item eventKey="4.2">
-            <LinkContainer to={ROUTES.ADMIN}>
-              <Nav.Item>Admin</Nav.Item>
-            </LinkContainer>
-          </NavDropdown.Item>
-          <NavDropdown.Item eventKey="4.4">
-            <Nav.Item>
-              <SignOutButton to={ROUTES.SIGN_IN} />
-            </Nav.Item>
-          </NavDropdown.Item>
-        </NavDropdown>
+        <LinkContainer to={ROUTES.HOME}>
+          <Nav.Item>Home</Nav.Item>
+        </LinkContainer>
+        <LinkContainer to={ROUTES.ACCOUNT}>
+          <Nav.Item>Account</Nav.Item>
+        </LinkContainer>
+        <LinkContainer to={ROUTES.ADMIN}>
+          <Nav.Item>Admin</Nav.Item>
+        </LinkContainer>
+        <Nav.Item>
+          <SignOutButton to={ROUTES.SIGN_IN} />
+        </Nav.Item>
       </Nav>
+    </Navbar.Collapse>
+  </Navbar>
 );
 
 const NavigationNonAuth = () => (
-  <Navbar sticky="top">
-    <Navbar.Brand href={ROUTES.LANDING}><p style={{color:`#fff`,}}>Blabber</p></Navbar.Brand>
-      <Nav className="justify-content-end" activeKey={ROUTES.HOME}>
-        <Nav.Item>
-          <Link to={ROUTES.LANDING}>Landing</Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Link to={ROUTES.SIGN_IN}>Sign In</Link>
-        </Nav.Item>
+  <Navbar sticky="top" expand="lg">
+    <Navbar.Brand href="/home">Blabber</Navbar.Brand>
+    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+    <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+      <Nav>
+        <LinkContainer to={ROUTES.LANDING}>
+          <Nav.Item>Landing</Nav.Item>
+        </LinkContainer>
+        <LinkContainer to={ROUTES.SIGN_IN}>
+          <Nav.Item>Sign In</Nav.Item>
+        </LinkContainer>
       </Nav>
+    </Navbar.Collapse>
   </Navbar>
 );
 
