@@ -22,9 +22,9 @@ import { withAuthentication } from '../Session';
 const App = () => (
       <Router>
         <Container fluid >
-          <Row>
+
             <Navigation />
-          </Row>
+
           <Row>
             <Col md={{ span: 8, offset: 2 }}>
                 <Route path={ROUTES.LANDING} component={LandingPage} />
