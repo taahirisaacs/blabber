@@ -87,13 +87,13 @@ class MessageForm extends Component {
 
   componentWillUnmount() {
     const user = firebase.auth().currentUser;
-    firebase.database().ref('messages/users/' + user.uid).off('value');
+    firebase.database().ref('messages/users/' + user.uid + '/' + '$(dataId)').off('value');
   }
 
   removeItem(dataId)  {
     const user = firebase.auth().currentUser;
     firebase.database().ref('messages/users/' + user.uid + '/' + dataId).remove();
-    window.location.reload();
+
   }
 
   render() {
