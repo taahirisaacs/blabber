@@ -22,14 +22,14 @@ import { withAuthentication } from '../Session';
 const App = () => (
       <Router>
         <Container fluid >
-          <Row>            
+          <Row>
             <Navigation />
           </Row>
           <Row>
             <Col md={{ span: 8, offset: 2 }}>
-                <Route exact path={ROUTES.LANDING} component={LandingPage} />
+                <Route path={ROUTES.LANDING} component={LandingPage} />
                 <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-                <Route path={ROUTES.SIGN_IN} component={SignInPage} />
+                <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
                 <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
                 <Route path={ROUTES.HOME} component={HomePage} />
                 <Route path={ROUTES.ACCOUNT} component={AccountPage} />
