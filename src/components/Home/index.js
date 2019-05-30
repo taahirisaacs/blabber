@@ -34,6 +34,7 @@ class MessageForm extends Component {
     this.state = {
       datas: '',
       data: [],
+      date: [],
       dataId: [],
     };
   }
@@ -63,27 +64,36 @@ class MessageForm extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  componentDidMount(){
+  componentWillMount(){
     this.setState({ loading: true });
 
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         firebase.database().ref('messages/users/' + user.uid) //reference uid of logged in user like so
             .on('value', (snapshot) => {
+              this.setState({ loading: false })
               snapshot.forEach(child =>{
                   this.setState({
-                    dataId: this.state.dataId.concat([child.val().timestamp]),
+                    dataId: this.state.dataId.concat([child.key]),
+                    date: this.state.date.concat([child.val().timestamp]),
                     data: this.state.data.concat([child.val().message]),
-                    loading: false
                   })
               });
             })
       }
+
    });
   }
 
   componentWillUnmount() {
-    this.props.firebase.users().off();
+    const user = firebase.auth().currentUser;
+    firebase.database().ref('messages/users/' + user.uid).off('value');
+  }
+
+  removeItem(dataId)  {
+    const user = firebase.auth().currentUser;
+    firebase.database().ref('messages/users/' + user.uid + '/' + dataId).remove();
+    window.location.reload();
   }
 
   render() {
@@ -100,7 +110,7 @@ class MessageForm extends Component {
     const messageList = this.state.dataId.map((dataList, index) =>
 
         <li key={dataList} className="messages">
-          <p className="chat">{this.state.data[index]}</p>
+          <p className="chat">{this.state.data[index]}</p><button onClick={this.removeItem.bind(this, dataList)}>X</button>
              <span className="timestamp">
                {new Intl.DateTimeFormat('en-GB', {
                 hour: 'numeric',
@@ -109,14 +119,14 @@ class MessageForm extends Component {
                 year: 'numeric',
                 month: 'long',
                 day: '2-digit'
-              }).format(dataList)}
+              }).format(this.state.date[index])}
             </span>
         </li>
      );
 
     return (
       <div>
-      {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" />Loading...</div>}
+      {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
       <ul>{messageList}</ul>
       <Form className="FormInput" onSubmit={this.onSubmit}>
         <InputGroup controlid="formMessage">
