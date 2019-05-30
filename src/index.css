@@ -26,25 +26,46 @@ li.messages {
 }
 
 p.chat {
-    padding: 10px 10px 10px 20px;
+    word-wrap: break-word;
+    max-width: 100%;
+    padding: 15px;
     display: inline-block;
-    margin: 0px!important;
+    margin: 0px 0px 20px!important;
     line-height: 1.2;
     background: #343ee6;
     color: #fff;
     font-size: 0.9rem;
     font-weight: bold;
-    border-radius: 100px;
+    border-radius: 8px;
+}
+
+p.chat a {
+  color: #ffffff;
+  background: #ffffff40;
+  padding: 0px 7px;
+  border-radius: 4px;
+}
+
+.info {
+    display: block;
+    text-align: right;
 }
 
 span.timestamp {
-    display: block;
+    display: inline-block;
     font-size: 0.7rem;
     font-weight: bold;
-    padding-left: 10px;
-    color: #414690;
-    margin-top: 10px;
-    margin-bottom: 30px;
+    color: #858dff;
+    margin-top: 20px;
+}
+
+span.timestamp.delete {
+    background: #5560ff;
+    color: #eaecff;
+    padding: 2px 10px;
+    margin-left: 10px;
+    border-radius: 100px;
+    cursor: pointer;
 }
 
 form.FormInput {

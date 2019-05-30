@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 
+import Linkify from 'react-linkify';
+
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -11,7 +13,6 @@ import firebase from 'firebase';
 
 import { withAuthorization } from '../Session';
 import { withFirebase } from '../Firebase';
-import * as ROUTES from '../../constants/routes';
 
 const HomePage = () => (
   <div>
@@ -104,7 +105,6 @@ class MessageForm extends Component {
   render() {
 
     const {
-      datas,
       loading,
       message,
       error,
@@ -114,19 +114,24 @@ class MessageForm extends Component {
       message === '';
 
     const messageList = Object.keys(this.state.datas).map((key, index) =>
+          <li key={key} className="messages">
+            <Linkify>
+            <p className="chat">{this.state.datas[key].data}
+              <span className="info">
+                 <span className="timestamp">
+                   {new Intl.DateTimeFormat('en-GB', {
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric',
+                    year: 'numeric',
+                    month: 'long',
+                    day: '2-digit'
+                  }).format(this.state.datas[key].date)}
+                </span>
+                <span className="timestamp delete" onClick={this.removeItem.bind(this, key)}>Delete</span>
+              </span>
+            </p></Linkify>
 
-        <li key={key} className="messages">
-          <p className="chat">{this.state.datas[key].data} <button className="mesDel" onClick={this.removeItem.bind(this, key)}>X</button></p>
-             <span className="timestamp">
-               {new Intl.DateTimeFormat('en-GB', {
-                hour: 'numeric',
-                minute: 'numeric',
-                second: 'numeric',
-                year: 'numeric',
-                month: 'long',
-                day: '2-digit'
-              }).format(this.state.datas[key].date)}
-            </span>
         </li>
      );
 
