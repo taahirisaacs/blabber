@@ -23,7 +23,7 @@ const Navigation = () => (
 );
 
 const NavigationAuth = () => (
-  <Navbar fluid sticky="top">
+  <Navbar sticky="top">
     <Navbar.Brand href={ROUTES.LANDING}><p style={{color:`#fff`,}}>Blabber</p></Navbar.Brand>
     <Navbar.Collapse>
       <Nav className="justify-content-end">

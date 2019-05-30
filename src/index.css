@@ -26,10 +26,10 @@ li.messages {
 }
 
 p.chat {
-    padding: 12px 20px;
+    padding: 10px 10px 10px 20px;
     display: inline-block;
     margin: 0px!important;
-    line-height: 1;
+    line-height: 1.2;
     background: #343ee6;
     color: #fff;
     font-size: 0.9rem;
@@ -75,4 +75,16 @@ button.btn.btn-primary.btn-block.chatBtn {
     background: #343ee6;
     border: #343ee6;
     border-radius: 100px;
+}
+
+button.mesDel {
+    margin-left: 10px;
+    border-radius: 100px;
+    width: 25px;
+    height: 25px;
+    font-size: 13px;
+    color: #333ee6;
+    font-weight: bold;
+    background: #777ee2;
+    border: none;
 }

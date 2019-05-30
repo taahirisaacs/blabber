@@ -71,14 +71,19 @@ class MessageForm extends Component {
       if (user) {
         firebase.database().ref('messages/users/' + user.uid) //reference uid of logged in user like so
             .on('value', (snapshot) => {
+              var datasUpdate = [];
               this.setState({ loading: false })
-              snapshot.forEach(child =>{
-                  this.setState({
-                    dataId: this.state.dataId.concat([child.key]),
-                    date: this.state.date.concat([child.val().timestamp]),
-                    data: this.state.data.concat([child.val().message]),
-                  })
+              snapshot.forEach((child) =>{
+                  datasUpdate.push({
+                    dataId: child.key,
+                    date: child.val().timestamp,
+                    data: child.val().message,
+                  });
               });
+              this.setState({
+                datas: datasUpdate,
+              });
+              console.log(this.state.datas);
             })
       }
 
@@ -87,18 +92,19 @@ class MessageForm extends Component {
 
   componentWillUnmount() {
     const user = firebase.auth().currentUser;
-    firebase.database().ref('messages/users/' + user.uid + '/' + '$(dataId)').off('value');
+    firebase.database().ref('messages/users/' + user.uid).off('value');
   }
 
-  removeItem(dataId)  {
+  removeItem(key, e)  {
     const user = firebase.auth().currentUser;
-    firebase.database().ref('messages/users/' + user.uid + '/' + dataId).remove();
-
+    const item = this.state.datas[key].dataId;
+    firebase.database().ref(`messages/users/` + user.uid + `/` + item).remove();
   }
 
   render() {
 
     const {
+      datas,
       loading,
       message,
       error,
@@ -107,10 +113,10 @@ class MessageForm extends Component {
     const isInvalid =
       message === '';
 
-    const messageList = this.state.dataId.map((dataList, index) =>
+    const messageList = Object.keys(this.state.datas).map((key, index) =>
 
-        <li key={dataList} className="messages">
-          <p className="chat">{this.state.data[index]}</p><button onClick={this.removeItem.bind(this, dataList)}>X</button>
+        <li key={key} className="messages">
+          <p className="chat">{this.state.datas[key].data} <button className="mesDel" onClick={this.removeItem.bind(this, key)}>X</button></p>
              <span className="timestamp">
                {new Intl.DateTimeFormat('en-GB', {
                 hour: 'numeric',
@@ -119,7 +125,7 @@ class MessageForm extends Component {
                 year: 'numeric',
                 month: 'long',
                 day: '2-digit'
-              }).format(this.state.date[index])}
+              }).format(this.state.datas[key].date)}
             </span>
         </li>
      );
