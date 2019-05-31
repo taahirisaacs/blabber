@@ -3,10 +3,11 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 
 import Linkify from 'react-linkify';
+import TimeAgo from 'react-timeago';
+import TextareaAutosize from 'react-autosize-textarea';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import InputGroup from 'react-bootstrap/InputGroup';
 import Spinner from 'react-bootstrap/Spinner';
 
 import firebase from 'firebase';
@@ -93,7 +94,7 @@ class MessageForm extends Component {
 
   componentWillUnmount() {
     const user = firebase.auth().currentUser;
-    firebase.database().ref('messages/users/' + user.uid).off('value');
+    firebase.database().ref('messages/users/').off('value');
   }
 
   removeItem(key, e)  {
@@ -119,14 +120,7 @@ class MessageForm extends Component {
             <p className="chat">{this.state.datas[key].data}
               <span className="info">
                  <span className="timestamp">
-                   {new Intl.DateTimeFormat('en-GB', {
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    second: 'numeric',
-                    year: 'numeric',
-                    month: 'long',
-                    day: '2-digit'
-                  }).format(this.state.datas[key].date)}
+                   <TimeAgo date={this.state.datas[key].date}/>
                 </span>
                 <span className="timestamp delete" onClick={this.removeItem.bind(this, key)}>Delete</span>
               </span>
@@ -139,23 +133,26 @@ class MessageForm extends Component {
       <div>
       {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
       <ul>{messageList}</ul>
-      <Form className="FormInput" onSubmit={this.onSubmit}>
-        <InputGroup controlid="formMessage">
-          <Form.Control
-            name="message"
-            value={this.state.message || ''}
-            onChange={this.onChange}
-            type="text"
-            placeholder="Write a blab..."
-          />
-        <InputGroup.Append>
+      <div className="formhold">
+        <Form className="FormInput" onSubmit={this.onSubmit}>
+          <Form.Group className="messagegroup" controlid="formMessage">
+            <TextareaAutosize
+              as="textarea"
+              rows={1}
+              name="message"
+              value={this.state.message || ''}
+              onChange={this.onChange}
+              type="text"
+              placeholder="Write a blab..."
+              className="messagearea"
+            />
+          </Form.Group>
           <Button className="chatBtn" variant="primary" disabled={isInvalid} type="submit" block>
             👉
           </Button>
-        </InputGroup.Append>
-        </InputGroup>
-        {error && <p>{error.message}</p>}
-      </Form>
+          {error && <p>{error.message}</p>}
+        </Form>
+      </div>
     </div>
     );
   }
