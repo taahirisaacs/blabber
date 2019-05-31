@@ -26,6 +26,7 @@ li.messages {
 }
 
 p.chat {
+    white-space: pre-wrap;
     word-wrap: break-word;
     max-width: 100%;
     padding: 15px;
@@ -90,7 +91,7 @@ span.timestamp.delete {
 form.FormInput textarea {
     display: inline-block;
     position: relative;
-    padding: 10px 25px;
+    padding: 10px 20px;
     line-height: 1.2;
     border-radius: 100px;
     border: 1px solid #ccc;
