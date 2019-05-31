@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import Linkify from 'react-linkify';
 import TimeAgo from 'react-timeago';
 import TextareaAutosize from 'react-autosize-textarea';
+import {sortableContainer, sortableElement} from 'react-sortable-hoc';
+import arrayMove from 'array-move';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -16,7 +18,7 @@ import firebase from 'firebase';
 import { withAuthorization } from '../Session';
 import { withFirebase } from '../Firebase';
 
-const HomePage = () => (
+const BlobPage = () => (
   <div>
     <h1>Home</h1>
     <p>The Home Page is accessible by every signed in user.</p>
@@ -25,34 +27,32 @@ const HomePage = () => (
 
 const INITIAL_STATE = {
   loading: false,
-  message: '',
+  description: '',
   error: null,
 };
 
-class MessageForm extends Component {
+class DescForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = { ...INITIAL_STATE };
     this.state = {
       datas: '',
-      description: '',
       data: [],
       date: [],
       dataId: [],
     };
-  };
+  }
 
   onSubmit = event => {
-    const { message, description } = this.state;
+    const { description } = this.state;
+    const blobId = this.props.match.params.dataId;
     const user = firebase.auth().currentUser;
     const date = new Date();
     const timestamp = date.getTime();
 
-      firebase.database().ref('messages/users/' + user.uid).push({
-          message,
-          timestamp,
-          description
+      firebase.database().ref(`messages/users/${user.uid}/` + blobId).update({
+            description
         })
       .then(authUser => {
         this.setState({ ...INITIAL_STATE });
@@ -71,88 +71,56 @@ class MessageForm extends Component {
 
   componentWillMount(){
     this.setState({ loading: true });
+    const blobId = this.props.match.params.dataId;
+    const user = firebase.auth().currentUser;
 
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        firebase.database().ref('messages/users/' + user.uid) //reference uid of logged in user like so
-            .on('value', (snapshot) => {
-              var datasUpdate = [];
-              this.setState({ loading: false })
-                snapshot.forEach((child) =>{
-                    datasUpdate.push({
-                      dataId: child.key,
-                      date: child.val().timestamp,
-                      data: child.val().message,
-                      description: child.val().description,
-                    });
-                });
-                this.setState({
-                  datas: datasUpdate,
-                });
-              });
-      }
-
-   });
+    firebase.database().ref(`messages/users/${user.uid}/` + blobId).on('value', snapshot => {
+      const blobject = snapshot.val();
+      console.log(snapshot);
+      this.setState({
+        datas: blobject,
+        loading: false,
+      });
+    });
   }
 
   componentWillUnmount() {
-    firebase.database().ref('messages/users/').off();
-  }
-
-  removeItem(key, e)  {
+    const blobId = this.props.match.params.dataId;
     const user = firebase.auth().currentUser;
-    const item = this.state.datas[key].dataId;
-    firebase.database().ref(`messages/users/` + user.uid + `/` + item).remove();
+    firebase.database().ref(`messages/users/${user.uid}/` + blobId).off();
   }
 
   render() {
-
+    const blobId = this.props.match.params.dataId;
+    console.log(this.props);
     const {
       datas,
       loading,
+      date,
+      description,
       message,
       error,
     } = this.state;
 
-    const messageList = Object.keys(this.state.datas).map((key, index) =>
-    <li key={key} className="messages">
-      <Linkify>
-        <p className="chat">{this.state.datas[key].data}
-          <span className="info">
-             <span className="timestamp">
-               <TimeAgo date={this.state.datas[key].date}/>
-            </span>
-            <span className="timestamp delete">
-              <Link to={`/blob/${this.state.datas[key].dataId}`}>
-                View
-              </Link>
-            </span>
-            <span className="timestamp delete" onClick={this.removeItem.bind(this, key)}>Delete</span>
-          </span>
-        </p>
-      </Linkify>
-    </li>
-     );
-
     const isInvalid =
-      message === '';
+      description === '';
 
     return (
       <div>
       {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
-
-      <ul>
-        {messageList}
-      </ul>
-
+      <div className="chat">
+        <h6>{datas.message}</h6>
+        <p>{datas.description}</p>
+        <span className="timestamp delete" onClick={this.props.history.goBack}>Back</span>
+      </div>
       <div className="formhold">
         <Form className="FormInput" onSubmit={this.onSubmit}>
           <Form.Group className="messagegroup" controlid="formMessage">
             <TextareaAutosize
               as="textarea"
               rows={1}
-              name="message"
-              value={this.state.message || ''}
+              name="description"
+              value={this.state.description || ''}
               onChange={this.onChange}
               type="text"
               placeholder="Write a blab..."
@@ -162,7 +130,7 @@ class MessageForm extends Component {
           <Button className="chatBtn" variant="primary" disabled={isInvalid} type="submit" block>
             👉
           </Button>
-          {error && <p>{error.message}</p>}
+          {error && <p>{error.description}</p>}
         </Form>
       </div>
     </div>
@@ -170,11 +138,11 @@ class MessageForm extends Component {
   }
 }
 
-const HomePageForm = compose(
+const BlobPageForm = compose(
   withRouter,
   withFirebase,
-)(MessageForm);
+)(DescForm);
 
 const condition = authUser => !!authUser;
 
-export default withAuthorization(condition)(HomePageForm, HomePage);
+export default withAuthorization(condition)(BlobPageForm, BlobPage);

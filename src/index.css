@@ -25,7 +25,7 @@ li.messages {
     list-style: none;
 }
 
-p.chat {
+p.chat, .chat {
     white-space: pre-wrap;
     word-wrap: break-word;
     max-width: 100%;
@@ -67,6 +67,10 @@ span.timestamp.delete {
     margin-left: 10px;
     border-radius: 100px;
     cursor: pointer;
+}
+
+span.timestamp.delete a {
+  background: none;
 }
 
 .formhold {
