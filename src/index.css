@@ -98,15 +98,21 @@ form.FormInput textarea {
     padding: 10px 20px;
     line-height: 1.2;
     border-radius: 100px;
-    border: 1px solid #ccc;
+    border: 1px solid #e3e3ea;
+    background: #e3e3ea;
+    color: #1b1b1f;
     width: 100%;
     bottom: -5px;
+}
+
+::placeholder {
+  color: #717190;
 }
 
 form.FormInput textarea:focus {
   box-shadow: none;
   outline: none;
-  border-color: #a2a2a2;
+  border: 1px solid #e3e3ea;
 }
 
 .input-group-append {

@@ -107,9 +107,12 @@ class DescForm extends Component {
 
     return (
       <div>
+
       {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
+
+      <h6>{datas.message}</h6>
+      
       <div className="chat">
-        <h6>{datas.message}</h6>
         <p>{datas.description}</p>
         <span className="timestamp delete" onClick={this.props.history.goBack}>Back</span>
       </div>

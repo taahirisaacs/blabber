@@ -38,6 +38,19 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
+const getItemStyle = (isDragging, draggableStyle) => ({
+  // some basic styles to make the items look a bit nicer
+  userSelect: "none",
+
+
+  // styles we need to apply on draggables
+  ...draggableStyle
+});
+
+const getListStyle = isDraggingOver => ({
+  listStyle: "none",
+});
+
 class MessageForm extends Component {
   constructor(props) {
     super(props);
@@ -108,7 +121,8 @@ class MessageForm extends Component {
   }
 
   componentWillUnmount() {
-    firebase.database().ref('messages/users/').off();
+    const user = firebase.auth().currentUser;
+    firebase.database().ref('messages/users/' + user.uid).off();
   }
 
     onDragEnd(result) {
@@ -155,16 +169,20 @@ class MessageForm extends Component {
       <DragDropContext onDragEnd={this.onDragEnd}>
         <Droppable droppableId="droppable">
           {(provided, snapshot) => (
-            <div {...provided.droppableProps} ref={ provided.innerRef } >
+            <ul {...provided.droppableProps} ref={ provided.innerRef } style={getListStyle(snapshot.isDraggingOver)} >
               {Object.keys(this.state.datas).map((key, index) => (
                 <Draggable key={key} draggableId={key} index={index}>
                   {(provided, snapshot) => (
-                    <div
+                    <li
+                      className="messages"
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
+                      style={getItemStyle(
+                        snapshot.isDragging,
+                        provided.draggableProps.style
+                      )}
                     >
-                    <li key={key} className="messages">
                       <Linkify>
                         <p className="chat">{this.state.datas[key].data}
                           <span className="info">
@@ -181,12 +199,11 @@ class MessageForm extends Component {
                         </p>
                       </Linkify>
                     </li>
-                    </div>
                   )}
                 </Draggable>
               ))}
               {provided.placeholder}
-            </div>
+            </ul>
           )}
         </Droppable>
       </DragDropContext>
