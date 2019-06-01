@@ -11,6 +11,9 @@ import arrayMove from 'array-move';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 import Spinner from 'react-bootstrap/Spinner';
 
 import firebase from 'firebase';
@@ -106,16 +109,15 @@ class DescForm extends Component {
       description === '';
 
     return (
-      <div>
+      <Col md={{ span: 8, offset: 2 }}>
 
       {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
 
-      <h6>{datas.message}</h6>
-      
-      <div className="chat">
-        <p>{datas.description}</p>
-        <span className="timestamp delete" onClick={this.props.history.goBack}>Back</span>
+      <div className="chat" style={{width:`100%`}}>
+        <h6>{this.state.datas.message}</h6>
+        <p>{this.state.datas.description}</p>
       </div>
+      <Button className="innerBtn" onClick={this.props.history.goBack}>Back</Button>
       <div className="formhold">
         <Form className="FormInput" onSubmit={this.onSubmit}>
           <Form.Group className="messagegroup" controlid="formMessage">
@@ -136,7 +138,7 @@ class DescForm extends Component {
           {error && <p>{error.description}</p>}
         </Form>
       </div>
-    </div>
+    </Col>
     );
   }
 }

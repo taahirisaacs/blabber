@@ -18,7 +18,7 @@ code {
 
 
 ul {
-    padding: 50px 10px 100px;
+    padding: 30px 10px 100px;
 }
 
 li.messages {
@@ -38,6 +38,10 @@ p.chat, .chat {
     font-size: 0.9rem;
     font-weight: bold;
     border-radius: 8px;
+}
+
+div.chat {
+  margin-top: 30px!important;
 }
 
 p.chat a {
@@ -169,10 +173,13 @@ a.navbar-brand {
     font-weight: bold;
 }
 .navbar-light .navbar-toggler {
-    border: 1px solid #fff;
-    background: #fff!important;
+    border: none;
+    background: none!important;
     padding: 4px 5px;
     border-radius: 100px;
+}
+button:focus {
+  outline: none!important;
 }
 .navbar-toggler-icon {
     display: inline-block;
@@ -189,4 +196,14 @@ a.navbar-brand {
 }
 #basic-navbar-nav.justify-content-end.navbar-collapse.collapse {
   border-radius: 8px;
+}
+
+button.innerBtn, button.innerBtn:hover {
+    width: 100%;
+    background: #191b40;
+    border: #191b40;
+    border-radius: 100px;
+}
+.navbar-light .navbar-toggler-icon {
+    background-image: url("./images/menu-icon.svg")!important;
 }

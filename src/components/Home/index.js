@@ -38,15 +38,6 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-const getItemStyle = (isDragging, draggableStyle) => ({
-  // some basic styles to make the items look a bit nicer
-  userSelect: "none",
-
-
-  // styles we need to apply on draggables
-  ...draggableStyle
-});
-
 const getListStyle = isDraggingOver => ({
   listStyle: "none",
 });
@@ -178,10 +169,6 @@ class MessageForm extends Component {
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      style={getItemStyle(
-                        snapshot.isDragging,
-                        provided.draggableProps.style
-                      )}
                     >
                       <Linkify>
                         <p className="chat">{this.state.datas[key].data}

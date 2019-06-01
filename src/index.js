@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import MenuIcon from './images/menu-icon.svg';
 
 import './index.css';
 import * as serviceWorker from './serviceWorker';
