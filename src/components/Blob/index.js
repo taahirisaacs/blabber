@@ -17,6 +17,7 @@ import Row from 'react-bootstrap/Row';
 import Spinner from 'react-bootstrap/Spinner';
 
 import firebase from 'firebase';
+import HomePage from '../Home';
 
 import { withAuthorization } from '../Session';
 import { withFirebase } from '../Firebase';
@@ -51,8 +52,6 @@ class DescForm extends Component {
     const { description } = this.state;
     const blobId = this.props.match.params.dataId;
     const user = firebase.auth().currentUser;
-    const date = new Date();
-    const timestamp = date.getTime();
 
       firebase.database().ref(`messages/users/${user.uid}/` + blobId).update({
             description
@@ -77,11 +76,14 @@ class DescForm extends Component {
     const blobId = this.props.match.params.dataId;
     const user = firebase.auth().currentUser;
 
-    firebase.database().ref(`messages/users/${user.uid}/` + blobId).on('value', snapshot => {
+    const db = firebase.database().ref(`messages/users/${user.uid}/${blobId}`);
+
+    db.on('value', snapshot => {
       const blobject = snapshot.val();
-      console.log(snapshot);
+      console.log(snapshot.val());
       this.setState({
-        datas: blobject,
+        description: snapshot.val().description,
+        message: snapshot.val().message,
         loading: false,
       });
     });
@@ -90,12 +92,11 @@ class DescForm extends Component {
   componentWillUnmount() {
     const blobId = this.props.match.params.dataId;
     const user = firebase.auth().currentUser;
-    firebase.database().ref(`messages/users/${user.uid}/` + blobId).off();
+    firebase.database().ref(`messages/users/${user.uid}/${blobId}`).off();
   }
 
   render() {
     const blobId = this.props.match.params.dataId;
-    console.log(this.props);
     const {
       datas,
       loading,
@@ -104,20 +105,25 @@ class DescForm extends Component {
       message,
       error,
     } = this.state;
+    console.log(datas)
 
     const isInvalid =
       description === '';
 
     return (
-      <Col md={{ span: 8, offset: 2 }}>
+      <Col md={12}>
 
       {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
 
-      <div className="chat" style={{width:`100%`}}>
-        <h6>{this.state.datas.message}</h6>
-        <p>{this.state.datas.description}</p>
+      <div className="chat" style={{width:`100%`,}}>
+        <span>
+          <h4>{message}</h4>
+          <p>{description}</p>
+        </span>
       </div>
+
       <Button className="innerBtn" onClick={this.props.history.goBack}>Back</Button>
+
       <div className="formhold">
         <Form className="FormInput" onSubmit={this.onSubmit}>
           <Form.Group className="messagegroup" controlid="formMessage">

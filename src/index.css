@@ -18,7 +18,7 @@ code {
 
 
 ul {
-    padding: 30px 10px 100px;
+    padding: 30px 20px 100px;
 }
 
 li.messages {
@@ -28,10 +28,10 @@ li.messages {
 p.chat, .chat {
     white-space: pre-wrap;
     word-wrap: break-word;
-    max-width: 100%;
+    width: 100%;
     padding: 15px;
     display: inline-block;
-    margin: 0px 0px 20px!important;
+    margin: 0px!important;
     line-height: 1.2;
     background: #343ee6;
     color: #fff;
@@ -40,15 +40,15 @@ p.chat, .chat {
     border-radius: 8px;
 }
 
-div.chat {
-  margin-top: 30px!important;
+.chat a, .chat a:hover {
+    color: #fff;
+    background: #ffffff40;
+    padding: 0px 7px;
+    border-radius: 4px;
 }
 
-p.chat a {
-  color: #ffffff;
-  background: #ffffff40;
-  padding: 0px 7px;
-  border-radius: 4px;
+div.chat {
+  margin-top: 30px!important;
 }
 
 .info {
@@ -56,7 +56,7 @@ p.chat a {
     text-align: right;
 }
 
-span.timestamp {
+span.timestamp, .link {
     display: inline-block;
     font-size: 0.7rem;
     font-weight: bold;
@@ -64,13 +64,17 @@ span.timestamp {
     margin-top: 20px;
 }
 
-span.timestamp.delete {
-    background: #5560ff;
-    color: #eaecff;
-    padding: 2px 10px;
+span.timestamp.delete, .link {
+    background: #5560ff!important;
+    color: #eaecff!important;
+    padding: 2px 10px!important;
     margin-left: 10px;
-    border-radius: 100px;
+    border-radius: 100px!important;
     cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: none;
 }
 
 span.timestamp.delete a {
@@ -203,6 +207,7 @@ button.innerBtn, button.innerBtn:hover {
     background: #191b40;
     border: #191b40;
     border-radius: 100px;
+    margin-top: 30px;
 }
 .navbar-light .navbar-toggler-icon {
     background-image: url("./images/menu-icon.svg")!important;

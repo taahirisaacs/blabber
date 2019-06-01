@@ -24,7 +24,7 @@ const App = () => (
         <Container fluid >
             <Navigation />
           <Row>
-            <Col md={{ span: 8, offset: 2 }}>
+            <Col md={{ span: 6, offset: 3 }}>
                 <Route path={ROUTES.LANDING} component={LandingPage} />
                 <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
                 <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
