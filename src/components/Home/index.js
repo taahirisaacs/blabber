@@ -173,7 +173,7 @@ class MessageForm extends Component {
               {Object.keys(this.state.datas).map((key, index) => (
                 <Draggable key={key} draggableId={key} index={index}>
                   {(provided, snapshot) => (
-                    <li
+                  <Link to={`/blob/${this.state.datas[key].dataId}`}>  <li
                       className="messages"
                       ref={provided.innerRef}
                       {...provided.draggableProps}
@@ -189,16 +189,11 @@ class MessageForm extends Component {
                              <span className="timestamp">
                                <TimeAgo date={this.state.datas[key].date}/>
                             </span>
-                            <span className="timestamp delete">
-                              <Link to={`/blob/${this.state.datas[key].dataId}`}>
-                                View
-                              </Link>
-                            </span>
                             <span className="timestamp delete" onClick={this.removeItem.bind(this, key)}>Delete</span>
                           </span>
                         </p>
                       </Linkify>
-                    </li>
+                    </li></Link>
                   )}
                 </Draggable>
               ))}
