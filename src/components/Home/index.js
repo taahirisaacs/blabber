@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { Link } from 'react-router-dom';
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import Linkify from 'react-linkify';
 import TimeAgo from 'react-timeago';
@@ -29,10 +30,17 @@ const INITIAL_STATE = {
   error: null,
 };
 
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
+
 class MessageForm extends Component {
   constructor(props) {
     super(props);
-
     this.state = { ...INITIAL_STATE };
     this.state = {
       datas: '',
@@ -41,7 +49,11 @@ class MessageForm extends Component {
       date: [],
       dataId: [],
     };
+
+    this.onDragEnd = this.onDragEnd.bind(this);
+
   };
+
 
   onSubmit = event => {
     const { message, description } = this.state;
@@ -99,6 +111,23 @@ class MessageForm extends Component {
     firebase.database().ref('messages/users/').off();
   }
 
+    onDragEnd(result) {
+     // dropped outside the list
+     if (!result.destination) {
+       return;
+     }
+
+     const datas = reorder(
+       this.state.datas,
+       result.source.index,
+       result.destination.index
+     );
+
+     this.setState({
+       datas
+     });
+   }
+
   removeItem(key, e)  {
     const user = firebase.auth().currentUser;
     const item = this.state.datas[key].dataId;
@@ -114,25 +143,7 @@ class MessageForm extends Component {
       error,
     } = this.state;
 
-    const messageList = Object.keys(this.state.datas).map((key, index) =>
-    <li key={key} className="messages">
-      <Linkify>
-        <p className="chat">{this.state.datas[key].data}
-          <span className="info">
-             <span className="timestamp">
-               <TimeAgo date={this.state.datas[key].date}/>
-            </span>
-            <span className="timestamp delete">
-              <Link to={`/blob/${this.state.datas[key].dataId}`}>
-                View
-              </Link>
-            </span>
-            <span className="timestamp delete" onClick={this.removeItem.bind(this, key)}>Delete</span>
-          </span>
-        </p>
-      </Linkify>
-    </li>
-     );
+
 
     const isInvalid =
       message === '';
@@ -141,9 +152,44 @@ class MessageForm extends Component {
       <div>
       {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
 
-      <ul>
-        {messageList}
-      </ul>
+      <DragDropContext onDragEnd={this.onDragEnd}>
+        <Droppable droppableId="droppable">
+          {(provided, snapshot) => (
+            <div {...provided.droppableProps} ref={ provided.innerRef } >
+              {Object.keys(this.state.datas).map((key, index) => (
+                <Draggable key={key} draggableId={key} index={index}>
+                  {(provided, snapshot) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                    >
+                    <li key={key} className="messages">
+                      <Linkify>
+                        <p className="chat">{this.state.datas[key].data}
+                          <span className="info">
+                             <span className="timestamp">
+                               <TimeAgo date={this.state.datas[key].date}/>
+                            </span>
+                            <span className="timestamp delete">
+                              <Link to={`/blob/${this.state.datas[key].dataId}`}>
+                                View
+                              </Link>
+                            </span>
+                            <span className="timestamp delete" onClick={this.removeItem.bind(this, key)}>Delete</span>
+                          </span>
+                        </p>
+                      </Linkify>
+                    </li>
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
 
       <div className="formhold">
         <Form className="FormInput" onSubmit={this.onSubmit}>

@@ -25,9 +25,6 @@ const NavigationAuth = () => (
         <LinkContainer to={ROUTES.HOME}>
           <Nav.Item>Home</Nav.Item>
         </LinkContainer>
-        <LinkContainer to="/blob/:dataId">
-          <Nav.Item>Test</Nav.Item>
-        </LinkContainer>
         <LinkContainer to={ROUTES.ACCOUNT}>
           <Nav.Item>Account</Nav.Item>
         </LinkContainer>
