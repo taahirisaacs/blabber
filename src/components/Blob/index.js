@@ -21,12 +21,14 @@ import HomePage from '../Home';
 
 import { withAuthorization } from '../Session';
 import { withFirebase } from '../Firebase';
+import { AuthUserContext } from '../Session';
 
 const BlobPage = () => (
-  <div>
-    <h1>Home</h1>
-    <p>The Home Page is accessible by every signed in user.</p>
-  </div>
+  <AuthUserContext.Consumer>
+    {authUser =>
+      authUser ? <DescForm /> : <DescFormNon />
+    }
+  </AuthUserContext.Consumer>
 );
 
 const INITIAL_STATE = {
@@ -36,6 +38,119 @@ const INITIAL_STATE = {
 };
 
 class DescForm extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { ...INITIAL_STATE };
+    this.state = {
+      descr: '',
+      datas: '',
+      data: [],
+      date: [],
+      dataId: [],
+    };
+  }
+
+  onSubmit = event => {
+    const { description } = this.state;
+    const blobId = this.props.match.params.dataId;
+    const user = firebase.auth().currentUser;
+
+      firebase.database().ref(`messages/users/${user.uid}/` + blobId).update({
+            description
+        })
+      .then(authUser => {
+        this.setState({ ...INITIAL_STATE });
+
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+
+    event.preventDefault();
+  }
+
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  componentWillMount(){
+    this.setState({ loading: true });
+    const blobId = this.props.match.params.dataId;
+    const user = firebase.auth().currentUser;
+
+    const db = firebase.database().ref(`messages/users/${user.uid}/${blobId}`);
+
+    db.on('value', snapshot => {
+      console.log(snapshot.val());
+      this.setState({
+        descr: snapshot.val().description,
+        message: snapshot.val().message,
+        loading: false,
+      });
+    });
+  }
+
+  componentWillUnmount() {
+    const blobId = this.props.match.params.dataId;
+    const user = firebase.auth().currentUser;
+    firebase.database().ref(`messages/users/${user.uid}/${blobId}`).off();
+  }
+
+  render() {
+    const {
+      datas,
+      loading,
+      date,
+      description,
+      descr,
+      message,
+      error,
+    } = this.state;
+    console.log(datas)
+
+    const isInvalid =
+      description === '';
+
+    return (
+      <Col md={12}>
+
+      {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
+
+
+      <h1 className="innerTitle">{message}</h1>
+      <div className="chat" style={{width:`100%`,}}>
+          <p>{descr}</p>
+      </div>
+
+      <Button className="innerBtn" onClick={this.props.history.goBack}>Back</Button>
+
+      <div className="formhold">
+        <Form className="FormInput" onSubmit={this.onSubmit}>
+          <Form.Group className="messagegroup" controlid="formMessage">
+            <TextareaAutosize
+              as="textarea"
+              rows={1}
+              name="description"
+              value={description || ''}
+              onChange={this.onChange}
+              type="text"
+              placeholder="Write a blab..."
+              className="messagearea"
+            />
+          </Form.Group>
+          <Button className="chatBtn" variant="primary" disabled={isInvalid} type="submit" block>
+            👉
+          </Button>
+          {error && <p>{error.description}</p>}
+        </Form>
+      </div>
+    </Col>
+    );
+  }
+}
+
+class DescFormNon extends Component {
   constructor(props) {
     super(props);
 
@@ -79,7 +194,6 @@ class DescForm extends Component {
     const db = firebase.database().ref(`messages/users/${user.uid}/${blobId}`);
 
     db.on('value', snapshot => {
-      const blobject = snapshot.val();
       console.log(snapshot.val());
       this.setState({
         description: snapshot.val().description,
@@ -96,7 +210,6 @@ class DescForm extends Component {
   }
 
   render() {
-    const blobId = this.props.match.params.dataId;
     const {
       datas,
       loading,
@@ -124,26 +237,6 @@ class DescForm extends Component {
 
       <Button className="innerBtn" onClick={this.props.history.goBack}>Back</Button>
 
-      <div className="formhold">
-        <Form className="FormInput" onSubmit={this.onSubmit}>
-          <Form.Group className="messagegroup" controlid="formMessage">
-            <TextareaAutosize
-              as="textarea"
-              rows={1}
-              name="description"
-              value={this.state.description || ''}
-              onChange={this.onChange}
-              type="text"
-              placeholder="Write a blab..."
-              className="messagearea"
-            />
-          </Form.Group>
-          <Button className="chatBtn" variant="primary" disabled={isInvalid} type="submit" block>
-            👉
-          </Button>
-          {error && <p>{error.description}</p>}
-        </Form>
-      </div>
     </Col>
     );
   }
@@ -152,7 +245,7 @@ class DescForm extends Component {
 const BlobPageForm = compose(
   withRouter,
   withFirebase,
-)(DescForm);
+)(DescForm, DescFormNon);
 
 const condition = authUser => !!authUser;
 

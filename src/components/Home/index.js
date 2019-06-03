@@ -113,7 +113,7 @@ class MessageForm extends Component {
 
   componentWillUnmount() {
     const user = firebase.auth().currentUser;
-    firebase.database().ref('messages/users/' + user.uid).off();
+    firebase.database().ref(`messages/users/` + user.uid).off();
   }
 
     onDragEnd(result) {
@@ -166,7 +166,7 @@ class MessageForm extends Component {
               {Object.keys(this.state.datas).map((key, index) => (
                 <Draggable key={key} draggableId={key} index={index}>
                   {(provided, snapshot) => (
-                    <li
+                    <Link to={`/blob/${this.state.datas[key].dataId}/`}><li
                       className="messages"
                       ref={provided.innerRef}
                       {...provided.draggableProps}
@@ -175,17 +175,21 @@ class MessageForm extends Component {
 
                         <div key={key} className="chat">
 
-                            <p><Linkify>{this.state.datas[key].data}</Linkify></p>
+                            <p><Linkify >{this.state.datas[key].data}</Linkify></p>
 
                         <span className="info">
+                          <span className="timestamp tag">
+                          ✍🏼 Notes
+                         </span>
                            <span className="timestamp">
                              <TimeAgo date={this.state.datas[key].date}/>
                           </span>
-                          <Link className="link" to={`/blob/${this.state.datas[key].dataId}/`}>View</Link>
-                          <span className="timestamp delete" onClick={this.removeItem.bind(this, key)}>Delete</span>
                         </span>
+
                       </div>
+
                     </li>
+                    </Link>
                   )}
                 </Draggable>
               ))}
@@ -210,7 +214,7 @@ class MessageForm extends Component {
             />
           </Form.Group>
           <Button className="chatBtn" variant="primary" disabled={isInvalid} type="submit" block>
-            👉
+            👉🏻
           </Button>
           {error && <p>{error.message}</p>}
         </Form>
