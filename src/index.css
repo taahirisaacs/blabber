@@ -33,7 +33,9 @@ h1.innerTitle {
     line-height: 1.1;
     margin-bottom: 20px;
 }
-
+p {
+  margin-bottom: 0!important;
+}
 p.chat, .chat {
   white-space: pre-wrap;
   word-wrap: break-word;
@@ -75,11 +77,11 @@ span.timestamp, .link {
 }
 
 span.timestamp.delete, .link {
-    background: #5560ff!important;
+    background: #94a1b4!important;
     color: #eaecff!important;
-    padding: 2px 10px!important;
+    padding: 5px 10px!important;
     margin-left: 10px;
-    border-radius: 100px!important;
+    border-radius: 4px!important;
     cursor: pointer;
 }
 
@@ -248,6 +250,15 @@ button.timestamp.delete.btn.btn-primary {
     margin-top: 15px;
     float: right;
 }
+span.timestamp.delete, .link {
+  background: #94a1b4;
+  border: 1px solid #94a1b4;
+}
 .navbar-light .navbar-toggler-icon {
     background-image: url("./images/menu-icon.svg")!important;
+}
+.dropdown {
+    display: inline;
+    float: right;
+    margin-top: 5px;
 }

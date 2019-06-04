@@ -7,6 +7,9 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Linkify from 'react-linkify';
 import TimeAgo from 'react-timeago';
 import TextareaAutosize from 'react-autosize-textarea';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -174,16 +177,25 @@ class MessageForm extends Component {
                           <Link style={{display:`block`, height:`100%`,}} to={`/blob/${this.state.datas[key].dataId}/`}>
                             <span className="linkArea">
                               <p>{this.state.datas[key].data}</p>
+                                <span className="timestamp">
+                                  Last updated: <TimeAgo date={this.state.datas[key].date}/>
+                               </span>
                             </span>
                           </Link>
                             <span className="info">
                               <span className="timestamp tag">
                               ✍🏼 Note
                              </span>
-                               <span className="timestamp">
-                                 <TimeAgo date={this.state.datas[key].date}/>
-                              </span>
-                              <Button className="timestamp delete" onClick={this.removeItem.bind(this, key)}>Remove</Button>
+
+                              <Dropdown>
+                                <Dropdown.Toggle as="span" className="timestamp delete" id="dropdown-basic">
+                                  Menu
+                                </Dropdown.Toggle>
+
+                                <Dropdown.Menu>
+                                  <Dropdown.Item onClick={this.removeItem.bind(this, key)}>Delete</Dropdown.Item>
+                                </Dropdown.Menu>
+                              </Dropdown>
                             </span>
                         </div>
                     </li>
