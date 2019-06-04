@@ -51,9 +51,7 @@ p.chat, .chat {
 
 .chat a, .chat a:hover {
     color: #252e3c;
-    background: #ffe26c40;
-    padding: 0px 7px;
-    border-radius: 4px;
+    text-decoration: none;
 }
 
 .info {
@@ -235,6 +233,18 @@ button.innerBtn, button.innerBtn:hover, button.innerBtn:active {
   font-weight: bold;
   text-transform: uppercase;
   margin-top: 30px;
+}
+button.timestamp.delete.btn.btn-primary {
+    display: inline-block;
+    background: #94a1b4;
+    border: 1px solid #94a1b4;
+    padding: 0 8px;
+    font-size: 0.6rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 100px;
+    margin-top: 15px;
+    float: right;
 }
 .navbar-light .navbar-toggler-icon {
     background-image: url("./images/menu-icon.svg")!important;

@@ -166,30 +166,29 @@ class MessageForm extends Component {
               {Object.keys(this.state.datas).map((key, index) => (
                 <Draggable key={key} draggableId={key} index={index}>
                   {(provided, snapshot) => (
-                    <Link to={`/blob/${this.state.datas[key].dataId}/`}><li
+                    <li
                       className="messages"
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
-
                         <div key={key} className="chat">
-
-                            <p><Linkify >{this.state.datas[key].data}</Linkify></p>
-
-                        <span className="info">
-                          <span className="timestamp tag">
-                          ✍🏼 Notes
-                         </span>
-                           <span className="timestamp">
-                             <TimeAgo date={this.state.datas[key].date}/>
-                          </span>
-                        </span>
-
-                      </div>
-
+                          <Link style={{display:`block`, height:`100%`,}} to={`/blob/${this.state.datas[key].dataId}/`}>
+                            <span className="linkArea">
+                              <p>{this.state.datas[key].data}</p>
+                            </span>
+                          </Link>
+                            <span className="info">
+                              <span className="timestamp tag">
+                              ✍🏼 Note
+                             </span>
+                               <span className="timestamp">
+                                 <TimeAgo date={this.state.datas[key].date}/>
+                              </span>
+                              <Button className="timestamp delete" onClick={this.removeItem.bind(this, key)}>Remove</Button>
+                            </span>
+                        </div>
                     </li>
-                    </Link>
                   )}
                 </Draggable>
               ))}

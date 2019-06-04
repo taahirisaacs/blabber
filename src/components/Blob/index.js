@@ -26,7 +26,7 @@ import { AuthUserContext } from '../Session';
 const BlobPage = () => (
   <AuthUserContext.Consumer>
     {authUser =>
-      authUser ? <DescForm /> : <DescFormNon />
+      authUser ? <DescForm /> : <DescForm />
     }
   </AuthUserContext.Consumer>
 );
@@ -43,7 +43,6 @@ class DescForm extends Component {
 
     this.state = { ...INITIAL_STATE };
     this.state = {
-      descr: '',
       datas: '',
       data: [],
       date: [],
@@ -55,9 +54,12 @@ class DescForm extends Component {
     const { description } = this.state;
     const blobId = this.props.match.params.dataId;
     const user = firebase.auth().currentUser;
+    const date = new Date();
+    const timestamp = date.getTime();
 
       firebase.database().ref(`messages/users/${user.uid}/` + blobId).update({
-            description
+            description,
+            timestamp
         })
       .then(authUser => {
         this.setState({ ...INITIAL_STATE });
@@ -82,32 +84,32 @@ class DescForm extends Component {
     const db = firebase.database().ref(`messages/users/${user.uid}/${blobId}`);
 
     db.on('value', snapshot => {
-      console.log(snapshot.val());
       this.setState({
-        descr: snapshot.val().description,
-        message: snapshot.val().message,
+        dataId: snapshot.key,
+        description: snapshot.val().description,
+        data: snapshot.val().message,
         loading: false,
       });
     });
   }
 
   componentWillUnmount() {
-    const blobId = this.props.match.params.dataId;
+    const dataItem = this.state.dataId;
     const user = firebase.auth().currentUser;
-    firebase.database().ref(`messages/users/${user.uid}/${blobId}`).off();
+    firebase.database().ref(`messages/users/${user.uid}/${dataItem}`).off();
   }
 
   render() {
     const {
       datas,
+      dataId,
       loading,
-      date,
+      data,
       description,
       descr,
-      message,
       error,
     } = this.state;
-    console.log(datas)
+    console.log(dataId);
 
     const isInvalid =
       description === '';
@@ -118,9 +120,9 @@ class DescForm extends Component {
       {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
 
 
-      <h1 className="innerTitle">{message}</h1>
+      <h1 className="innerTitle">{data}</h1>
       <div className="chat" style={{width:`100%`,}}>
-          <p>{descr}</p>
+          <p>{description}</p>
       </div>
 
       <Button className="innerBtn" onClick={this.props.history.goBack}>Back</Button>
@@ -150,102 +152,10 @@ class DescForm extends Component {
   }
 }
 
-class DescFormNon extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { ...INITIAL_STATE };
-    this.state = {
-      datas: '',
-      data: [],
-      date: [],
-      dataId: [],
-    };
-  }
-
-  onSubmit = event => {
-    const { description } = this.state;
-    const blobId = this.props.match.params.dataId;
-    const user = firebase.auth().currentUser;
-
-      firebase.database().ref(`messages/users/${user.uid}/` + blobId).update({
-            description
-        })
-      .then(authUser => {
-        this.setState({ ...INITIAL_STATE });
-
-      })
-      .catch(error => {
-        this.setState({ error });
-      });
-
-    event.preventDefault();
-  }
-
-  onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
-
-  componentWillMount(){
-    this.setState({ loading: true });
-    const blobId = this.props.match.params.dataId;
-    const user = firebase.auth().currentUser;
-
-    const db = firebase.database().ref(`messages/users/${user.uid}/${blobId}`);
-
-    db.on('value', snapshot => {
-      console.log(snapshot.val());
-      this.setState({
-        description: snapshot.val().description,
-        message: snapshot.val().message,
-        loading: false,
-      });
-    });
-  }
-
-  componentWillUnmount() {
-    const blobId = this.props.match.params.dataId;
-    const user = firebase.auth().currentUser;
-    firebase.database().ref(`messages/users/${user.uid}/${blobId}`).off();
-  }
-
-  render() {
-    const {
-      datas,
-      loading,
-      date,
-      description,
-      message,
-      error,
-    } = this.state;
-    console.log(datas)
-
-    const isInvalid =
-      description === '';
-
-    return (
-      <Col md={12}>
-
-      {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
-
-      <div className="chat" style={{width:`100%`,}}>
-        <span>
-          <h4>{message}</h4>
-          <p>{description}</p>
-        </span>
-      </div>
-
-      <Button className="innerBtn" onClick={this.props.history.goBack}>Back</Button>
-
-    </Col>
-    );
-  }
-}
-
 const BlobPageForm = compose(
   withRouter,
   withFirebase,
-)(DescForm, DescFormNon);
+)(DescForm);
 
 const condition = authUser => !!authUser;
 
