@@ -175,6 +175,7 @@ nav.navbar.navbar-expand-lg {
     border-radius: 100px;
     padding: 0px 15px;
     background: #fff!important;
+    border: 1px solid #fff;
 }
 
 .navbar-nav {

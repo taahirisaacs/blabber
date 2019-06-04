@@ -44,6 +44,7 @@ class DescForm extends Component {
     this.state = { ...INITIAL_STATE };
     this.state = {
       datas: '',
+      descr: '',
       data: [],
       date: [],
       dataId: [],
@@ -58,8 +59,7 @@ class DescForm extends Component {
     const timestamp = date.getTime();
 
       firebase.database().ref(`messages/users/${user.uid}/` + blobId).update({
-            description,
-            timestamp
+            description
         })
       .then(authUser => {
         this.setState({ ...INITIAL_STATE });
@@ -86,7 +86,8 @@ class DescForm extends Component {
     db.on('value', snapshot => {
       this.setState({
         dataId: snapshot.key,
-        description: snapshot.val().description,
+        descr: snapshot.val().description,
+        description: '',
         data: snapshot.val().message,
         loading: false,
       });
@@ -109,7 +110,6 @@ class DescForm extends Component {
       descr,
       error,
     } = this.state;
-    console.log(dataId);
 
     const isInvalid =
       description === '';
@@ -122,7 +122,7 @@ class DescForm extends Component {
 
       <h1 className="innerTitle">{data}</h1>
       <div className="chat" style={{width:`100%`,}}>
-          <p>{description}</p>
+          <p>{descr}</p>
       </div>
 
       <Button className="innerBtn" onClick={this.props.history.goBack}>Back</Button>

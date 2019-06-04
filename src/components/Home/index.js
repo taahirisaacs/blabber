@@ -140,8 +140,6 @@ class MessageForm extends Component {
   }
 
   render() {
-    const dataz = this.props;
-    console.log(dataz)
 
     const {
       datas,
