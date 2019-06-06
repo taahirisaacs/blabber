@@ -3,12 +3,20 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { Link } from 'react-router-dom';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import SwipeableViews from 'react-swipeable-views';
 
 import Linkify from 'react-linkify';
 import TimeAgo from 'react-timeago';
 import TextareaAutosize from 'react-autosize-textarea';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Modal from 'react-bootstrap/Modal';
 
 
 import Form from 'react-bootstrap/Form';
@@ -19,6 +27,8 @@ import firebase from 'firebase';
 
 import { withAuthorization } from '../Session';
 import { withFirebase } from '../Firebase';
+import Items from './Item';
+import Stores from './Store';
 
 const HomePage = () => (
   <div>
@@ -55,8 +65,12 @@ class MessageForm extends Component {
       data: [],
       date: [],
       dataId: [],
+      show: false,
+      index: 0,
     };
 
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
     this.onDragEnd = this.onDragEnd.bind(this);
 
   };
@@ -109,10 +123,9 @@ class MessageForm extends Component {
                   datas: datasUpdate,
                 });
               });
-      }
-
-   });
-  }
+            }
+         });
+        }
 
   componentWillUnmount() {
     const user = firebase.auth().currentUser;
@@ -142,6 +155,26 @@ class MessageForm extends Component {
     firebase.database().ref(`messages/users/` + user.uid + `/` + item).remove();
   }
 
+  handleClose() {
+    this.setState({ show: false });
+  }
+
+  handleShow() {
+    this.setState({ show: true });
+  }
+
+  handleChange = (event, value) => {
+    this.setState({
+      index: value,
+    });
+  };
+
+  handleChangeIndex = index => {
+    this.setState({
+      index,
+    });
+  };
+
   render() {
 
     const {
@@ -149,6 +182,7 @@ class MessageForm extends Component {
       loading,
       message,
       error,
+      index,
     } = this.state;
 
 
@@ -158,76 +192,120 @@ class MessageForm extends Component {
 
     return (
       <div>
-      {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
+        <Row className="tabbar">
+          <Col md={{span:6, offset:3,}}>
+            <Tabs TabIndicatorProps={{style: {backgroundColor:`#6a7b95`}}} value={index} variant="fullWidth" onChange={this.handleChange} >
+              <Tab label="🛍 Store" />
+              <Tab label="📦 Items" />
+              <Tab label="🧾 Orders" />
+              <Tab label="✍🏼 Notes" />
+            </Tabs>
+          </Col>
+        </Row>
+        <SwipeableViews index={index} onChangeIndex={this.handleChangeIndex}>
 
-      <DragDropContext onDragEnd={this.onDragEnd}>
-        <Droppable droppableId="droppable">
-          {(provided, snapshot) => (
-            <ul {...provided.droppableProps} ref={ provided.innerRef } style={getListStyle(snapshot.isDraggingOver)} >
-              {Object.keys(this.state.datas).map((key, index) => (
-                <Draggable key={key} draggableId={key} index={index}>
+          <Row>
+            <Stores />
+          </Row>
+
+          <Row>
+            <Items />
+          </Row>
+
+          <Row>
+            <Col md={{span:6, offset:3}}>
+              Orders
+            </Col>
+          </Row>
+
+            <Row>
+
+              <Col md={{span:6, offset:3}}>
+                <Row className="laneTitle">
+                  <Col>
+                    <Button variant="primary" onClick={this.handleShow}>
+                      New Note
+                    </Button>
+                  </Col>
+                </Row>
+              {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
+              <DragDropContext onDragEnd={this.onDragEnd}>
+                <Droppable droppableId="droppable">
                   {(provided, snapshot) => (
-                    <li
-                      className="messages"
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                    >
-                        <div key={key} className="chat">
-                          <Link style={{display:`block`, height:`100%`,}} to={`/blob/${this.state.datas[key].dataId}/`}>
-                            <span className="linkArea">
-                              <p>{this.state.datas[key].data}</p>
-                                <span className="timestamp">
-                                  Last updated: <TimeAgo date={this.state.datas[key].date}/>
-                               </span>
-                            </span>
-                          </Link>
-                            <span className="info">
-                              <span className="timestamp tag">
-                              ✍🏼 Note
-                             </span>
-
-                              <Dropdown>
-                                <Dropdown.Toggle as="span" className="timestamp delete" id="dropdown-basic">
-                                  Menu
-                                </Dropdown.Toggle>
-
-                                <Dropdown.Menu>
-                                  <Dropdown.Item onClick={this.removeItem.bind(this, key)}>Delete</Dropdown.Item>
-                                </Dropdown.Menu>
-                              </Dropdown>
-                            </span>
-                        </div>
-                    </li>
+                    <ul {...provided.droppableProps} ref={ provided.innerRef } style={getListStyle(snapshot.isDraggingOver)} >
+                      {Object.keys(this.state.datas).map((key, index) => (
+                        <Draggable key={key} draggableId={key} index={index}>
+                          {(provided, snapshot) => (
+                            <li
+                              className="messages"
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                            >
+                                <div key={key} className="notes">
+                                  <Link style={{display:`inline-block`, height:`100%`,}} to={`/blob/${this.state.datas[key].dataId}/`}>
+                                    <span className="linkArea">
+                                      <p>{this.state.datas[key].data}</p>
+                                        <span className="timestamp">
+                                          <TimeAgo date={this.state.datas[key].date}/>
+                                       </span>
+                                    </span>
+                                  </Link>
+                                  <Dropdown>
+                                    <Dropdown.Toggle as="span" drop="up" className="timestamp delete" id="dropdown-basic"/>
+                                    <Dropdown.Menu >
+                                      <Dropdown.Item onClick={this.removeItem.bind(this, key)}>Delete</Dropdown.Item>
+                                    </Dropdown.Menu>
+                                  </Dropdown>
+                                </div>
+                            </li>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </ul>
                   )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </ul>
-          )}
-        </Droppable>
-      </DragDropContext>
+                </Droppable>
+              </DragDropContext>
 
-      <div className="formhold">
-        <Form className="FormInput" onSubmit={this.onSubmit}>
-          <Form.Group className="messagegroup" controlid="formMessage">
-            <TextareaAutosize
-              as="textarea"
-              rows={1}
-              name="message"
-              value={this.state.message || ''}
-              onChange={this.onChange}
-              type="text"
-              placeholder="Write a blab..."
-              className="messagearea"
-            />
-          </Form.Group>
-          <Button className="chatBtn" variant="primary" disabled={isInvalid} type="submit" block>
-            👉🏻
-          </Button>
-          {error && <p>{error.message}</p>}
-        </Form>
-      </div>
+              <Modal show={this.state.show} onHide={this.handleClose}>
+
+                <Form className="FormInput" onSubmit={this.onSubmit}>
+
+                  <Modal.Header closeButton>
+                    <Modal.Title>Add a Note</Modal.Title>
+                  </Modal.Header>
+
+                  <Modal.Body>
+                    <Form.Group controlid="formMessage">
+                      <TextareaAutosize
+                        as="textarea"
+                        rows={3}
+                        name="message"
+                        value={this.state.message || ''}
+                        onChange={this.onChange}
+                        type="text"
+                        placeholder="Write a new note"
+                      />
+                    </Form.Group>
+                  </Modal.Body>
+                  <Modal.Footer >
+                    <Button variant="secondary" onClick={this.handleClose}>
+                      Close
+                    </Button>
+                    <Button onClick={this.handleClose} variant="primary" disabled={isInvalid} type="submit" block>
+                      Add new note
+                    </Button>
+                    {error && <p>{error.message}</p>}
+                  </Modal.Footer>
+
+                </Form>
+
+              </Modal>
+
+            </Col >
+          </Row>
+        </SwipeableViews>
     </div>
     );
   }
