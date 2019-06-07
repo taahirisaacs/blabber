@@ -327,7 +327,7 @@ span.timestamp.delete {
 }
 .itemImg img{
     height: auto;
-    max-width: 100%;
+    width: 100%;
 }
 span.pricing {
   font-size: 0.85rem;

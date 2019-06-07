@@ -38,9 +38,9 @@ const StoresPage = () => (
 const INITIAL_STATE = {
   loading: false,
   store: [],
-  description: [],
+  storedesc: [],
   item: [],
-  itemdesc: [],
+  description: [],
   category: [],
   price: [],
   error: null,
@@ -60,12 +60,12 @@ class DescForm extends Component {
   }
 
   onSubmit = event => {
-    const { item, itemdesc, price, category, storeId, imgUrl } = this.state;
+    const { item, description, price, category, storeId, imgUrl } = this.state;
     const user = firebase.auth().currentUser;
 
       firebase.database().ref('items/users/' + user.uid).push({
           item,
-          itemdesc,
+          description,
           price,
           category,
           storeId,
@@ -84,21 +84,21 @@ class DescForm extends Component {
 
   componentWillMount(){
     const user = firebase.auth().currentUser;
-
-    const db = firebase.database().ref(`stores/users/${user.uid}/`);
+    const blobId = this.props.match.params.uid;
+    const db = firebase.database().ref(`stores/users/${user.uid}/${blobId}/`);
 
     db.on('value', snapshot => {
-      const snap = snapshot.val();
-      const key = Object.keys(snap);
-      const custdata = snap[key];
-      // console.log(key[0]);
+      const snap = snapshot.key;
+      // const key = Object.keys(snap);
+      // const custdata = snap[key];
+      console.log(snap);
       this.setState({
-        storesImg: custdata.imgUrl,
-        storesName: custdata.store,
-        storesDesc: custdata.description,
-        storesCat: custdata.category,
+        storesImg: snapshot.val().imgUrl,
+        storesName: snapshot.val().store,
+        storesDesc: snapshot.val().description,
+        storesCat: snapshot.val().category,
         loading: false,
-        storeId: key[0],
+        storeId: snapshot.key,
       });
     });
 
@@ -125,8 +125,9 @@ class DescForm extends Component {
         }
 
   componentWillUnmount() {
+    const storeItem = this.state.storeId;
     const user = firebase.auth().currentUser;
-    firebase.database().ref(`stores/users/` + user.uid).off();
+    firebase.database().ref(`stores/users/${user.uid}/${storeItem}/`).off();
   }
 
   onChange = event => {
@@ -172,12 +173,12 @@ class DescForm extends Component {
                <li className="messages" key={key} index={index} style={{marginBottom:`10px`,}}>
                 <div className="chat">
                   <Row>
-                  <Col xs={4} sm={3} md={3}>
+                  <Col xs={12} sm={3} md={3}>
                     <div className="itemImg">
                     <Image src={items[key].imgUrl + `/-/scale_crop/250x250/center/` || "https://via.placeholder.com/150"}/>
                     </div>
                   </Col>
-                  <Col xs={8} sm={9} md={9}>
+                  <Col xs={12} sm={9} md={9}>
                     <h2>{items[key].item}</h2>
                     <span className="timestamp">{items[key].description}</span>
                     <span className="pricing">R{items[key].price}</span>
@@ -215,7 +216,7 @@ class DescForm extends Component {
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlInput2">
               <Form.Label>Description</Form.Label>
-              <Form.Control name="itemdesc" as="textarea" rows="3"  value={this.state.itemdesc || ''} onChange={this.onChange} type="text" placeholder="eg. Widget123" />
+              <Form.Control name="description" as="textarea" rows="3"  value={this.state.description || ''} onChange={this.onChange} type="text" placeholder="eg. Widget123" />
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlInput3">
               <Form.Label>Price</Form.Label>
