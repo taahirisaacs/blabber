@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import Spinner from 'react-bootstrap/Spinner';
 
 import firebase from 'firebase';
 
@@ -20,6 +21,7 @@ const INITIAL_STATE = {
   description: [],
   category: [],
   error: null,
+  loading: false,
 };
 
 class Stores extends Component {
@@ -28,7 +30,6 @@ class Stores extends Component {
 
     this.state = { ...INITIAL_STATE };
     this.state = {
-      loading: false,
       stores: '',
       imgUrl: [],
       show: false,
@@ -60,6 +61,7 @@ class Stores extends Component {
   }
 
   componentWillMount(){
+    this.setState({ loading: true });
 
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -105,29 +107,29 @@ class Stores extends Component {
 
   render() {
 
-    const { stores } = this.state;
+    const {
+      stores,
+      loading
+    } = this.state;
+
+    const isInvalid =
+      stores === '';
 
     return (
       <Col md={{span:6, offset:3}}>
-        <Row className="laneTitle">
-          <Col>
-            <Button variant="primary" onClick={this.handleShow}>
-              Add New Store
-            </Button>
-          </Col>
-        </Row>
+          {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
         <ul>
           {Object.keys(stores).map((key, index) => {
              return (
                <li className="messages" key={key} index={index} style={{marginBottom:`10px`,}}>
                 <div className="chat">
                   <Row>
-                  <Col xs={4} sm={3} md={3}>
-                    <div className="itemImg">
-                    <Image src={stores[key].imgUrl + `/-/scale_crop/250x250/center/` || "https://via.placeholder.com/150"}/>
+                  <Col xs={4} sm={4} md={2}>
+                    <div className="itemImg storeList">
+                    <Image src={stores[key].imgUrl + `/-/scale_crop/250x250/center/`}/>
                     </div>
                   </Col>
-                  <Col xs={8} sm={9} md={9}>
+                  <Col xs={8} sm={8} md={10} style={{ paddingLeft: `0`, paddingRight: `45px` }}>
                   <Link to={`/store/${this.state.stores[key].uid}/`}>
                     <h2>{stores[key].store}</h2>
                   </Link>
@@ -147,9 +149,17 @@ class Stores extends Component {
           })}
         </ul>
 
+        <Row className="laneTitle">
+          <Col>
+            <Button variant="primary" onClick={this.handleShow} block>
+              + Create a new store
+            </Button>
+          </Col>
+        </Row>
+
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Add New Store</Modal.Title>
+            <Modal.Title>Create a new store</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>

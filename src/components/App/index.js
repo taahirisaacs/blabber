@@ -25,7 +25,7 @@ const App = () => (
         <Container fluid >
             <Navigation />
           <Row>
-            <Col md>
+            <Col md style={{ paddingLeft: `0`, paddingRight: `0` }}>
                 <Route path={ROUTES.LANDING} component={LandingPage} />
                 <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
                 <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />

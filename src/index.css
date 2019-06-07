@@ -22,23 +22,27 @@ code {
 .laneTitle {
     margin-bottom: 10px;
 }
-.laneTitle button.btn.btn-primary {
-    float: right;
-    background: #4583db;
-    border: 1px solid #4583db;
-    border-radius: 100px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    padding: 5px 20px;
+.laneTitle button.btn.btn-primary, .laneTitle button.btn.btn-primary:focus, .laneTitle button.btn.btn-primary:active {
+  background: #4785df;
+  border: 1px solid #4885de;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  padding: 15px 20px;
+  outline: none;
+  box-shadow: none;
+  margin-top: 15px;
+
 }
 ul {
   border-radius: 8px;
-  padding: 10px;
+  padding: 0px;
 }
 
 li.messages {
     list-style: none;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 h1.innerTitle {
@@ -94,10 +98,10 @@ li.messages:last-child {
 }
 .chat h2 {
   color: #354153;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
-  line-height: 1.3;
-  margin-bottom: 0px;
+  line-height: 1;
+  margin-bottom: 5px;
 }
 
 .chat a, .chat a:hover {
@@ -219,6 +223,7 @@ nav.navbar.navbar-expand-lg {
 
 .navbar {
   padding-top: 10px!important;
+  margin-bottom: 20px;
 }
 
 .nav-item button {
@@ -324,17 +329,19 @@ span.timestamp.delete {
     max-width: 100%;
     height: auto;
     overflow: hidden;
+    background: #d9e0e9;
+    border-radius: 4px;
+    margin-bottom: 15px;
 }
 .itemImg img{
     height: auto;
     width: 100%;
 }
 span.pricing {
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-weight: bold;
-  position: absolute;
-  bottom: 0px;
-  right: 10px;
+  display: inline-block;
+  float: right;
 }
 span.cat {
     display: inline-block;
@@ -343,11 +350,38 @@ span.cat {
     font-weight: 600;
     color: #8a97aa;
     border: 1px solid #d1d9e3;
-    border-radius: 4px;
+    border-radius: 100px;
 }
 span.MuiTab-wrapper {
     font-family: Helvetica;
     text-transform: none;
     font-weight: 500;
     font-size: 0.9rem;
+}
+.storeHeader {
+  text-align: center;
+  margin-bottom: 5px;
+}
+.storeHeader .timestamp {
+  font-size: 0.85rem;
+}
+.itemImg.storeList {
+  background: #d9e0e9;
+  border-radius: 100px;
+  border: 2px solid #fff;
+  box-shadow: 0px 3px 5px #bbc0c8;
+}
+.storeImg {
+    width: 70px;
+    height: 70px;
+    overflow: hidden;
+    background: #d9e0e9;
+    border-radius: 100px;
+    border: 2px solid #fff;
+    box-shadow: 0px 3px 5px #bbc0c8;
+    margin: 0 auto 10px;
+}
+.storeImg img {
+    width: 100%;
+    height: auto;
 }

@@ -111,17 +111,11 @@ class Items extends Component {
 
     return (
       <Col md={{span:6, offset:3}}>
-        <Row className="laneTitle">
-          <Col>
-            <Button variant="primary" onClick={this.handleShow}>
-              Add New Item
-            </Button>
-          </Col>
-        </Row>
+
         <ul>
           {Object.keys(items).map((key, index) => {
              return (
-               <li className="messages" key={key} index={index} style={{marginBottom:`10px`,}}>
+               <li className="messages" key={key} index={index}>
                 <div className="chat">
                   <Row>
                   <Col xs={4} sm={3} md={3}>
@@ -129,10 +123,9 @@ class Items extends Component {
                     <Image src={items[key].imgUrl + `/-/scale_crop/250x250/center/` || "https://via.placeholder.com/150"}/>
                     </div>
                   </Col>
-                  <Col xs={8} sm={9} md={9}>
+                  <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
                     <h2>{items[key].item}</h2>
                     <span className="timestamp">{items[key].description}</span>
-                    <span className="pricing">R{items[key].price}</span>
                     <span className="cat">{items[key].category}</span>
                   </Col>
                   <Dropdown>
@@ -141,12 +134,24 @@ class Items extends Component {
                       <Dropdown.Item onClick={this.removeItem.bind(this, key)}>Delete</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
+                  <Col>
+                    <span className="pricing">R{items[key].price}</span>
+                  </Col>
+
                   </Row>
                 </div>
                </li>
              );
           })}
         </ul>
+
+        <Row className="laneTitle">
+          <Col>
+            <Button variant="primary" onClick={this.handleShow} block>
+              Add New Item
+            </Button>
+          </Col>
+        </Row>
 
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>

@@ -129,7 +129,7 @@ class MessageForm extends Component {
 
   componentWillUnmount() {
     const user = firebase.auth().currentUser;
-    firebase.database().ref(`messages/users/` + user.uid).off();
+    firebase.database().ref(`messages/users/${user.uid}`).off();
   }
 
     onDragEnd(result) {
@@ -191,7 +191,7 @@ class MessageForm extends Component {
       message === '';
 
     return (
-      <div>
+      <Col>
         <Row className="tabbar">
           <Col md={{span:6, offset:3,}}>
             <Tabs TabIndicatorProps={{style: {backgroundColor:`#6a7b95`}}} value={index} variant="fullWidth" onChange={this.handleChange} >
@@ -306,7 +306,7 @@ class MessageForm extends Component {
             </Col >
           </Row>
         </SwipeableViews>
-    </div>
+    </Col>
     );
   }
 }

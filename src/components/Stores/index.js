@@ -15,6 +15,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Modal from 'react-bootstrap/Modal';
 import Spinner from 'react-bootstrap/Spinner';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -56,7 +57,10 @@ class DescForm extends Component {
       items: '',
       imgUrl: [],
       storeId: [],
+      show: false,
     };
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   onSubmit = event => {
@@ -83,6 +87,7 @@ class DescForm extends Component {
   }
 
   componentWillMount(){
+    this.setState({ loading: true })
     const user = firebase.auth().currentUser;
     const blobId = this.props.match.params.uid;
     const db = firebase.database().ref(`stores/users/${user.uid}/${blobId}/`);
@@ -130,6 +135,14 @@ class DescForm extends Component {
     firebase.database().ref(`stores/users/${user.uid}/${storeItem}/`).off();
   }
 
+  handleClose() {
+    this.setState({ show: false });
+  }
+
+  handleShow() {
+    this.setState({ show: true });
+  }
+
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
@@ -143,46 +156,55 @@ class DescForm extends Component {
       storesImg,
       storesName,
       storesDesc,
-      storesCat
+      storesCat,
+      loading
      } = this.state;
 
     return (
       <Col md={{span:6, offset:3}}>
         <ul>
-             <li key={storeUid} index={storeUid} className="messages"style={{marginBottom:`10px`,}}>
-              <div className="chat">
+             <li key={storeUid} index={storeUid} className="messages" >
+
                 <Row>
-                <Col xs={3}>
-                  <div className="itemImg">
-                  <Image src={storesImg + `/-/scale_crop/250x250/center/` || "https://via.placeholder.com/150"}/>
-                  </div>
-                </Col>
-                <Col xs={9}>
-                  <h2>{storesName}</h2>
-                  <span className="timestamp">{storesDesc}</span>
-                  <span className="cat">{storesCat}</span>
-                </Col>
+                  <Col xs sm md className="storeHeader">
+                    <div className="chat">
+                    <div className="storeImg">
+                    <Image src={storesImg + `/-/scale_crop/250x250/center/` || "https://via.placeholder.com/150"}/>
+                    </div>
+                    <h2>{storesName}</h2>
+                    <span className="timestamp">{storesDesc}</span>
+                    <span className="cat">{storesCat}</span>
+                      <Row className="laneTitle">
+                        <Col>
+                          <Button variant="primary" onClick={this.handleShow} block>
+                            + Add a new item
+                          </Button>
+                        </Col>
+                      </Row>
+                    </div>
+                  </Col>
                 </Row>
-              </div>
              </li>
         </ul>
-
         <ul>
+          {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
           {Object.keys(items).map((key, index) => {
              return (
-               <li className="messages" key={key} index={index} style={{marginBottom:`10px`,}}>
+               <li className="messages" key={key} index={index} style={{marginBottom:`20px`,}}>
                 <div className="chat">
                   <Row>
-                  <Col xs={12} sm={3} md={3}>
+                  <Col xs={12} sm={3} md={4}>
                     <div className="itemImg">
                     <Image src={items[key].imgUrl + `/-/scale_crop/250x250/center/` || "https://via.placeholder.com/150"}/>
                     </div>
                   </Col>
-                  <Col xs={12} sm={9} md={9}>
+                  <Col xs={12} sm={9} md={8}>
                     <h2>{items[key].item}</h2>
                     <span className="timestamp">{items[key].description}</span>
-                    <span className="pricing">R{items[key].price}</span>
                     <span className="cat">{items[key].category}</span>
+                  </Col>
+                  <Col>
+                    <span className="pricing">R{items[key].price}</span>
                   </Col>
                   </Row>
                 </div>
@@ -191,6 +213,11 @@ class DescForm extends Component {
           })}
         </ul>
 
+    <Modal show={this.state.show} onHide={this.handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Create a new store</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
         <Uploader
           id='file'
           name='file'
@@ -233,11 +260,17 @@ class DescForm extends Component {
                 <option>📦 2nd Hand Goods</option>
               </Form.Control>
             </Form.Group>
-              <Button variant="primary" type="submit">
-                Add Item
+            <Modal.Footer >
+              <Button variant="secondary" onClick={this.handleClose}>
+                Close
               </Button>
+              <Button variant="primary" onClick={this.handleClose} type="submit">
+                Add Store
+              </Button>
+            </Modal.Footer>
             </Form>
-
+          </Modal.Body>
+        </Modal>
       </Col>
     );
   }
