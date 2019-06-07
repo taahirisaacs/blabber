@@ -17,8 +17,8 @@ const Navigation = () => (
 );
 
 const NavigationAuth = () => (
-  <Navbar expand="lg">
-    <Navbar.Brand href="/home">(tiny)trader</Navbar.Brand>
+  <Navbar expand="lg" sticky="top">
+    <LinkContainer to={ROUTES.HOME}><Navbar.Brand>(tiny)trader</Navbar.Brand></LinkContainer>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
       <Nav>
@@ -40,7 +40,7 @@ const NavigationAuth = () => (
 );
 
 const NavigationNonAuth = () => (
-  <Navbar expand="lg">
+  <Navbar expand="lg" sticky="top">
     <Navbar.Brand href="/home">(tiny)trader</Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">

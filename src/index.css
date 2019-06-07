@@ -25,14 +25,14 @@ code {
 .laneTitle button.btn.btn-primary, .laneTitle button.btn.btn-primary:focus, .laneTitle button.btn.btn-primary:active {
   background: #4785df;
   border: 1px solid #4885de;
-  border-radius: 8px;
+  border-radius: 100px;
   font-size: 1rem;
   font-weight: bold;
   color: #ffffff;
   padding: 15px 20px;
   outline: none;
   box-shadow: none;
-  margin-top: 15px;
+  margin-top: 0px;
 
 }
 ul {
@@ -223,14 +223,14 @@ nav.navbar.navbar-expand-lg {
 
 .navbar {
   padding-top: 10px!important;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
 }
 
 .nav-item button {
-    border-radius: 100px;
-    padding: 0px 15px;
-    background: #fff!important;
-    border: 1px solid #fff;
+  border-radius: 100px;
+  padding: 2px 20px;
+  background: #5d6e87!important;
+  border: 1px solid #5d6e87;
 }
 
 .navbar-nav {
@@ -338,10 +338,11 @@ span.timestamp.delete {
     width: 100%;
 }
 span.pricing {
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: bold;
   display: inline-block;
-  float: right;
+  margin-bottom: 10px;
+  color: #1ca12f;
 }
 span.cat {
     display: inline-block;
@@ -361,9 +362,13 @@ span.MuiTab-wrapper {
 .storeHeader {
   text-align: center;
   margin-bottom: 5px;
+  margin-top: 20px;
 }
 .storeHeader .timestamp {
   font-size: 0.85rem;
+}
+.storeHeader .cat {
+  margin-bottom: 15px;
 }
 .itemImg.storeList {
   background: #d9e0e9;

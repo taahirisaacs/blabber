@@ -169,7 +169,7 @@ class DescForm extends Component {
                   <Col xs sm md className="storeHeader">
                     <div className="chat">
                     <div className="storeImg">
-                    <Image src={storesImg + `/-/scale_crop/250x250/center/` || "https://via.placeholder.com/150"}/>
+                    <Image src={storesImg + `/-/scale_crop/500x500/center/` || "https://via.placeholder.com/150"}/>
                     </div>
                     <h2>{storesName}</h2>
                     <span className="timestamp">{storesDesc}</span>
@@ -193,18 +193,16 @@ class DescForm extends Component {
                <li className="messages" key={key} index={index} style={{marginBottom:`20px`,}}>
                 <div className="chat">
                   <Row>
-                  <Col xs={12} sm={3} md={4}>
+                  <Col xs={12} sm={3} md={3}>
                     <div className="itemImg">
-                    <Image src={items[key].imgUrl + `/-/scale_crop/250x250/center/` || "https://via.placeholder.com/150"}/>
+                    <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/` || "https://via.placeholder.com/150"}/>
                     </div>
                   </Col>
-                  <Col xs={12} sm={9} md={8}>
+                  <Col xs={12} sm={9} md={9}>
                     <h2>{items[key].item}</h2>
+                    <span className="pricing">R{items[key].price}</span>
                     <span className="timestamp">{items[key].description}</span>
                     <span className="cat">{items[key].category}</span>
-                  </Col>
-                  <Col>
-                    <span className="pricing">R{items[key].price}</span>
                   </Col>
                   </Row>
                 </div>

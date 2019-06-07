@@ -120,11 +120,12 @@ class Items extends Component {
                   <Row>
                   <Col xs={4} sm={3} md={3}>
                     <div className="itemImg">
-                    <Image src={items[key].imgUrl + `/-/scale_crop/250x250/center/` || "https://via.placeholder.com/150"}/>
+                    <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/` || "https://via.placeholder.com/150"}/>
                     </div>
                   </Col>
                   <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
                     <h2>{items[key].item}</h2>
+                    <span className="pricing">R{items[key].price}</span>
                     <span className="timestamp">{items[key].description}</span>
                     <span className="cat">{items[key].category}</span>
                   </Col>
@@ -134,10 +135,6 @@ class Items extends Component {
                       <Dropdown.Item onClick={this.removeItem.bind(this, key)}>Delete</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
-                  <Col>
-                    <span className="pricing">R{items[key].price}</span>
-                  </Col>
-
                   </Row>
                 </div>
                </li>
