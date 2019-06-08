@@ -3,6 +3,9 @@ import { LinkContainer } from "react-router-bootstrap";
 
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
 import SignOutButton from '../SignOut';
 import * as ROUTES from '../../constants/routes';

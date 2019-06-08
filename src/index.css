@@ -123,8 +123,8 @@ span.timestamp.tag {
 
 span.timestamp, .link {
   display: block;
-  font-size: 0.7rem;
-  font-weight: 600;
+  font-size: 0.85rem;
+  font-weight: 500;
   color: #8a97aa;
   margin-bottom: 15px;
 }
@@ -325,11 +325,14 @@ span.timestamp.delete {
     width: 100%;
 }
 span.pricing {
-  font-size: 0.85rem;
+  font-size: 0.75rem!important;
   font-weight: bold;
   display: inline-block;
   margin-bottom: 10px;
-  color: #1ca12f;
+  color: #ffffff;
+  background: #1fb13f;
+  padding: 4px 11px;
+  border-radius: 100px;
 }
 span.cat {
     display: inline-block;
@@ -376,6 +379,19 @@ span.MuiTab-wrapper {
 .storeImg img {
     width: 100%;
     height: auto;
+}
+.itemTitle {
+    background: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 8px 8px 0px 0px;
+    padding: 15px 10px 15px 20px;
+    line-height: 1;
+}
+.itemTitle span.pricing{
+    float: right;
+    margin-bottom: 0px;
+    font-size: 1rem;
 }
 .bottomNav {
     position: fixed;

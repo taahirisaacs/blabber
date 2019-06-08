@@ -111,6 +111,10 @@ class MessageForm extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  componentDidMount() {
+    document.title = 'Profile';
+  }
+
   componentWillMount(){
     this.setState({ loading: true });
 
@@ -201,7 +205,7 @@ class MessageForm extends Component {
 
 
     return (
-      <Container fluid>
+      <Container fluid className="px-0">
         <Row>
           <Col xs sm md className="storeHeader">
             <div className="chat">
@@ -225,7 +229,6 @@ class MessageForm extends Component {
           </Col>
         </Row>
         <SwipeableViews index={index} onChangeIndex={this.handleChangeIndex}>
-
           <Row>
             <Stores />
           </Row>
@@ -320,8 +323,8 @@ class MessageForm extends Component {
 
             </Col >
           </Row>
-
         </SwipeableViews>
+
     </Container>
     );
   }

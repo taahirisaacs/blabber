@@ -181,16 +181,20 @@ class DescForm extends Component {
           {Object.keys(items).map((key, index) => {
              return (
                <li className="messages" key={key} index={index} style={{marginBottom:`20px`,}}>
+                 <div className="itemTitle">
+                   <Row>
+                   <Col>
+                       <span>{items[key].item}</span>
+                       <span className="pricing">R{items[key].price}</span>
+                   </Col>
+                   </Row>
+                 </div>
+                 <div className="itemImg mb-0">
+                 <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/` || "https://via.placeholder.com/150"}/>
+                 </div>
                 <div className="chat">
                   <Row>
-                  <Col xs={12} sm={3} md={3}>
-                    <div className="itemImg">
-                    <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/` || "https://via.placeholder.com/150"}/>
-                    </div>
-                  </Col>
                   <Col xs={12} sm={9} md={9}>
-                    <h2>{items[key].item}</h2>
-                    <span className="pricing">R{items[key].price}</span>
                     <span className="timestamp">{items[key].description}</span>
                     <span className="cat">{items[key].category}</span>
                   </Col>

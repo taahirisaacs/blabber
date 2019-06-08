@@ -27,10 +27,8 @@ import { withAuthentication } from '../Session';
 
 const App = () => (
       <Router>
-        <Navigation />
-        <Container fluid className="mx-0">
-          <Row>
-            <Col md={{span:8, offset:2}} style={{ paddingLeft: `0`, paddingRight: `0`, paddingBottom:`40px` }}>
+        <Navigation/>
+        <Container fluid className="mx-0 mb-5">
                 <Route path={ROUTES.LANDING} component={LandingPage} />
                 <Route path={ROUTES.ORDERS} component={Orders} />
                 <Route path={ROUTES.EXPLORE} component={Explore} />
@@ -43,11 +41,9 @@ const App = () => (
                 <Route path={ROUTES.ADMIN} component={AdminPage} />
                 <Route path={ROUTES.NEWITEM} component={NewItem} />
                 <Route path="/blob/:dataId" component={BlobPage} />
-                <Route path="/store/:uid" render={(props) => <StorePage {...props} /> } component={StorePage} />
-            </Col>
-          </Row>
-            <FooterNavigation />
+                <Route path="/store/:uid" component={StorePage} />
         </Container>
+        <FooterNavigation />
       </Router>
 );
 

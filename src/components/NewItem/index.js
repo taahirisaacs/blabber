@@ -61,6 +61,10 @@ onSubmit = event => {
   event.preventDefault();
 }
 
+componentDidMount() {
+  document.title = 'Add New Item';
+}
+
 componentWillMount(){
 
   firebase.auth().onAuthStateChanged((user) => {
@@ -111,6 +115,7 @@ onChange = event => {
 render() {
 
   const { items, stores } = this.state;
+  console.log(this.props);
 
   return (
     <Col md={{span:6, offset:3}}>
