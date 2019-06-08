@@ -33,8 +33,6 @@ class Items extends Component {
       imgUrl: [],
       show: false,
     };
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
 
   };
 
@@ -68,7 +66,6 @@ class Items extends Component {
             .on('value', (snapshot) => {
               const itemsObject = snapshot.val() || '';
               this.setState({ loading: false })
-              // console.log(itemsObject);
               const itemsList = Object.keys(itemsObject).map((key, index) => ({
                 ...itemsObject[key],
                 uid: key,
@@ -84,14 +81,6 @@ class Items extends Component {
   componentWillUnmount() {
     const user = firebase.auth().currentUser;
     firebase.database().ref(`items/users/` + user.uid).off();
-  }
-
-  handleClose() {
-    this.setState({ show: false });
-  }
-
-  handleShow() {
-    this.setState({ show: true });
   }
 
   removeItem(key, e)  {
@@ -141,74 +130,6 @@ class Items extends Component {
              );
           })}
         </ul>
-
-        <Row className="laneTitle">
-          <Col>
-            <Button variant="primary" onClick={this.handleShow} block>
-              Add New Item
-            </Button>
-          </Col>
-        </Row>
-
-        <Modal show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Add New Item</Modal.Title>
-          </Modal.Header>
-
-          <Modal.Body>
-          <Uploader
-            id='file'
-            name='file'
-            onChange={(file) => {
-              console.log('File changed: ', file)
-
-              if (file) {
-                file.progress(info => console.log('File progress: ', info.progress))
-                file.done(info => console.log('File uploaded: ', info))
-              }
-            }}
-            onUploadComplete={info =>
-              this.setState ({
-                imgUrl: info.cdnUrl,
-              })
-            } />
-          <Form className="FormInput" onSubmit={this.onSubmit}>
-          <Form.Control style={{display:`none`}} name="imgurl" value={this.state.imgUrl || ''} onChange={this.onChange} type="text" placeholder="imgUrl" />
-
-              <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>Item Name</Form.Label>
-                <Form.Control name="item" value={this.state.item || ''} onChange={this.onChange} type="text" placeholder="eg. Widget123" />
-              </Form.Group>
-              <Form.Group controlId="exampleForm.ControlInput2">
-                <Form.Label>Description</Form.Label>
-                <Form.Control name="description" as="textarea" rows="3"  value={this.state.description || ''} onChange={this.onChange} type="text" placeholder="eg. Widget123" />
-              </Form.Group>
-              <Form.Group controlId="exampleForm.ControlInput3">
-                <Form.Label>Price</Form.Label>
-                <Form.Control name="price"  value={this.state.price || ''} onChange={this.onChange} type="number" min="0.00" step="any" placeholder="100.00" />
-              </Form.Group>
-              <Form.Group controlId="exampleForm.ControlSelect1">
-                <Form.Label>Select a category</Form.Label>
-                <Form.Control as="select" name="category" value={this.state.category || ''} onChange={this.onChange}>
-                  <option>Select a Category</option>
-                  <option>👕 Clothing</option>
-                  <option>👟 Sneakers</option>
-                  <option>🍔 Food</option>
-                  <option>💻 Electronics</option>
-                  <option>📦 2nd Hand Goods</option>
-                </Form.Control>
-              </Form.Group>
-              <Modal.Footer >
-                <Button variant="secondary" onClick={this.handleClose}>
-                  Close
-                </Button>
-                <Button variant="primary" onClick={this.handleClose} type="submit">
-                  Add Item
-                </Button>
-              </Modal.Footer>
-              </Form>
-          </Modal.Body>
-        </Modal>
       </Col >
     );
   }

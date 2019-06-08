@@ -12,7 +12,7 @@ import * as ROUTES from '../../constants/routes';
 import { AuthUserContext } from '../Session';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStore, faSearch, faUserCircle, faReceipt, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { faStore, faSearch, faUserCircle, faReceipt, faPlusSquare, faHome } from '@fortawesome/free-solid-svg-icons';
 
 const FooterNavigation = () => (
     <AuthUserContext.Consumer>
@@ -24,15 +24,13 @@ const FooterNavigation = () => (
 
 const FooterNavigationAuth = () => (
   <Row className="bottomNav">
-
     <Col className="px-0">
-      <NavLink to={ROUTES.HOME}>
+      <NavLink to={ROUTES.ADMIN}>
         <span className="navItem">
-          <FontAwesomeIcon icon={faStore} />
-        </span>
-      </NavLink>
+      <FontAwesomeIcon icon={faHome} />
+      </span>
+    </NavLink>
     </Col>
-
     <Col className="px-0">
       <NavLink to={ROUTES.EXPLORE}>
         <span className="navItem">
@@ -55,12 +53,13 @@ const FooterNavigationAuth = () => (
     </NavLink>
     </Col>
     <Col className="px-0">
-      <NavLink to={ROUTES.SETTINGS}>
+      <NavLink to={ROUTES.HOME}>
         <span className="navItem">
-      <FontAwesomeIcon icon={faUserCircle} />
-      </span>
-    </NavLink>
+          <FontAwesomeIcon icon={faStore} />
+        </span>
+      </NavLink>
     </Col>
+
   </Row>
 );
 

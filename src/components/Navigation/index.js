@@ -17,7 +17,7 @@ const Navigation = () => (
 );
 
 const NavigationAuth = () => (
-  <Navbar expand="lg">
+  <Navbar expand="lg" sticky="top">
     <LinkContainer to={ROUTES.HOME}><Navbar.Brand><span className="sml">tiny</span>trader</Navbar.Brand></LinkContainer>
   </Navbar>
 );

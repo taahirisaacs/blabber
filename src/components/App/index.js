@@ -27,8 +27,8 @@ import { withAuthentication } from '../Session';
 
 const App = () => (
       <Router>
+        <Navigation />
         <Container fluid className="mx-0">
-            <Navigation />
           <Row>
             <Col md={{span:8, offset:2}} style={{ paddingLeft: `0`, paddingRight: `0`, paddingBottom:`40px` }}>
                 <Route path={ROUTES.LANDING} component={LandingPage} />

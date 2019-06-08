@@ -103,12 +103,10 @@ class DescForm extends Component {
            if (user) {
 
              const storeId = this.props.match.params.uid;
-             console.log(this.props);
              firebase.database().ref('items/users/' + user.uid).orderByChild('storeId').equalTo(`${storeId}`) //reference uid of logged in user like so
                  .on('value', (snapshot) => {
                    const itemsObject = snapshot.val() || '';
                    this.setState({ loading: false })
-                   console.log(itemsObject);
                    const itemsList = Object.keys(itemsObject).map((key, index) => ({
                      ...itemsObject[key],
                      uid: key,
@@ -166,9 +164,9 @@ class DescForm extends Component {
                     <h2>{storesName}</h2>
                     <span className="timestamp">{storesDesc}</span>
                     <span className="cat">{storesCat}</span>
-                      <Row className="laneTitle">
+                      <Row >
                         <Col>
-                          <Button variant="primary" onClick={this.handleShow} block>
+                          <Button variant="primary" size="sm" onClick={this.handleShow} block>
                             + Add a new item
                           </Button>
                         </Col>

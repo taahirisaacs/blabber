@@ -119,12 +119,12 @@ class Stores extends Component {
       <Col md={{span:6, offset:3}}>
         <Row className="laneTitle">
           <Col>
-            <Button variant="primary" onClick={this.handleShow} block>
-              + Create a new store
+            <Button variant="primary" onClick={this.handleShow}>
+              + Add new store
             </Button>
           </Col>
         </Row>
-        
+
           {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
 
         <ul>

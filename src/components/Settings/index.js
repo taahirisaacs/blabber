@@ -12,7 +12,7 @@ import Row from 'react-bootstrap/Row';
 const Settings = () => (
   <AuthUserContext.Consumer>
     {authUser => (
-        <Col xs={{span:10, offset:1}}>
+        <Col md>
             <h3>Settings</h3>
             <p>Account: {authUser.email}</p>
               <PasswordForgetForm />

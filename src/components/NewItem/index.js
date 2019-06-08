@@ -111,9 +111,10 @@ onChange = event => {
 render() {
 
   const { items, stores } = this.state;
-console.log(stores);
+
   return (
     <Col md={{span:6, offset:3}}>
+        <h2>Add an item</h2>
         <Uploader
           id='file'
           name='file'
@@ -132,7 +133,6 @@ console.log(stores);
           } />
         <Form className="FormInput" onSubmit={this.onSubmit}>
         <Form.Control style={{display:`none`}} name="imgurl" value={this.state.imgUrl || ''} onChange={this.onChange} type="text" placeholder="imgUrl" />
-
             <Form.Group controlId="exampleForm.ControlInput1">
               <Form.Label>Item Name</Form.Label>
               <Form.Control name="item" value={this.state.item || ''} onChange={this.onChange} type="text" placeholder="eg. Widget123" />
@@ -144,11 +144,9 @@ console.log(stores);
                 {Object.keys(stores).map((key, index) => {
                   return (
                     <option key={key} index={index} value={key}>{stores[key].store}</option>
-                  );
-                }
-
+                    );
+                  }
                 )}
-
               </Form.Control>
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlInput2">

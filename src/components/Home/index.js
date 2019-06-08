@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -201,6 +202,19 @@ class MessageForm extends Component {
 
     return (
       <Container fluid>
+        <Row>
+          <Col xs sm md className="storeHeader">
+            <div className="chat">
+              <h2>Profile</h2>
+              <NavLink to={ROUTES.SETTINGS}>
+                  <Button className="navItem mt-3 mb-3" size="sm" variant="secondary" block>
+                Settings
+                </Button>
+              </NavLink>
+            </div>
+          </Col>
+        </Row>
+
         <Row className="tabbar">
           <Col md>
             <Tabs TabIndicatorProps={{style: {backgroundColor:`#6a7b95`}}} value={index} variant="fullWidth"  onChange={this.handleChange} >
@@ -221,7 +235,6 @@ class MessageForm extends Component {
           </Row>
 
             <Row>
-
               <Col md={{span:6, offset:3}}>
                 <Row className="laneTitle">
                   <Col>
