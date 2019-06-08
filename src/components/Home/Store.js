@@ -117,7 +117,16 @@ class Stores extends Component {
 
     return (
       <Col md={{span:6, offset:3}}>
+        <Row className="laneTitle">
+          <Col>
+            <Button variant="primary" onClick={this.handleShow} block>
+              + Create a new store
+            </Button>
+          </Col>
+        </Row>
+        
           {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
+
         <ul>
           {Object.keys(stores).map((key, index) => {
              return (
@@ -148,14 +157,6 @@ class Stores extends Component {
              );
           })}
         </ul>
-
-        <Row className="laneTitle">
-          <Col>
-            <Button variant="primary" onClick={this.handleShow} block>
-              + Create a new store
-            </Button>
-          </Col>
-        </Row>
 
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>

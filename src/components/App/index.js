@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import Navigation from '../Navigation';
+import FooterNavigation from '../Navigation/footer';
 import LandingPage from '../Landing';
 import SignUpPage from '../SignUp';
 import SignInPage from '../SignIn';
@@ -16,17 +17,23 @@ import AccountPage from '../Account';
 import AdminPage from '../Admin';
 import BlobPage from '../Blob';
 import StorePage from '../Stores';
+import Orders from '../Orders';
+import Explore from '../Explore';
+import Settings from '../Settings';
 
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
 
 const App = () => (
       <Router>
-        <Container fluid >
+        <Container fluid className="mx-0">
             <Navigation />
           <Row>
-            <Col md style={{ paddingLeft: `0`, paddingRight: `0`, paddingBottom:`40px` }}>
+            <Col md={{span:8, offset:2}} style={{ paddingLeft: `0`, paddingRight: `0`, paddingBottom:`40px` }}>
                 <Route path={ROUTES.LANDING} component={LandingPage} />
+                <Route path={ROUTES.ORDERS} component={Orders} />
+                <Route path={ROUTES.EXPLORE} component={Explore} />
+                <Route path={ROUTES.SETTINGS} component={Settings} />
                 <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
                 <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
                 <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
@@ -37,6 +44,7 @@ const App = () => (
                 <Route path="/store/:uid" render={(props) => <StorePage {...props} /> } component={StorePage} />
             </Col>
           </Row>
+            <FooterNavigation />
         </Container>
       </Router>
 );

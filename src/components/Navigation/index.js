@@ -17,30 +17,13 @@ const Navigation = () => (
 );
 
 const NavigationAuth = () => (
-  <Navbar expand="lg" sticky="top">
+  <Navbar expand="lg">
     <LinkContainer to={ROUTES.HOME}><Navbar.Brand>(tiny)trader</Navbar.Brand></LinkContainer>
-    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-    <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-      <Nav>
-        <LinkContainer to={ROUTES.HOME}>
-          <Nav.Item>Home</Nav.Item>
-        </LinkContainer>
-        <LinkContainer to={ROUTES.ACCOUNT}>
-          <Nav.Item>Account</Nav.Item>
-        </LinkContainer>
-        <LinkContainer to={ROUTES.ADMIN}>
-          <Nav.Item>Admin</Nav.Item>
-        </LinkContainer>
-        <Nav.Item>
-          <SignOutButton to={ROUTES.SIGN_IN} />
-        </Nav.Item>
-      </Nav>
-    </Navbar.Collapse>
   </Navbar>
 );
 
 const NavigationNonAuth = () => (
-  <Navbar expand="lg" sticky="top">
+  <Navbar expand="lg" className="px-0">
     <Navbar.Brand href="/home">(tiny)trader</Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">

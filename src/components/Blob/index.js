@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-import { Link } from 'react-router-dom';
 
-import Linkify from 'react-linkify';
-import TimeAgo from 'react-timeago';
 import TextareaAutosize from 'react-autosize-textarea';
-import {sortableContainer, sortableElement} from 'react-sortable-hoc';
-import arrayMove from 'array-move';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import Spinner from 'react-bootstrap/Spinner';
 
 import firebase from 'firebase';

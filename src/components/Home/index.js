@@ -8,12 +8,18 @@ import Tab from '@material-ui/core/Tab';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import SwipeableViews from 'react-swipeable-views';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStore, faSearch, faUserCircle, faReceipt } from '@fortawesome/free-solid-svg-icons';
 
 import Linkify from 'react-linkify';
 import TimeAgo from 'react-timeago';
 import TextareaAutosize from 'react-autosize-textarea';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Modal from 'react-bootstrap/Modal';
@@ -29,6 +35,7 @@ import { withAuthorization } from '../Session';
 import { withFirebase } from '../Firebase';
 import Items from './Item';
 import Stores from './Store';
+import * as ROUTES from '../../constants/routes';
 
 const HomePage = () => (
   <div>
@@ -42,6 +49,7 @@ const INITIAL_STATE = {
   message: '',
   error: null,
 };
+
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -190,15 +198,15 @@ class MessageForm extends Component {
     const isInvalid =
       message === '';
 
+
     return (
-      <Col>
+      <Container fluid>
         <Row className="tabbar">
-          <Col md={{span:6, offset:3,}}>
-            <Tabs TabIndicatorProps={{style: {backgroundColor:`#6a7b95`}}} value={index} variant="fullWidth" onChange={this.handleChange} >
-              <Tab label="🛍 Store" />
-              <Tab label="📦 Items" />
-              <Tab label="🧾 Orders" />
-              <Tab label="✍🏼 Notes" />
+          <Col md>
+            <Tabs TabIndicatorProps={{style: {backgroundColor:`#6a7b95`}}} value={index} variant="fullWidth"  onChange={this.handleChange} >
+              <Tab label="Stores" />
+              <Tab label="Items" />
+              <Tab label="Notes" />
             </Tabs>
           </Col>
         </Row>
@@ -210,12 +218,6 @@ class MessageForm extends Component {
 
           <Row>
             <Items />
-          </Row>
-
-          <Row>
-            <Col md={{span:6, offset:3}}>
-              Orders
-            </Col>
           </Row>
 
             <Row>
@@ -305,8 +307,9 @@ class MessageForm extends Component {
 
             </Col >
           </Row>
+
         </SwipeableViews>
-    </Col>
+    </Container>
     );
   }
 }
