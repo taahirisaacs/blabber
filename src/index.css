@@ -400,11 +400,10 @@ span.MuiTab-wrapper {
     background: #fff;
     margin: 0!important;
     text-align: center;
-    padding: 8px 5px;
-    font-size: 0.8rem;
+    padding: 13px 5px;
 }
 .svg-inline--fa {
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   display: block;
   margin: 0 auto;
 }
@@ -419,5 +418,5 @@ span.navItem {
 }
 .bottomNav .active {
   text-decoration: none;
-  color: #1b69cc;
+  color: #394450;
 }

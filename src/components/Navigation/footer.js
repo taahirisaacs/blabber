@@ -12,7 +12,7 @@ import * as ROUTES from '../../constants/routes';
 import { AuthUserContext } from '../Session';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStore, faSearch, faUserCircle, faReceipt } from '@fortawesome/free-solid-svg-icons';
+import { faStore, faSearch, faUserCircle, faReceipt, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 
 const FooterNavigation = () => (
     <AuthUserContext.Consumer>
@@ -29,9 +29,6 @@ const FooterNavigationAuth = () => (
       <NavLink to={ROUTES.HOME}>
         <span className="navItem">
           <FontAwesomeIcon icon={faStore} />
-          <span>
-            My Stores
-          </span>
         </span>
       </NavLink>
     </Col>
@@ -40,9 +37,13 @@ const FooterNavigationAuth = () => (
       <NavLink to={ROUTES.EXPLORE}>
         <span className="navItem">
           <FontAwesomeIcon icon={faSearch} />
-          <span>
-            Explore
-          </span>
+        </span>
+    </NavLink>
+    </Col>
+    <Col className="px-0">
+      <NavLink to={ROUTES.NEWITEM}>
+        <span className="navItem">
+          <FontAwesomeIcon icon={faPlusSquare} />
         </span>
     </NavLink>
     </Col>
@@ -50,9 +51,6 @@ const FooterNavigationAuth = () => (
       <NavLink to={ROUTES.ORDERS}>
         <span className="navItem">
       <FontAwesomeIcon icon={faReceipt} />
-      <span>
-        Orders
-      </span>
       </span>
     </NavLink>
     </Col>
@@ -60,9 +58,6 @@ const FooterNavigationAuth = () => (
       <NavLink to={ROUTES.SETTINGS}>
         <span className="navItem">
       <FontAwesomeIcon icon={faUserCircle} />
-      <span>
-        Settings
-      </span>
       </span>
     </NavLink>
     </Col>

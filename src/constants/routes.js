@@ -8,3 +8,4 @@ export const PASSWORD_FORGET = '/pw-forget';
 export const ORDERS = '/orders';
 export const EXPLORE = '/explore';
 export const SETTINGS = '/settings';
+export const NEWITEM = '/newitem';
