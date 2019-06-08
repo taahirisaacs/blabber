@@ -412,11 +412,10 @@ span.navItem {
     width: 100%;
     height: 100%;
 }
-.bottomNav a {
+.bottomNav a, .bottomNav a:hover {
   color: #9aa7b7;
-  cursor: pointer;
 }
-.bottomNav .active {
+.bottomNav .active, .bottomNav .active:hover {
   text-decoration: none;
   color: #394450;
 }

@@ -18,13 +18,13 @@ const Navigation = () => (
 
 const NavigationAuth = () => (
   <Navbar expand="lg">
-    <LinkContainer to={ROUTES.HOME}><Navbar.Brand>(tiny)trader</Navbar.Brand></LinkContainer>
+    <LinkContainer to={ROUTES.HOME}><Navbar.Brand><span className="sml">tiny</span>trader</Navbar.Brand></LinkContainer>
   </Navbar>
 );
 
 const NavigationNonAuth = () => (
   <Navbar expand="lg" className="px-0">
-    <Navbar.Brand href="/home">(tiny)trader</Navbar.Brand>
+    <Navbar.Brand href="/home">tiny trader</Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
       <Nav>
