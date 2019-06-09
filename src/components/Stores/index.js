@@ -23,7 +23,7 @@ import { AuthUserContext } from '../Session';
 const StoresPage = () => (
   <AuthUserContext.Consumer>
     {authUser =>
-      authUser ? <DescForm /> : <DescForm />
+      authUser ? <StoresPageAuth /> : <StoresPageNonAuth />
     }
   </AuthUserContext.Consumer>
 );
@@ -39,7 +39,7 @@ const INITIAL_STATE = {
   error: null,
 };
 
-class DescForm extends Component {
+class StoresPageAuth extends Component {
   constructor(props) {
     super(props);
 
@@ -176,7 +176,7 @@ class DescForm extends Component {
                 </Row>
              </li>
         </ul>
-        <ul>
+        <ul style={{marginBottom:`100px`,}}>
           {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
           {Object.keys(items).map((key, index) => {
              return (
@@ -268,10 +268,173 @@ class DescForm extends Component {
   }
 }
 
+class StoresPageNonAuth extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { ...INITIAL_STATE };
+    this.state = {
+      stores: '',
+      items: '',
+      imgUrl: [],
+      storeId: [],
+      show: false,
+    };
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+  }
+
+  onSubmit = event => {
+    const { item, description, price, category, storeId, imgUrl } = this.state;
+    const user = firebase.auth().currentUser;
+
+      firebase.database().ref('items/users/' + user.uid).push({
+          item,
+          description,
+          price,
+          category,
+          storeId,
+          imgUrl
+        })
+      .then(authUser => {
+        this.setState({ ...INITIAL_STATE });
+
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+
+    event.preventDefault();
+  }
+
+  componentWillMount(){
+    this.setState({ loading: true })
+    const user = firebase.auth().currentUser;
+    const blobId = this.props.match.params.uid;
+    const db = firebase.database().ref(`stores/users/${user.uid}/${blobId}/`);
+
+    db.on('value', snapshot => {
+      const snap = snapshot.key;
+      // const key = Object.keys(snap);
+      // const custdata = snap[key];
+      console.log(snap);
+      this.setState({
+        storesImg: snapshot.val().imgUrl,
+        storesName: snapshot.val().store,
+        storesDesc: snapshot.val().description,
+        storesCat: snapshot.val().category,
+        loading: false,
+        storeId: snapshot.key,
+      });
+    });
+
+         firebase.auth().onAuthStateChanged((user) => {
+           if (user) {
+
+             const storeId = this.props.match.params.uid;
+             firebase.database().ref('items/users/' + user.uid).orderByChild('storeId').equalTo(`${storeId}`) //reference uid of logged in user like so
+                 .on('value', (snapshot) => {
+                   const itemsObject = snapshot.val() || '';
+                   this.setState({ loading: false })
+                   const itemsList = Object.keys(itemsObject).map((key, index) => ({
+                     ...itemsObject[key],
+                     uid: key,
+                   }));
+                     this.setState({
+                       items: itemsList,
+                     })
+                   });
+                 }
+              });
+        }
+
+  componentWillUnmount() {
+    const storeItem = this.state.storeId;
+    const user = firebase.auth().currentUser;
+    firebase.database().ref(`stores/users/${user.uid}/${storeItem}/`).off();
+  }
+
+  handleClose() {
+    this.setState({ show: false });
+  }
+
+  handleShow() {
+    this.setState({ show: true });
+  }
+
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  render() {
+
+    const {
+      stores,
+      items,
+      storeUid,
+      storesImg,
+      storesName,
+      storesDesc,
+      storesCat,
+      loading
+     } = this.state;
+
+    return (
+      <Col md={{span:6, offset:3}}>
+        <ul>
+             <li key={storeUid} index={storeUid} className="messages" >
+
+                <Row>
+                  <Col xs sm md className="storeHeader">
+                    <div className="chat">
+                    <div className="storeImg">
+                    <Image src={storesImg + `/-/scale_crop/500x500/center/` || "https://via.placeholder.com/150"}/>
+                    </div>
+                    <h2>{storesName}</h2>
+                    <span className="timestamp">{storesDesc}</span>
+                    <span className="cat">{storesCat}</span>
+                    </div>
+                  </Col>
+                </Row>
+             </li>
+        </ul>
+        <ul style={{marginBottom:`100px`,}}>
+          {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
+          {Object.keys(items).map((key, index) => {
+             return (
+               <li className="messages" key={key} index={index} style={{marginBottom:`20px`,}}>
+                 <div className="itemTitle">
+                   <Row>
+                   <Col>
+                       <span>{items[key].item}</span>
+                       <span className="pricing">R{items[key].price}</span>
+                   </Col>
+                   </Row>
+                 </div>
+                 <div className="itemImg mb-0">
+                 <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/` || "https://via.placeholder.com/150"}/>
+                 </div>
+                <div className="chat">
+                  <Row>
+                  <Col xs={12} sm={9} md={9}>
+                    <span className="timestamp">{items[key].description}</span>
+                    <span className="cat">{items[key].category}</span>
+                  </Col>
+                  </Row>
+                </div>
+               </li>
+             );
+          })}
+        </ul>
+      </Col>
+    );
+  }
+}
+
 const StoresPageForm = compose(
   withRouter,
   withFirebase,
-)(DescForm);
+)(StoresPageAuth, StoresPageNonAuth);
 
 const condition = authUser => !!authUser;
 

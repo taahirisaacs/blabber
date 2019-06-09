@@ -23,7 +23,7 @@ const INITIAL_STATE = {
   error: null,
 };
 
-class NewItem extends Component{
+class NewItem extends Component {
 
 constructor(props, context) {
   super(props, context);
@@ -119,7 +119,6 @@ render() {
 
   return (
     <Col md={{span:6, offset:3}}>
-        <h2>Add an item</h2>
         <Uploader
           id='file'
           name='file'

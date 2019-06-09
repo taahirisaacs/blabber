@@ -118,6 +118,19 @@ class MessageForm extends Component {
   componentWillMount(){
     this.setState({ loading: true });
 
+    const user = firebase.auth().currentUser;
+    const db = firebase.database().ref(`users/${user.uid}/`);
+
+    db.on('value', (snapshot) => {
+      const uname = snapshot.val().username;
+      this.setState({
+        uname: uname,
+      });
+
+    });
+
+    console.log(db);
+
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         firebase.database().ref('messages/users/' + user.uid) //reference uid of logged in user like so
@@ -196,6 +209,7 @@ class MessageForm extends Component {
       message,
       error,
       index,
+      uname,
     } = this.state;
 
 
@@ -206,10 +220,13 @@ class MessageForm extends Component {
 
     return (
       <Container fluid className="px-0">
-        <Row>
+        <Row className="mx-0">
           <Col xs sm md className="storeHeader">
             <div className="chat">
-              <h2>Profile</h2>
+              <span className="storeImg">
+                <img src="https://i.pravatar.cc/300"/>
+              </span>
+              <h2>{uname}</h2>
               <NavLink to={ROUTES.SETTINGS}>
                   <Button className="navItem mt-3 mb-3" size="sm" variant="secondary" block>
                 Settings
@@ -219,7 +236,7 @@ class MessageForm extends Component {
           </Col>
         </Row>
 
-        <Row className="tabbar">
+        <Row className="tabbar mx-0">
           <Col md>
             <Tabs TabIndicatorProps={{style: {backgroundColor:`#6a7b95`}}} value={index} variant="fullWidth"  onChange={this.handleChange} >
               <Tab label="Stores" />
@@ -229,15 +246,15 @@ class MessageForm extends Component {
           </Col>
         </Row>
         <SwipeableViews index={index} onChangeIndex={this.handleChangeIndex}>
-          <Row>
+          <Row className="px-2">
             <Stores />
           </Row>
 
-          <Row>
+          <Row className="px-2">
             <Items />
           </Row>
 
-            <Row>
+            <Row className="px-2">
               <Col md={{span:6, offset:3}}>
                 <Row className="laneTitle">
                   <Col>
