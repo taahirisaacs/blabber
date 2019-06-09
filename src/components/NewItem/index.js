@@ -114,11 +114,14 @@ onChange = event => {
 
 render() {
 
-  const { items, stores } = this.state;
+  const { items, stores, imgUrl } = this.state;
   console.log(this.props);
 
   return (
-    <Col md={{span:6, offset:3}}>
+    <Col md={{span:6, offset:3}} className="newitemform">
+        <span className="uploadImg">
+          <img src={imgUrl}></img>
+        </span>
         <Uploader
           id='file'
           name='file'
@@ -138,13 +141,17 @@ render() {
         <Form className="FormInput" onSubmit={this.onSubmit}>
         <Form.Control style={{display:`none`}} name="imgurl" value={this.state.imgUrl || ''} onChange={this.onChange} type="text" placeholder="imgUrl" />
             <Form.Group controlId="exampleForm.ControlInput1">
-              <Form.Label>Item Name</Form.Label>
-              <Form.Control name="item" value={this.state.item || ''} onChange={this.onChange} type="text" placeholder="eg. Widget123" />
+              <Form.Label>Name</Form.Label>
+              <Form.Control name="item" value={this.state.item || ''} onChange={this.onChange} type="text" placeholder="Give your item a name" />
+            </Form.Group>
+            <Form.Group controlId="exampleForm.ControlInput2">
+              <Form.Label>Description</Form.Label>
+              <Form.Control name="description" as="textarea" rows="3"  value={this.state.description || ''} onChange={this.onChange} type="text" placeholder="eg. Widget123" />
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlSelect2">
               <Form.Label>Select a Store</Form.Label>
               <Form.Control as="select" name="storeId" value={this.state.storeId || ''} onChange={this.onChange}>
-                <option>Select a Category</option>
+                <option>Select a Store</option>
                 {Object.keys(stores).map((key, index) => {
                   return (
                     <option key={key} index={index} value={key}>{stores[key].store}</option>
@@ -153,10 +160,7 @@ render() {
                 )}
               </Form.Control>
             </Form.Group>
-            <Form.Group controlId="exampleForm.ControlInput2">
-              <Form.Label>Description</Form.Label>
-              <Form.Control name="description" as="textarea" rows="3"  value={this.state.description || ''} onChange={this.onChange} type="text" placeholder="eg. Widget123" />
-            </Form.Group>
+
             <Form.Group controlId="exampleForm.ControlInput3">
               <Form.Label>Price</Form.Label>
               <Form.Control name="price"  value={this.state.price || ''} onChange={this.onChange} type="number" min="0.00" step="any" placeholder="100.00" />
@@ -173,7 +177,7 @@ render() {
                 <option>📦 2nd Hand Goods</option>
               </Form.Control>
             </Form.Group>
-              <Button variant="primary" onClick={this.handleClose} type="submit">
+              <Button variant="primary" onClick={this.handleClose} type="submit" block>
                 Add Item
               </Button>
             </Form>

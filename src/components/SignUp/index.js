@@ -18,6 +18,8 @@ const SignUpPage = () => (
 const INITIAL_STATE = {
   username: '',
   email: '',
+  location: '',
+  profileUrl: '',
   passwordOne: '',
   passwordTwo: '',
   error: null,
@@ -31,7 +33,7 @@ class SignUpFormBase extends Component {
   }
 
   onSubmit = event => {
-    const { username, email, passwordOne } = this.state;
+    const { username, email, location, profileUrl, passwordOne } = this.state;
 
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -42,6 +44,8 @@ class SignUpFormBase extends Component {
           .set({
             username,
             email,
+            location,
+            profileUrl,
           });
       })
       .then(authUser => {
@@ -63,6 +67,8 @@ class SignUpFormBase extends Component {
     const {
       username,
       email,
+      profileUrl,
+      location,
       passwordOne,
       passwordTwo,
       error,
@@ -72,11 +78,21 @@ class SignUpFormBase extends Component {
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
       email === '' ||
+      location === '' ||
       username === '';
 
     return (
       <Form onSubmit={this.onSubmit}>
         <Form.Group controlId="formUsername">
+          <Form.Group controlId="formImage">
+            <Form.Control
+              name="profileUrl"
+              value={profileUrl}
+              onChange={this.onChange}
+              type="text"
+              placeholder="Profile Url"
+            />
+          </Form.Group>
           <Form.Control
             name="username"
             value={username}
@@ -92,6 +108,15 @@ class SignUpFormBase extends Component {
             onChange={this.onChange}
             type="text"
             placeholder="Email Address"
+          />
+        </Form.Group>
+        <Form.Group controlId="formLocation">
+          <Form.Control
+            name="location"
+            value={location}
+            onChange={this.onChange}
+            type="text"
+            placeholder="Your location"
           />
         </Form.Group>
         <Form.Group controlId="formPassOne">

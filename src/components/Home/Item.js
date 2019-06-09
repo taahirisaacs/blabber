@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -8,6 +9,9 @@ import Row from 'react-bootstrap/Row';
 import Modal from 'react-bootstrap/Modal';
 import Image from 'react-bootstrap/Image';
 import Uploader from './../Uploader';
+
+
+import * as ROUTES from '../../constants/routes';
 
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -100,7 +104,13 @@ class Items extends Component {
 
     return (
       <Col md={{span:6, offset:3}}>
-
+        <Row className="laneTitle">
+          <Col>
+            <NavLink as="button" to={ROUTES.NEWITEM}>
+                <Button>+ Add new item</Button>
+          </NavLink>
+          </Col>
+        </Row>
         <ul>
           {Object.keys(items).map((key, index) => {
              return (

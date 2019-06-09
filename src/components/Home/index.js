@@ -123,8 +123,10 @@ class MessageForm extends Component {
 
     db.on('value', (snapshot) => {
       const uname = snapshot.val().username;
+      const ulocation = snapshot.val().location;
       this.setState({
         uname: uname,
+        ulocation: ulocation,
       });
 
     });
@@ -210,6 +212,7 @@ class MessageForm extends Component {
       error,
       index,
       uname,
+      ulocation,
     } = this.state;
 
 
@@ -224,9 +227,10 @@ class MessageForm extends Component {
           <Col xs sm md className="storeHeader">
             <div className="chat">
               <span className="storeImg">
-                <img src="https://i.pravatar.cc/300"/>
+                <img src="https://res.cloudinary.com/djqr0a74c/image/upload/v1560070682/TinyTrader/taahir_2x.890a73ff.png"/>
               </span>
               <h2>{uname}</h2>
+              <p className="profileSub">{ulocation}</p>
               <NavLink to={ROUTES.SETTINGS}>
                   <Button className="navItem mt-3 mb-3" size="sm" variant="secondary" block>
                 Settings

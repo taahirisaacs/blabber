@@ -161,7 +161,7 @@ span.timestamp.delete a {
 .formhold .form-group {
     display: inline-block;
     width: calc(100% - 60px);
-    margin: 0px!important;
+    margin: 0px 0px 20px;
 }
 
 form.FormInput textarea {
@@ -420,4 +420,35 @@ span.navItem {
 .bottomNav .active, .bottomNav .active:hover {
   text-decoration: none;
   color: #394450;
+}
+p.profileSub {
+  color: #64768c;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+.newitemform {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.uploadcare--widget {
+  display: block;
+}
+.uploadcare--widget button {
+  background: #6e7e95;
+  font-weight: 500;
+  width: 100%;
+  margin-bottom: 20px;
+}
+span.uploadImg {
+    display: block;
+    width: 100%;
+    background: #dbe4f0;
+    height: 300px;
+    margin-bottom: 10px;
+}
+span.uploadImg img {
+  max-width: 100%;
+  height: auto;
 }
