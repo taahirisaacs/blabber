@@ -16,11 +16,12 @@ import HomePage from '../Home';
 import AccountPage from '../Account';
 import AdminPage from '../Admin';
 import BlobPage from '../Blob';
-import StorePage from '../Stores';
+import StoresPage from '../Stores';
 import Orders from '../Orders';
 import Explore from '../Explore';
 import Settings from '../Settings';
 import NewItem from '../NewItem';
+import Profile from '../Profile';
 
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
@@ -36,12 +37,12 @@ const App = () => (
             <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
             <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
             <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
-            <Route path={ROUTES.HOME} component={HomePage} />
+            <Route path={ROUTES.HOME} component={HomePage}/>
             <Route path={ROUTES.ACCOUNT} component={AccountPage} />
             <Route path={ROUTES.ADMIN} component={AdminPage} />
             <Route path={ROUTES.NEWITEM} component={NewItem} />
             <Route path="/blob/:dataId" component={BlobPage} />
-            <Route path="/store/:uid" component={StorePage} />
+            <Route exact path="/store/:userid/:uid" component={Profile} render={(props) => <Profile {...props} />}/>
           <FooterNavigation />
         </Container>
       </Router>

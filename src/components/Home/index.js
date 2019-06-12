@@ -243,107 +243,21 @@ class MessageForm extends Component {
         <Row className="tabbar mx-0">
           <Col md>
             <Tabs TabIndicatorProps={{style: {backgroundColor:`#6a7b95`}}} value={index} variant="fullWidth"  onChange={this.handleChange} >
-              <Tab label="Stores" />
-              <Tab label="Items" />
-              <Tab label="Notes" />
+              <Tab label="Your Items" />
+              <Tab label="Your Stores" />
             </Tabs>
           </Col>
         </Row>
         <SwipeableViews index={index} onChangeIndex={this.handleChangeIndex}>
+
+        <Row className="px-2">
+          <Items />
+        </Row>
+
           <Row className="px-2">
             <Stores />
           </Row>
 
-          <Row className="px-2">
-            <Items />
-          </Row>
-
-            <Row className="px-2">
-              <Col md={{span:6, offset:3}}>
-                <Row className="laneTitle">
-                  <Col>
-                    <Button variant="primary" onClick={this.handleShow}>
-                      New Note
-                    </Button>
-                  </Col>
-                </Row>
-              {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
-              <DragDropContext onDragEnd={this.onDragEnd}>
-                <Droppable droppableId="droppable">
-                  {(provided, snapshot) => (
-                    <ul {...provided.droppableProps} ref={ provided.innerRef } style={getListStyle(snapshot.isDraggingOver)} >
-                      {Object.keys(this.state.datas).map((key, index) => (
-                        <Draggable key={key} draggableId={key} index={index}>
-                          {(provided, snapshot) => (
-                            <li
-                              className="messages"
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                            >
-                                <div key={key} className="notes">
-                                  <Link style={{display:`inline-block`, height:`100%`,}} to={`/blob/${this.state.datas[key].dataId}/`}>
-                                    <span className="linkArea">
-                                      <p>{this.state.datas[key].data}</p>
-                                        <span className="timestamp">
-                                          <TimeAgo date={this.state.datas[key].date}/>
-                                       </span>
-                                    </span>
-                                  </Link>
-                                  <Dropdown>
-                                    <Dropdown.Toggle as="span" drop="up" className="timestamp delete" id="dropdown-basic"/>
-                                    <Dropdown.Menu >
-                                      <Dropdown.Item onClick={this.removeItem.bind(this, key)}>Delete</Dropdown.Item>
-                                    </Dropdown.Menu>
-                                  </Dropdown>
-                                </div>
-                            </li>
-                          )}
-                        </Draggable>
-                      ))}
-                      {provided.placeholder}
-                    </ul>
-                  )}
-                </Droppable>
-              </DragDropContext>
-
-              <Modal show={this.state.show} onHide={this.handleClose}>
-
-                <Form className="FormInput" onSubmit={this.onSubmit}>
-
-                  <Modal.Header closeButton>
-                    <Modal.Title>Add a Note</Modal.Title>
-                  </Modal.Header>
-
-                  <Modal.Body>
-                    <Form.Group controlid="formMessage">
-                      <TextareaAutosize
-                        as="textarea"
-                        rows={3}
-                        name="message"
-                        value={this.state.message || ''}
-                        onChange={this.onChange}
-                        type="text"
-                        placeholder="Write a new note"
-                      />
-                    </Form.Group>
-                  </Modal.Body>
-                  <Modal.Footer >
-                    <Button variant="secondary" onClick={this.handleClose}>
-                      Close
-                    </Button>
-                    <Button onClick={this.handleClose} variant="primary" disabled={isInvalid} type="submit" block>
-                      Add new note
-                    </Button>
-                    {error && <p>{error.message}</p>}
-                  </Modal.Footer>
-
-                </Form>
-
-              </Modal>
-
-            </Col >
-          </Row>
         </SwipeableViews>
 
     </Container>
