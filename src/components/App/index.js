@@ -17,6 +17,7 @@ import AccountPage from '../Account';
 import AdminPage from '../Admin';
 import BlobPage from '../Blob';
 import StoresPage from '../Stores';
+import StoresPageNonAuth from '../StoresNonAuth';
 import Orders from '../Orders';
 import Explore from '../Explore';
 import Settings from '../Settings';
@@ -42,8 +43,8 @@ const App = () => (
             <Route path={ROUTES.ADMIN} component={AdminPage} />
             <Route path={ROUTES.NEWITEM} component={NewItem} />
             <Route path="/blob/:dataId" component={BlobPage} />
-            <Route exact path="/store/:userid/:uid" component={Profile} render={(routeProps) => <Profile {...routeProps} />}/>
-          <FooterNavigation />
+            <Route exact path="/store/:userid/:uid" render={(routeProps) => <Profile {...routeProps} />}/>
+        <FooterNavigation />
         </Container>
       </Router>
 );

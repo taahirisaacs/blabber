@@ -115,12 +115,12 @@ onChange = event => {
 render() {
 
   const { items, stores, imgUrl } = this.state;
-  console.log(this.props);
+  const uploadedImg = `${imgUrl}/-/scale_crop/500x500/center/`;
 
   return (
     <Col md={{span:6, offset:3}} className="newitemform">
         <span className="uploadImg">
-          <img src={imgUrl + `/-/scale_crop/500x500/center/`}></img>
+          <img src={uploadedImg}></img>
         </span>
         <Uploader
           id='file'

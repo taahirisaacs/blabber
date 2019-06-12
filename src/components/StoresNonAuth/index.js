@@ -39,7 +39,7 @@ class StoresPageNonAuth extends Component {
   }
 
   componentWillMount(){
-
+    this.setState({ loading: true })
     console.log(this.props.location.state);
 
     const userkey = this.props.match.params.userid;
@@ -57,6 +57,7 @@ class StoresPageNonAuth extends Component {
           storeDesc: snap.description,
           storeCat: snap.category,
           storeId: snapshot.key,
+          loading: false
         });
       });
 
@@ -65,6 +66,7 @@ class StoresPageNonAuth extends Component {
           this.setState({
             userLocation: snap.location,
             userWhatsapp: snap.whatsapp,
+            loading: false
           });
         });
 
@@ -76,6 +78,7 @@ class StoresPageNonAuth extends Component {
       }));
         this.setState({
           items: itemsList,
+          loading: false
         })
       });
 
@@ -86,34 +89,37 @@ class StoresPageNonAuth extends Component {
       const storekey = this.props.match.params.uid;
       firebase.database().ref(`stores/users/${userkey}/${storekey}/`).off();
       firebase.database().ref(`items/users/${userkey}/`).off();
+      firebase.database().ref(`users/${userkey}/`).off();
     }
 
   render() {
-    const { items, storeImg, storeName, storeDesc, storeCat, storeId, userLocation, userWhatsapp} = this.state;
+    const { items, storeImg, storeName, storeDesc, storeCat, storeId, userLocation, userWhatsapp, loading} = this.state;
 
     const pretext = "I'm interested in:";
 
     return (
+
       <Col md={{span:6, offset:3}}>
+      {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
         <ul>
              <li key={storeId} index={storeId} className="messages" >
                 <Row>
                   <Col xs sm md className="storeHeader">
                     <div className="chat">
-                    <div className="storeImg">
-                    <Image src={storeImg + `/-/scale_crop/500x500/center/` || `https://via.placeholder.com/150`}/>
-                    </div>
-                    <h2>{storeName}</h2>
-                    <span className="city">{userLocation}</span>
-                    <span className="timestamp">{storeDesc}</span>
-                    <span className="cat">{storeCat}</span>
+                      <div className="storeImg">
+                      <Image src={storeImg + `/-/scale_crop/500x500/center/`}/>
+                      </div>
+                        <h2>{storeName}</h2>
+                        <span className="city">{userLocation}</span>
+                        <span className="timestamp">{storeDesc}</span>
+                        <span className="cat">{storeCat}</span>
                     </div>
                   </Col>
                 </Row>
              </li>
         </ul>
 
-        <ul style={{marginBottom:`100px`,}}>
+        <ul style={{marginBottom:`40px`,}}>
 
           {Object.keys(items).map((key, index) => {
              return (
@@ -127,14 +133,14 @@ class StoresPageNonAuth extends Component {
                    </Row>
                  </div>
                  <div className="itemImg mb-0">
-                 <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/` || "https://via.placeholder.com/150"}/>
+                 <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/`}/>
                  </div>
                 <div className="chat store">
                   <Row>
-                  <Col xs={12} sm={9} md={9}>
+                  <Col xs={12}>
                     <span className="timestamp">{items[key].description}</span>
                     <span className="cat">{items[key].category}</span>
-                    <Button className="storebtn" target="_blank" href={`https://wa.me/27${userWhatsapp}/?text=${pretext}%20${items[key].item}%20|%20${items[key].description}%20(R${items[key].price})`}>Message</Button>
+                    <Button className="storebtn" href={`https://wa.me/27${userWhatsapp}/?text=${pretext}%20${items[key].item}%20|%20R${items[key].price}`}>Message</Button>
                   </Col>
                   </Row>
                 </div>
@@ -142,7 +148,7 @@ class StoresPageNonAuth extends Component {
              );
           })}
         </ul>
-
+        <span className="poweredby">Powered by TinyTrader®</span>
       </Col>
     );
   }

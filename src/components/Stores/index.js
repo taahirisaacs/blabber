@@ -71,18 +71,13 @@ class StoresPageAuth extends Component {
   }
 
   componentWillMount(){
-
-    const { userkey } = this.props.location.state;
-
-    console.log(this.props.location.state);
-
     this.setState({ loading: true })
     const user = firebase.auth().currentUser;
     const blobId = this.props.match.params.uid;
     const db = firebase.database().ref(`stores/users/${user.uid}/${blobId}/`);
-    console.log(this.props);
+
     db.on('value', snapshot => {
-      console.log(snapshot.val());
+
       this.setState({
         storesImg: snapshot.val().imgUrl,
         storesName: snapshot.val().store,
@@ -98,7 +93,6 @@ class StoresPageAuth extends Component {
            if (user) {
 
              const storeId = this.props.match.params.uid;
-             console.log(storeId);
              firebase.database().ref('items/users/' + user.uid).orderByChild('storeId').equalTo(`${storeId}`) //reference uid of logged in user like so
                  .on('value', (snapshot) => {
                    const itemsObject = snapshot.val() || '';
@@ -149,7 +143,7 @@ class StoresPageAuth extends Component {
       loading
      } = this.state;
 
-     console.log(this.props.user);
+     console.log(this.props.match.params.userid);
     return (
       <Col md={{span:6, offset:3}}>
         <ul>
@@ -181,21 +175,17 @@ class StoresPageAuth extends Component {
           {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
           {Object.keys(items).map((key, index) => {
              return (
-               <li className="messages" key={key} index={index} style={{marginBottom:`20px`,}}>
-                 <div className="itemTitle">
-                   <Row>
-                   <Col>
-                       <span>{items[key].item}</span>
-                       <span className="pricing">R{items[key].price}</span>
-                   </Col>
-                   </Row>
-                 </div>
-                 <div className="itemImg mb-0">
-                 <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/` || "https://via.placeholder.com/150"}/>
-                 </div>
+               <li className="messages" key={key} index={index}>
                 <div className="chat">
                   <Row>
-                  <Col xs={12} sm={9} md={9}>
+                  <Col xs={4} sm={3} md={3}>
+                    <div className="itemImg">
+                    <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/`}/>
+                    </div>
+                  </Col>
+                  <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
+                    <h2>{items[key].item}</h2>
+                    <span className="pricing">R{items[key].price}</span>
                     <span className="timestamp">{items[key].description}</span>
                     <span className="cat">{items[key].category}</span>
                   </Col>

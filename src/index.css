@@ -76,6 +76,7 @@ p.chat, .chat {
 }
 .producttitle {
   font-size: 0.8rem;
+  font-weight: 700;
   display: inline-block;
   width: calc(100% - 100px);
   padding-top: 3px;
@@ -487,4 +488,11 @@ button.settings {
   border: 1px solid #c2cddd;
   color: #354152;
   font-weight: 600;
+}
+span.poweredby {
+    display: block;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #65768d;
 }
