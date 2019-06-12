@@ -1,7 +1,7 @@
 {
-  "short_name": "Blabber",
-  "name": "Blabber",
-  "description": "A simple microblog, journaling, note taking, list making app thing",
+  "short_name": "TinyTrader",
+  "name": "TinyTrader",
+  "description": "A free online store for entrepreneurs and microbusinesses",
   "icons": [
     {
       "src": "favicon.ico",

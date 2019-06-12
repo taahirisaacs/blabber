@@ -43,7 +43,7 @@ const App = () => (
             <Route path={ROUTES.ADMIN} component={AdminPage} />
             <Route path={ROUTES.NEWITEM} component={NewItem} />
             <Route path="/blob/:dataId" component={BlobPage} />
-            <Route exact path="/store/:userid/:uid" render={(routeProps) => <Profile {...routeProps} />}/>
+            <Route exact path="/store/:userid/:uid" component={Profile} />
         <FooterNavigation />
         </Container>
       </Router>

@@ -13,7 +13,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Image from 'react-bootstrap/Image';
 
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import HomePage from '../Home';
 
 import { withAuthorization } from '../Session';
@@ -32,8 +32,8 @@ const INITIAL_STATE = {
 };
 
 class StoresPageAuth extends Component {
-  constructor(props, id) {
-    super(props, id);
+  constructor(props) {
+    super(props);
 
     this.state = { ...INITIAL_STATE };
     this.state = {
@@ -42,6 +42,12 @@ class StoresPageAuth extends Component {
       imgUrl: [],
       storeId: [],
       show: false,
+      storeUrl: window.location.href,
+      storesImg: [],
+      storesName: [],
+      storesDesc: [],
+      storesCat: [],
+      storeUid: []
     };
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -72,19 +78,20 @@ class StoresPageAuth extends Component {
 
   componentWillMount(){
     this.setState({ loading: true })
-    const user = firebase.auth().currentUser;
+    const userKey = this.props.match.params.userid;
     const blobId = this.props.match.params.uid;
-    const db = firebase.database().ref(`stores/users/${user.uid}/${blobId}/`);
+    console.log(userKey);
+    const db = firebase.database().ref(`stores/users/${userKey}/${blobId}/`);
 
     db.on('value', snapshot => {
-
+      const snap = snapshot.val();
       this.setState({
-        storesImg: snapshot.val().imgUrl,
+        storesImg: snap.imgUrl,
         storesName: snapshot.val().store,
         storesDesc: snapshot.val().description,
         storesCat: snapshot.val().category,
         loading: false,
-        storeId: snapshot.key,
+        storeUid: snapshot.key
       });
 
     });
@@ -102,8 +109,7 @@ class StoresPageAuth extends Component {
                      uid: key,
                    }));
                      this.setState({
-                       items: itemsList,
-                       storeUrl: window.location.href,
+                       items: itemsList
                      })
                    });
                  }
@@ -142,8 +148,6 @@ class StoresPageAuth extends Component {
       storeUrl,
       loading
      } = this.state;
-
-     console.log(this.props.match.params.userid);
     return (
       <Col md={{span:6, offset:3}}>
         <ul>

@@ -16,7 +16,7 @@ import * as ROUTES from '../../constants/routes';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 
 const INITIAL_STATE = {
   item: [],

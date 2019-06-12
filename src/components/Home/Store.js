@@ -14,7 +14,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Spinner from 'react-bootstrap/Spinner';
 
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 
 const INITIAL_STATE = {
   store: [],
@@ -141,7 +141,7 @@ class Stores extends Component {
                     </div>
                   </Col>
                   <Col xs={8} sm={8} md={10} style={{ paddingLeft: `0`, paddingRight: `45px` }}>
-                  <Link to={{ pathname:`store/${userid.uid}/${this.state.stores[key].uid}/`, state:{userkey: `${userid.uid}`} }}>
+                  <Link to={{ pathname:`store/${userid.uid}/${this.state.stores[key].uid}`, state:{userkey: `${userid.uid}`} }}>
                     <h2>{stores[key].store}</h2>
                   </Link>
                     <span className="timestamp">{stores[key].description}</span>

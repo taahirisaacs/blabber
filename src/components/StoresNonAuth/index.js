@@ -13,7 +13,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Image from 'react-bootstrap/Image';
 
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import HomePage from '../Home';
 
 const INITIAL_STATE = {
@@ -40,7 +40,6 @@ class StoresPageNonAuth extends Component {
 
   componentWillMount(){
     this.setState({ loading: true })
-    console.log(this.props.location.state);
 
     const userkey = this.props.match.params.userid;
     const storekey = this.props.match.params.uid;
@@ -50,7 +49,6 @@ class StoresPageNonAuth extends Component {
 
     db.on('value', snapshot => {
         const snap = snapshot.val();
-        console.log(snap);
         this.setState({
           storeImg: snap.imgUrl,
           storeName: snap.store,

@@ -30,7 +30,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 
 import { withAuthorization } from '../Session';
 import { withFirebase } from '../Firebase';
