@@ -45,6 +45,7 @@ class StoresPageNonAuth extends Component {
     const userkey = this.props.match.params.userid;
     const storekey = this.props.match.params.uid;
     const db = firebase.database().ref(`stores/users/${userkey}/${storekey}/`);
+    const dbUser = firebase.database().ref(`users/${userkey}/`);
     const dbItem = firebase.database().ref(`items/users/${userkey}`).orderByChild('storeId').equalTo(`${storekey}`)
 
     db.on('value', snapshot => {
@@ -58,6 +59,14 @@ class StoresPageNonAuth extends Component {
           storeId: snapshot.key,
         });
       });
+
+      dbUser.on('value', snapshot => {
+          const snap = snapshot.val();
+          this.setState({
+            userLocation: snap.location,
+            userWhatsapp: snap.whatsapp,
+          });
+        });
 
     dbItem.on('value', (snapshot) => {
       const itemsObject = snapshot.val() || '';
@@ -80,9 +89,9 @@ class StoresPageNonAuth extends Component {
     }
 
   render() {
-    const { items, storeImg, storeName, storeDesc, storeCat, storeId} = this.state;
+    const { items, storeImg, storeName, storeDesc, storeCat, storeId, userLocation, userWhatsapp} = this.state;
 
-    console.log(this.props);
+    const pretext = "I'm interested in:";
 
     return (
       <Col md={{span:6, offset:3}}>
@@ -95,6 +104,7 @@ class StoresPageNonAuth extends Component {
                     <Image src={storeImg + `/-/scale_crop/500x500/center/` || `https://via.placeholder.com/150`}/>
                     </div>
                     <h2>{storeName}</h2>
+                    <span className="city">{userLocation}</span>
                     <span className="timestamp">{storeDesc}</span>
                     <span className="cat">{storeCat}</span>
                     </div>
@@ -124,6 +134,7 @@ class StoresPageNonAuth extends Component {
                   <Col xs={12} sm={9} md={9}>
                     <span className="timestamp">{items[key].description}</span>
                     <span className="cat">{items[key].category}</span>
+                    <Button className="storebtn" target="_blank" href={`https://wa.me/27${userWhatsapp}/?text=${pretext}%20${items[key].item}%20|%20${items[key].description}%20(R${items[key].price})`}>Message</Button>
                   </Col>
                   </Row>
                 </div>

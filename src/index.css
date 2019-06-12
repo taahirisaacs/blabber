@@ -74,10 +74,12 @@ p.chat, .chat {
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
 }
-.chat.store .producttitle{
+.producttitle {
   font-size: 0.8rem;
   display: inline-block;
+  width: calc(100% - 100px);
   padding-top: 3px;
+  line-height: 1.2;
 }
 .notes {
   white-space: pre-wrap;
@@ -137,7 +139,13 @@ span.timestamp, .link {
   color: #8a97aa;
   margin-bottom: 15px;
 }
-
+span.city, p.profileSub {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #8a97aa;
+  margin-bottom: 10px;
+}
 span.timestamp.delete, .link {
     color: #eaecff!important;
     padding: 5px 10px!important;
@@ -334,14 +342,14 @@ span.timestamp.delete {
     width: 100%;
 }
 span.pricing {
-  font-size: 0.75rem!important;
-  font-weight: bold;
+  font-size: 0.85rem!important;
+  font-weight: 900;
   display: inline-block;
-  margin-bottom: 10px;
-  color: #ffffff;
-  background: #1fb13f;
-  padding: 4px 11px;
-  border-radius: 100px;
+  margin-bottom: 5px;
+  color: #1fb13f;
+  padding: 2px 5px;
+  border: 1px solid #1fb13f;
+  border-radius: 4px;
 }
 span.cat {
     display: inline-block;
@@ -349,7 +357,7 @@ span.cat {
     font-size: 0.7rem;
     font-weight: 600;
     color: #8a97aa;
-    border: 1px solid #d1d9e3;
+    border: 1px solid #c6ced9;
     border-radius: 100px;
 }
 span.MuiTab-wrapper {
@@ -368,6 +376,7 @@ span.MuiTab-wrapper {
 }
 .storeHeader .timestamp {
   font-size: 0.95rem;
+  color: #4a576a;
 }
 .storeHeader .cat {
   margin-bottom: 15px;
@@ -406,6 +415,17 @@ span.MuiTab-wrapper {
     margin-bottom: 0px;
     font-size: 1rem;
 }
+a.storebtn.btn.btn-primary {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 100px;
+    background: #2068d5;
+    border: 1px solid #2068d5;
+    float: right;
+    margin-top: 25px;
+}
 .bottomNav {
     position: fixed;
     left: 0;
@@ -433,11 +453,6 @@ span.navItem {
   text-decoration: none;
   color: #394450;
 }
-p.profileSub {
-  color: #64768c;
-  font-size: 0.7rem;
-  font-weight: 500;
-}
 .newitemform {
   background: #fff;
   padding: 20px;
@@ -459,8 +474,17 @@ span.uploadImg {
     background: #dbe4f0;
     height: 300px;
     margin-bottom: 10px;
+    overflow: hidden;
 }
 span.uploadImg img {
+  display: block;
   max-width: 100%;
   height: auto;
+  margin: 0 auto;
+}
+button.settings {
+  background: #c2cddd;
+  border: 1px solid #c2cddd;
+  color: #354152;
+  font-weight: 600;
 }

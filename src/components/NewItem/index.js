@@ -120,7 +120,7 @@ render() {
   return (
     <Col md={{span:6, offset:3}} className="newitemform">
         <span className="uploadImg">
-          <img src={imgUrl}></img>
+          <img src={imgUrl + `/-/scale_crop/500x500/center/`}></img>
         </span>
         <Uploader
           id='file'
@@ -142,11 +142,10 @@ render() {
         <Form.Control style={{display:`none`}} name="imgurl" value={this.state.imgUrl || ''} onChange={this.onChange} type="text" placeholder="imgUrl" />
             <Form.Group controlId="exampleForm.ControlInput1">
               <Form.Label>Name</Form.Label>
-              <Form.Control name="item" value={this.state.item || ''} onChange={this.onChange} type="text" placeholder="Give your item a name" />
+              <Form.Control name="item" value={this.state.item || ''} onChange={this.onChange} type="text" placeholder="Item name" />
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlInput2">
-              <Form.Label>Description</Form.Label>
-              <Form.Control name="description" as="textarea" rows="3"  value={this.state.description || ''} onChange={this.onChange} type="text" placeholder="eg. Widget123" />
+              <Form.Control name="description" as="textarea" rows="3"  value={this.state.description || ''} onChange={this.onChange} type="text" placeholder="Description" />
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlSelect2">
               <Form.Label>Select a Store</Form.Label>
@@ -163,18 +162,22 @@ render() {
 
             <Form.Group controlId="exampleForm.ControlInput3">
               <Form.Label>Price</Form.Label>
-              <Form.Control name="price"  value={this.state.price || ''} onChange={this.onChange} type="number" min="0.00" step="any" placeholder="100.00" />
+              <Form.Control name="price"  value={this.state.price || ''} onChange={this.onChange} type="number" pattern="[0-9]*" inputmode="numeric" placeholder="100.00" />
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlSelect1">
               <Form.Label>Select a category</Form.Label>
               <Form.Control as="select" name="category" value={this.state.category || ''} onChange={this.onChange}>
                 <option>Select a Category</option>
                 <option>👕 Clothing</option>
-                <option>👟 Sneakers</option>
+                <option>👟 Shoes</option>
                 <option>🍔 Food</option>
                 <option>💻 Electronics</option>
                 <option>🚗 Cars</option>
+                <option>🚚 Logistics</option>
                 <option>📦 2nd Hand Goods</option>
+                <option>💅🏼 Salon</option>
+                <option>💇🏼‍♂️ Barber</option>
+                <option>🧹 Cleaning</option>
               </Form.Control>
             </Form.Group>
               <Button variant="primary" onClick={this.handleClose} type="submit" block>

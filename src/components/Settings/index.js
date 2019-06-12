@@ -2,6 +2,7 @@ import React from 'react';
 import { AuthUserContext, withAuthorization } from '../Session';
 import { PasswordForgetForm } from '../PasswordForget';
 import PasswordChangeForm from '../PasswordChange';
+import WhatsappUpdate from '../WhatsappUpdate';
 import * as ROUTES from '../../constants/routes';
 import SignOutButton from '../SignOut';
 
@@ -15,6 +16,7 @@ const Settings = () => (
         <Col md>
             <h3>Settings</h3>
             <p>Account: {authUser.email}</p>
+              <WhatsappUpdate />
               <PasswordForgetForm />
               <PasswordChangeForm className="mb-3"/>
             <SignOutButton to={ROUTES.SIGN_IN} />

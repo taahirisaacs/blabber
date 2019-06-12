@@ -198,10 +198,15 @@ class Stores extends Component {
                 <Form.Control as="select" name="category" value={this.state.category || ''} onChange={this.onChange}>
                   <option>Select a Category</option>
                   <option>👕 Clothing</option>
-                  <option>👟 Sneakers</option>
+                  <option>👟 Shoes</option>
                   <option>🍔 Food</option>
                   <option>💻 Electronics</option>
+                  <option>🚗 Cars</option>
+                  <option>🚚 Logistics</option>
                   <option>📦 2nd Hand Goods</option>
+                  <option>💅🏼 Salon</option>
+                  <option>💇🏼‍♂️ Barber</option>
+                  <option>🧹 Cleaning</option>
                 </Form.Control>
               </Form.Group>
               <Modal.Footer >

@@ -232,8 +232,8 @@ class MessageForm extends Component {
               <h2>{uname}</h2>
               <p className="profileSub">{ulocation}</p>
               <NavLink to={ROUTES.SETTINGS}>
-                  <Button className="navItem mt-3 mb-3" size="sm" variant="secondary" block>
-                Settings
+                  <Button className="navItem mt-3 mb-3 settings" size="sm" variant="secondary" block>
+                Edit my profile
                 </Button>
               </NavLink>
             </div>

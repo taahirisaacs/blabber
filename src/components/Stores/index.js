@@ -208,7 +208,7 @@ class StoresPageAuth extends Component {
 
     <Modal show={this.state.show} onHide={this.handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Create a new store</Modal.Title>
+        <Modal.Title>Add an item</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Uploader
@@ -232,25 +232,29 @@ class StoresPageAuth extends Component {
         <Form.Control style={{display:`none`}} name="storeId" value={this.state.storeId || ''} onChange={this.onChange} type="text" />
             <Form.Group controlId="exampleForm.ControlInput1">
               <Form.Label>Item Name</Form.Label>
-              <Form.Control name="item" value={this.state.item || ''} onChange={this.onChange} type="text" placeholder="eg. Widget123" />
+              <Form.Control name="item" value={this.state.item || ''} onChange={this.onChange} type="text" placeholder="Item name" />
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlInput2">
-              <Form.Label>Description</Form.Label>
-              <Form.Control name="description" as="textarea" rows="3"  value={this.state.description || ''} onChange={this.onChange} type="text" placeholder="eg. Widget123" />
+              <Form.Control name="description" as="textarea" rows="3"  value={this.state.description || ''} onChange={this.onChange} type="text" placeholder="Description..." />
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlInput3">
               <Form.Label>Price</Form.Label>
-              <Form.Control name="price"  value={this.state.price || ''} onChange={this.onChange} type="number" min="0.00" step="any" placeholder="100.00" />
+              <Form.Control name="price"  value={this.state.price || ''} onChange={this.onChange} type="number" pattern="[0-9]*" inputmode="numeric" placeholder="100.00" />
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlSelect1">
               <Form.Label>Select a category</Form.Label>
               <Form.Control as="select" name="category" value={this.state.category || ''} onChange={this.onChange}>
                 <option>Select a Category</option>
                 <option>👕 Clothing</option>
-                <option>👟 Sneakers</option>
+                <option>👟 Shoes</option>
                 <option>🍔 Food</option>
                 <option>💻 Electronics</option>
+                <option>🚗 Cars</option>
+                <option>🚚 Logistics</option>
                 <option>📦 2nd Hand Goods</option>
+                <option>💅🏼 Salon</option>
+                <option>💇🏼‍♂️ Barber</option>
+                <option>🧹 Cleaning</option>
               </Form.Control>
             </Form.Group>
             <Modal.Footer >
@@ -258,7 +262,7 @@ class StoresPageAuth extends Component {
                 Close
               </Button>
               <Button variant="primary" onClick={this.handleClose} type="submit">
-                Add Store
+                Add Item
               </Button>
             </Modal.Footer>
             </Form>
