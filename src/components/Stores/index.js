@@ -32,8 +32,8 @@ const INITIAL_STATE = {
 };
 
 class StoresPageAuth extends Component {
-  constructor(props) {
-    super(props);
+  constructor(props, id) {
+    super(props, id);
 
     this.state = { ...INITIAL_STATE };
     this.state = {
@@ -71,6 +71,11 @@ class StoresPageAuth extends Component {
   }
 
   componentWillMount(){
+
+    const { userkey } = this.props.location.state;
+
+    console.log(this.props.location.state);
+
     this.setState({ loading: true })
     const user = firebase.auth().currentUser;
     const blobId = this.props.match.params.uid;
@@ -144,6 +149,7 @@ class StoresPageAuth extends Component {
       loading
      } = this.state;
 
+     console.log(this.props.user);
     return (
       <Col md={{span:6, offset:3}}>
         <ul>

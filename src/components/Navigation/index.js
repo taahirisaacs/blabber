@@ -26,8 +26,8 @@ const NavigationAuth = () => (
 );
 
 const NavigationNonAuth = () => (
-  <Navbar expand="lg" className="px-0">
-    <Navbar.Brand href="/home">tiny trader</Navbar.Brand>
+  <Navbar expand="lg" className="px-3">
+    <Navbar.Brand className="mx-0" href="/home">tiny trader</Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
       <Nav>

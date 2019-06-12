@@ -7,6 +7,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
+import Stores from '../Home/Store';
 import StoresPage from '../Stores';
 import StoresPageNonAuth from '../StoresNonAuth';
 import StoresPageAuth from '../Stores';
@@ -15,9 +16,10 @@ import * as ROUTES from '../../constants/routes';
 import { AuthUserContext } from '../Session';
 
 const Profile = (props) => (
+
     <AuthUserContext.Consumer>
       {authUser =>
-        authUser ? <StoresPageAuth {...props} /> : <StoresPageNonAuth {...props} />
+        authUser ? <StoresPageAuth {...props}/> : <StoresPageNonAuth {...props}/>
       }
     </AuthUserContext.Consumer>
 );

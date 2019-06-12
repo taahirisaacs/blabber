@@ -40,6 +40,8 @@ class StoresPageNonAuth extends Component {
 
   componentWillMount(){
 
+    console.log(this.props.location.state);
+
     const userkey = this.props.match.params.userid;
     const storekey = this.props.match.params.uid;
     const db = firebase.database().ref(`stores/users/${userkey}/${storekey}/`);
@@ -109,7 +111,7 @@ class StoresPageNonAuth extends Component {
                  <div className="itemTitle">
                    <Row>
                    <Col>
-                       <span>{items[key].item}</span>
+                       <span className="producttitle">{items[key].item}</span>
                        <span className="pricing">R{items[key].price}</span>
                    </Col>
                    </Row>
@@ -117,7 +119,7 @@ class StoresPageNonAuth extends Component {
                  <div className="itemImg mb-0">
                  <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/` || "https://via.placeholder.com/150"}/>
                  </div>
-                <div className="chat">
+                <div className="chat store">
                   <Row>
                   <Col xs={12} sm={9} md={9}>
                     <span className="timestamp">{items[key].description}</span>

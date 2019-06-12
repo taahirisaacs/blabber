@@ -70,6 +70,15 @@ p.chat, .chat {
   border-radius: 8px;
   box-shadow: 0px 3px 20px #b0bfd7;
 }
+.chat.store {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+.chat.store .producttitle{
+  font-size: 0.8rem;
+  display: inline-block;
+  padding-top: 3px;
+}
 .notes {
   white-space: pre-wrap;
   word-wrap: break-word;
@@ -354,8 +363,11 @@ span.MuiTab-wrapper {
   margin-bottom: 5px;
   margin-top: 20px;
 }
+.storeHeader h2 {
+  font-size: 1.3rem;
+}
 .storeHeader .timestamp {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
 }
 .storeHeader .cat {
   margin-bottom: 15px;
