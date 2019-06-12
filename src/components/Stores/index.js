@@ -27,6 +27,7 @@ const INITIAL_STATE = {
   item: [],
   description: [],
   category: [],
+  cta: [],
   price: [],
   error: null,
 };
@@ -54,7 +55,7 @@ class StoresPageAuth extends Component {
   }
 
   onSubmit = event => {
-    const { item, description, price, category, storeId, imgUrl } = this.state;
+    const { item, description, price, category, storeId, imgUrl, cta } = this.state;
     const user = firebase.auth().currentUser;
 
       firebase.database().ref('items/users/' + user.uid).push({
@@ -63,7 +64,8 @@ class StoresPageAuth extends Component {
           price,
           category,
           storeId,
-          imgUrl
+          imgUrl,
+          cta
         })
       .then(authUser => {
         this.setState({ ...INITIAL_STATE });
@@ -249,6 +251,18 @@ class StoresPageAuth extends Component {
                 <option>💅🏼 Salon</option>
                 <option>💇🏼‍♂️ Barber</option>
                 <option>🧹 Cleaning</option>
+              </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="exampleForm.ControlSelect12">
+              <Form.Label>Select your contact button</Form.Label>
+              <Form.Control as="select" name="cta" value={this.state.cta || ''} onChange={this.onChange}>
+                <option>Message</option>
+                <option>Make an offer</option>
+                <option>Order</option>
+                <option>Pre-Order</option>
+                <option>Book Now</option>
+                <option>RSVP</option>
+                <option>Request a quote</option>
               </Form.Control>
             </Form.Group>
             <Modal.Footer >

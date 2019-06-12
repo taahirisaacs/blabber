@@ -93,7 +93,7 @@ class StoresPageNonAuth extends Component {
   render() {
     const { items, storeImg, storeName, storeDesc, storeCat, storeId, userLocation, userWhatsapp, loading} = this.state;
 
-    const pretext = "I'm interested in:";
+    const pretext = "Hello! I want to";
 
     return (
 
@@ -138,7 +138,7 @@ class StoresPageNonAuth extends Component {
                   <Col xs={12}>
                     <span className="timestamp">{items[key].description}</span>
                     <span className="cat">{items[key].category}</span>
-                    <Button className="storebtn" href={`https://wa.me/27${userWhatsapp}/?text=${pretext}%20${items[key].item}%20|%20R${items[key].price}`}>Message</Button>
+                    <Button className="storebtn" href={`https://wa.me/27${userWhatsapp}/?text=${pretext}%20${items[key].cta}%20${items[key].item}%20|%20R${items[key].price}`}>{items[key].cta}</Button>
                   </Col>
                   </Row>
                 </div>

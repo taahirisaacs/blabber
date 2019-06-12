@@ -19,6 +19,7 @@ const INITIAL_STATE = {
   description: [],
   category: [],
   price: [],
+  cta: [],
   storeId: [],
   error: null,
 };
@@ -39,7 +40,7 @@ constructor(props, context) {
 };
 
 onSubmit = event => {
-  const { item, description, price, category, imgUrl, storeId } = this.state;
+  const { item, description, price, category, imgUrl, storeId, cta } = this.state;
   const user = firebase.auth().currentUser;
 
     firebase.database().ref('items/users/' + user.uid).push({
@@ -48,7 +49,8 @@ onSubmit = event => {
         price,
         category,
         imgUrl,
-        storeId
+        storeId,
+        cta
       })
     .then(authUser => {
       this.setState({ ...INITIAL_STATE });
@@ -178,6 +180,18 @@ render() {
                 <option>💅🏼 Salon</option>
                 <option>💇🏼‍♂️ Barber</option>
                 <option>🧹 Cleaning</option>
+              </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="exampleForm.ControlSelect12">
+              <Form.Label>Select your contact button</Form.Label>
+              <Form.Control as="select" name="cta" value={this.state.cta || ''} onChange={this.onChange}>
+                <option>Message</option>
+                <option>Make an offer</option>
+                <option>Order</option>
+                <option>Pre-Order</option>
+                <option>Book Now</option>
+                <option>RSVP</option>
+                <option>Request a quote</option>
               </Form.Control>
             </Form.Group>
               <Button variant="primary" onClick={this.handleClose} type="submit" block>
