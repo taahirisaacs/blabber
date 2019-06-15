@@ -23,6 +23,7 @@ import Explore from '../Explore';
 import Settings from '../Settings';
 import NewItem from '../NewItem';
 import Profile from '../Profile';
+import Items from '../Items';
 
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
@@ -44,6 +45,7 @@ const App = () => (
             <Route path={ROUTES.NEWITEM} component={NewItem} />
             <Route path="/blob/:dataId" component={BlobPage} />
             <Route exact path="/store/:userid/:uid" component={Profile} />
+            <Route exact path="/items/:itemid" component={Items} />
         <FooterNavigation />
         </Container>
       </Router>

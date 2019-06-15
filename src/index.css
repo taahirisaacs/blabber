@@ -147,6 +147,28 @@ span.city, p.profileSub {
   color: #8a97aa;
   margin-bottom: 10px;
 }
+.desc {
+  display: block;
+  width: 205px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #8a97aa;
+  margin-bottom: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  line-height: 1.3;
+  max-height: 50px;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.itemdesc {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #8a97aa;
+  margin-bottom: 15px;
+}
 span.timestamp.delete, .link {
     color: #eaecff!important;
     padding: 5px 10px!important;

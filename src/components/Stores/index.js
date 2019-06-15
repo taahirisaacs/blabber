@@ -101,9 +101,11 @@ class StoresPageAuth extends Component {
          firebase.auth().onAuthStateChanged((user) => {
            if (user) {
 
-             const storeId = this.props.match.params.uid;
-             firebase.database().ref('items/users/' + user.uid).orderByChild('storeId').equalTo(`${storeId}`) //reference uid of logged in user like so
+             const blobId = this.props.match.params.uid;
+
+             firebase.database().ref('items/users/' + user.uid).orderByChild('storeId').equalTo(`${blobId}`) //reference uid of logged in user like so
                  .on('value', (snapshot) => {
+                   console.log(snapshot.val());
                    const itemsObject = snapshot.val() || '';
                    this.setState({ loading: false })
                    const itemsList = Object.keys(itemsObject).map((key, index) => ({
@@ -150,6 +152,9 @@ class StoresPageAuth extends Component {
       storeUrl,
       loading
      } = this.state;
+
+     console.log(items);
+
     return (
       <Col md={{span:6, offset:3}}>
         <ul>
@@ -235,7 +240,7 @@ class StoresPageAuth extends Component {
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlInput3">
               <Form.Label>Price</Form.Label>
-              <Form.Control name="price"  value={this.state.price || ''} onChange={this.onChange} type="number" pattern="[0-9]*" inputmode="numeric" placeholder="100.00" />
+              <Form.Control name="price"  value={this.state.price || ''} onChange={this.onChange} type="number" pattern="[0-9]*" placeholder="100.00" />
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlSelect1">
               <Form.Label>Select a category</Form.Label>
@@ -256,11 +261,14 @@ class StoresPageAuth extends Component {
             <Form.Group controlId="exampleForm.ControlSelect12">
               <Form.Label>Select your contact button</Form.Label>
               <Form.Control as="select" name="cta" value={this.state.cta || ''} onChange={this.onChange}>
-                <option>Message</option>
+                <option>Message Me</option>
                 <option>Make an offer</option>
                 <option>Order</option>
                 <option>Pre-Order</option>
-                <option>Book Now</option>
+                <option>Make a booking</option>
+                <option>Book now</option>
+                <option>Book a test drive</option>
+                <option>Reserve</option>
                 <option>RSVP</option>
                 <option>Request a quote</option>
               </Form.Control>

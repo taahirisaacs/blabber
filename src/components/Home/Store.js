@@ -144,7 +144,7 @@ class Stores extends Component {
                   <Link to={{ pathname:`store/${userid.uid}/${this.state.stores[key].uid}`, state:{userkey: `${userid.uid}`} }}>
                     <h2>{stores[key].store}</h2>
                   </Link>
-                    <span className="timestamp">{stores[key].description}</span>
+                    <span className="desc">{stores[key].description}</span>
                     <span className="cat">{stores[key].category}</span>
                   </Col>
                   <Dropdown>

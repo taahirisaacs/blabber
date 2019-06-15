@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -9,12 +9,10 @@ import Row from 'react-bootstrap/Row';
 import Modal from 'react-bootstrap/Modal';
 import Image from 'react-bootstrap/Image';
 import Uploader from './../Uploader';
-
-
-import * as ROUTES from '../../constants/routes';
-
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+
+import * as ROUTES from '../../constants/routes';
 
 import firebase from 'firebase/app';
 
@@ -101,6 +99,7 @@ class Items extends Component {
   render() {
 
     const { items } = this.state;
+    const user = firebase.auth().currentUser;
 
     return (
       <Col md={{span:6, offset:3}}>
@@ -123,10 +122,12 @@ class Items extends Component {
                     </div>
                   </Col>
                   <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
-                    <h2>{items[key].item}</h2>
-                    <span className="pricing">R{items[key].price}</span>
-                    <span className="timestamp">{items[key].description}</span>
-                    <span className="cat">{items[key].category}</span>
+                    <Link to={{ pathname:`items/${items[key].item}`, state:{userkey: `${user.uid}`} }}>
+                      <h2>{items[key].item}</h2>
+                      <span className="pricing">R{items[key].price}</span>
+                      <span className="desc">{items[key].description}</span>
+                      <span className="cat">{items[key].category}</span>
+                    </Link>
                   </Col>
                   <Dropdown>
                     <Dropdown.Toggle as="span" drop="left" className="timestamp delete" id="dropdown-basic"/>
