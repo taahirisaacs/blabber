@@ -122,7 +122,7 @@ class Items extends Component {
                     </div>
                   </Col>
                   <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
-                    <Link to={{ pathname:`items/${items[key].item}`, state:{userkey: `${user.uid}`} }}>
+                    <Link to={{ pathname:`items/${user.uid}/${items[key].item}`, state:{userkey: `${user.uid}`} }}>
                       <h2>{items[key].item}</h2>
                       <span className="pricing">R{items[key].price}</span>
                       <span className="desc">{items[key].description}</span>

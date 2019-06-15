@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
 import Uploader from './../Uploader';
 
@@ -38,7 +38,7 @@ class StoresPageNonAuth extends Component {
 
   }
 
-  componentWillMount(){
+  componentDidMount(){
     this.setState({ loading: true })
 
     const userkey = this.props.match.params.userid;
@@ -82,7 +82,7 @@ class StoresPageNonAuth extends Component {
 
     }
 
-    componentWillUnmount() {
+      componentWillUnmount() {
       const userkey = this.props.match.params.userid;
       const storekey = this.props.match.params.uid;
       firebase.database().ref(`stores/users/${userkey}/${storekey}/`).off();
@@ -92,7 +92,7 @@ class StoresPageNonAuth extends Component {
 
   render() {
     const { items, storeImg, storeName, storeDesc, storeCat, storeId, userLocation, userWhatsapp, loading} = this.state;
-
+    const user = this.props.match.params.userid;
     const pretext = "Hello! I want to";
 
     return (
@@ -121,24 +121,21 @@ class StoresPageNonAuth extends Component {
 
           {Object.keys(items).map((key, index) => {
              return (
-               <li className="messages" key={key} index={index} style={{marginBottom:`20px`,}}>
-                 <div className="itemTitle">
-                   <Row>
-                   <Col>
-                       <span className="producttitle">{items[key].item}</span>
-                       <span className="pricing">R{items[key].price}</span>
-                   </Col>
-                   </Row>
-                 </div>
-                 <div className="itemImg mb-0">
-                 <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/`}/>
-                 </div>
-                <div className="chat store">
+               <li className="messages" key={key} index={index}>
+                <div className="chat">
                   <Row>
-                  <Col xs={12}>
-                    <span className="timestamp">{items[key].description}</span>
-                    <span className="cat">{items[key].category}</span>
-                    <Button className="storebtn" href={`https://wa.me/27${userWhatsapp}/?text=${pretext}%20${items[key].cta}%20${items[key].item}%20|%20R${items[key].price}`}>{items[key].cta}</Button>
+                  <Col xs={4} sm={3} md={3}>
+                    <div className="itemImg">
+                    <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/` || "https://via.placeholder.com/150"}/>
+                    </div>
+                  </Col>
+                  <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
+                    <Link to={`/items/${user}/${items[key].item}`}>
+                      <h2>{items[key].item}</h2>
+                      <span className="pricing">R{items[key].price}</span>
+                      <span className="desc">{items[key].description}</span>
+                      <span className="cat">{items[key].category}</span>
+                    </Link>
                   </Col>
                   </Row>
                 </div>

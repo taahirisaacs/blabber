@@ -438,7 +438,7 @@ span.MuiTab-wrapper {
     margin-bottom: 0px;
     font-size: 1rem;
 }
-a.storebtn.btn.btn-primary {
+.storebtn.btn.btn-primary {
     font-size: 0.8rem;
     font-weight: 600;
     color: #fff;

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import Uploader from './../Uploader';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -152,6 +153,7 @@ class StoresPageAuth extends Component {
       storeUrl,
       loading
      } = this.state;
+     const itemUrl = window.location.href;
 
      console.log(items);
 
@@ -174,7 +176,9 @@ class StoresPageAuth extends Component {
                           <Button variant="primary" size="sm" onClick={this.handleShow} block>
                             + Add a new item
                           </Button>
-                          <Form.Control name="storeUrl" value={this.state.storeUrl || ''} onChange={this.onChange} type="text" placeholder=""/>
+                          <CopyToClipboard block className="storebtn" text={`${itemUrl}`}>
+                            <Button>Copy Link URL</Button>
+                          </CopyToClipboard>
                         </Col>
                       </Row>
                     </div>

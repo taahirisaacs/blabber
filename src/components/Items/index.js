@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { LinkContainer } from "react-router-bootstrap";
 import { NavLink, Link } from 'react-router-dom';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -86,12 +87,13 @@ class ItemsAuth extends Component {
   render () {
 
     const { items, loading, userWhatsapp } = this.state;
+    const itemUrl = window.location.href;
     return (
       <Col>
-          <ul>
+          <ul style={{marginTop:`20px`, marginBottom:`90px`}}>
           {Object.keys(items).map((key, index) => {
             return (
-              <li style={{marginTop:`-23px` }} className="messages" key={key} index={index}>
+              <li className="messages" key={key} index={index}>
                <div className="chat">
                  <Row>
                  <Col xs={12}>
@@ -105,7 +107,10 @@ class ItemsAuth extends Component {
                      <span className="itemdesc">{items[key].description}</span>
                      <span className="cat">{items[key].category}</span>
                     <Button block className="storebtn" href={`https://wa.me/27${userWhatsapp}/?text=(${items[key].cta})%20:%20${items[key].item}%20|%20R${items[key].price}`}>{items[key].cta}</Button>
-                 </Col>
+                    <CopyToClipboard block className="storebtn" text={`${itemUrl}`}>
+                      <Button>Copy Link URL</Button>
+                    </CopyToClipboard>
+               </Col>
                  <Dropdown>
                    <Dropdown.Toggle as="span" drop="left" className="timestamp delete" id="dropdown-basic"/>
                    <Dropdown.Menu >
@@ -133,9 +138,9 @@ class ItemsNonAuth extends Component {
         };
       }
 
-      componentWillMount(){
+      componentDidMount(){
         this.setState({ loading: true })
-        const userkey = this.props.location.state.userkey;
+        const userkey = this.props.match.params.userid;
         const storekey = this.props.match.params.itemid;
         console.log(userkey);
         console.log(this.props);
@@ -166,23 +171,21 @@ class ItemsNonAuth extends Component {
 
         }
 
-        // componentWillUnmount() {
-        //   const userkey = this.props.match.params.userid;
-        //   const storekey = this.props.match.params.uid;
-        //   firebase.database().ref(`stores/users/${userkey}/${storekey}/`).off();
-        //   firebase.database().ref(`items/users/${userkey}/`).off();
-        //   firebase.database().ref(`users/${userkey}/`).off();
-        // }
+        componentWillUnmount() {
+          const userkey = this.props.match.params.userid;
+          firebase.database().ref(`items/users/${userkey}/`).off();
+          firebase.database().ref(`users/${userkey}/`).off();
+        }
 
       render () {
 
         const { items, loading, userWhatsapp } = this.state;
         return (
           <Col>
-              <ul>
+              <ul style={{marginTop:`20px`}}>
               {Object.keys(items).map((key, index) => {
                 return (
-                  <li style={{marginTop:`-23px` }} className="messages" key={key} index={index}>
+                  <li className="messages" key={key} index={index}>
                    <div className="chat">
                      <Row>
                      <Col xs={12}>
