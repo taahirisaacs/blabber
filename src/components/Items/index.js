@@ -18,6 +18,7 @@ import Modal from 'react-bootstrap/Modal';
 import Image from 'react-bootstrap/Image';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import Spinner from 'react-bootstrap/Spinner';
 
 import firebase from 'firebase/app';
 
@@ -40,15 +41,14 @@ class ItemsAuth extends Component {
     this.state = {
       loading: false,
       items: '',
+      copied: false,
     };
   }
 
   componentWillMount(){
     this.setState({ loading: true })
-    const userkey = this.props.location.state.userkey;
+    const userkey = this.props.match.params.userid;
     const storekey = this.props.match.params.itemid;
-    console.log(userkey);
-    console.log(this.props);
     const dbItem = firebase.database().ref(`items/users/${userkey}`).orderByChild('item').equalTo(`${storekey}`)
     const dbUser = firebase.database().ref(`users/${userkey}/`);
 
@@ -60,8 +60,7 @@ class ItemsAuth extends Component {
         uid: key,
       }));
         this.setState({
-          items: itemsList,
-          loading: false
+          items: itemsList
         })
       });
 
@@ -76,13 +75,11 @@ class ItemsAuth extends Component {
 
     }
 
-    // componentWillUnmount() {
-    //   const userkey = this.props.match.params.userid;
-    //   const storekey = this.props.match.params.uid;
-    //   firebase.database().ref(`stores/users/${userkey}/${storekey}/`).off();
-    //   firebase.database().ref(`items/users/${userkey}/`).off();
-    //   firebase.database().ref(`users/${userkey}/`).off();
-    // }
+    componentWillUnmount() {
+      const userkey = this.props.match.params.userid;
+      firebase.database().ref(`items/users/${userkey}/`).off();
+      firebase.database().ref(`users/${userkey}/`).off();
+    }
 
   render () {
 
@@ -107,9 +104,9 @@ class ItemsAuth extends Component {
                      <span className="itemdesc">{items[key].description}</span>
                      <span className="cat">{items[key].category}</span>
                     <Button block className="storebtn" href={`https://wa.me/27${userWhatsapp}/?text=(${items[key].cta})%20:%20${items[key].item}%20|%20R${items[key].price}`}>{items[key].cta}</Button>
-                    <CopyToClipboard block className="storebtn" text={`${itemUrl}`}>
-                      <Button>Copy Link URL</Button>
-                    </CopyToClipboard>
+                      <CopyToClipboard block className="storebtn" text={`${itemUrl}`} onCopy={() => this.setState({copied: true})}>
+                        <Button>{this.state.copied ? <span>Copied.</span> : <span>Copy Link URL</span>}</Button>
+                      </CopyToClipboard>
                </Col>
                  <Dropdown>
                    <Dropdown.Toggle as="span" drop="left" className="timestamp delete" id="dropdown-basic"/>
@@ -142,8 +139,6 @@ class ItemsNonAuth extends Component {
         this.setState({ loading: true })
         const userkey = this.props.match.params.userid;
         const storekey = this.props.match.params.itemid;
-        console.log(userkey);
-        console.log(this.props);
         const dbItem = firebase.database().ref(`items/users/${userkey}`).orderByChild('item').equalTo(`${storekey}`)
         const dbUser = firebase.database().ref(`users/${userkey}/`);
 
@@ -181,7 +176,8 @@ class ItemsNonAuth extends Component {
 
         const { items, loading, userWhatsapp } = this.state;
         return (
-          <Col>
+          <Col xs={12} md={{span:'4', offset:'4'}}>
+            {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
               <ul style={{marginTop:`20px`}}>
               {Object.keys(items).map((key, index) => {
                 return (

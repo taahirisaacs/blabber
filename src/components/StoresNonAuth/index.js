@@ -123,6 +123,7 @@ class StoresPageNonAuth extends Component {
              return (
                <li className="messages" key={key} index={index}>
                 <div className="chat">
+                  <Link to={`/items/${user}/${items[key].item}`}>
                   <Row>
                   <Col xs={4} sm={3} md={3}>
                     <div className="itemImg">
@@ -130,14 +131,13 @@ class StoresPageNonAuth extends Component {
                     </div>
                   </Col>
                   <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
-                    <Link to={`/items/${user}/${items[key].item}`}>
+
                       <h2>{items[key].item}</h2>
                       <span className="pricing">R{items[key].price}</span>
                       <span className="desc">{items[key].description}</span>
-                      <span className="cat">{items[key].category}</span>
-                    </Link>
                   </Col>
                   </Row>
+                  </Link>
                 </div>
                </li>
              );

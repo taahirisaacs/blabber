@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
 import Uploader from './../Uploader';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
@@ -31,6 +31,7 @@ const INITIAL_STATE = {
   cta: [],
   price: [],
   error: null,
+  copied: false,
 };
 
 class StoresPageAuth extends Component {
@@ -81,10 +82,9 @@ class StoresPageAuth extends Component {
 
   componentWillMount(){
     this.setState({ loading: true })
-    const userKey = this.props.match.params.userid;
+    const userkey = this.props.match.params.userid;
     const blobId = this.props.match.params.uid;
-    console.log(userKey);
-    const db = firebase.database().ref(`stores/users/${userKey}/${blobId}/`);
+    const db = firebase.database().ref(`stores/users/${userkey}/${blobId}/`);
 
     db.on('value', snapshot => {
       const snap = snapshot.val();
@@ -154,6 +154,7 @@ class StoresPageAuth extends Component {
       loading
      } = this.state;
      const itemUrl = window.location.href;
+     const user = firebase.auth().currentUser;
 
      console.log(items);
 
@@ -176,8 +177,8 @@ class StoresPageAuth extends Component {
                           <Button variant="primary" size="sm" onClick={this.handleShow} block>
                             + Add a new item
                           </Button>
-                          <CopyToClipboard block className="storebtn" text={`${itemUrl}`}>
-                            <Button>Copy Link URL</Button>
+                          <CopyToClipboard block className="storebtn" text={`${itemUrl}`} onCopy={() => this.setState({copied: true})}>
+                            <Button>{this.state.copied ? <span>Copied.</span> : <span>Copy Link URL</span>}</Button>
                           </CopyToClipboard>
                         </Col>
                       </Row>
@@ -192,19 +193,20 @@ class StoresPageAuth extends Component {
              return (
                <li className="messages" key={key} index={index}>
                 <div className="chat">
-                  <Row>
-                  <Col xs={4} sm={3} md={3}>
-                    <div className="itemImg">
-                    <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/`}/>
-                    </div>
-                  </Col>
-                  <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
-                    <h2>{items[key].item}</h2>
-                    <span className="pricing">R{items[key].price}</span>
-                    <span className="timestamp">{items[key].description}</span>
-                    <span className="cat">{items[key].category}</span>
-                  </Col>
-                  </Row>
+                  <Link to={`/items/${user.uid}/${items[key].item}`}>
+                    <Row>
+                    <Col xs={4} sm={3} md={3}>
+                      <div className="itemImg">
+                      <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/`}/>
+                      </div>
+                    </Col>
+                    <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
+                      <h2>{items[key].item}</h2>
+                      <span className="pricing">R{items[key].price}</span>
+                      <span className="timestamp">{items[key].description}</span>
+                    </Col>
+                    </Row>
+                  </Link>
                 </div>
                </li>
              );
