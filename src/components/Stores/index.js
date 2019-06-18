@@ -25,7 +25,7 @@ const INITIAL_STATE = {
   loading: false,
   store: [],
   storedesc: [],
-  item: [],
+  name: [],
   description: [],
   category: [],
   cta: [],
@@ -57,17 +57,20 @@ class StoresPageAuth extends Component {
   }
 
   onSubmit = event => {
-    const { item, description, price, category, storeId, imgUrl, cta } = this.state;
-    const user = firebase.auth().currentUser;
+    const { name, description, price, category, storeId, imgUrl, cta } = this.state;
+    console.log(storeId);
+    const user = firebase.auth().currentUser.uid;
+    const db = firebase.firestore();
 
-      firebase.database().ref('items/users/' + user.uid).push({
-          item,
-          description,
-          price,
-          category,
-          storeId,
-          imgUrl,
-          cta
+      db.collection("items").add({
+            name,
+            description,
+            price,
+            category,
+            cta,
+            imgUrl,
+            store: storeId,
+            user
         })
       .then(authUser => {
         this.setState({ ...INITIAL_STATE });
@@ -82,43 +85,31 @@ class StoresPageAuth extends Component {
 
   componentWillMount(){
     this.setState({ loading: true })
-    const userkey = this.props.match.params.userid;
-    const blobId = this.props.match.params.uid;
-    const db = firebase.database().ref(`stores/users/${userkey}/${blobId}/`);
+    const user = firebase.auth().currentUser.uid;
+    const docId = this.props.match.params.uid;
+    const db = firebase.firestore();
+    const dbCol = db.collection("stores").doc(docId);
 
-    db.on('value', snapshot => {
-      const snap = snapshot.val();
+    dbCol.onSnapshot(snap => {
+      console.log(snap.id);
       this.setState({
-        storesImg: snap.imgUrl,
-        storesName: snapshot.val().store,
-        storesDesc: snapshot.val().description,
-        storesCat: snapshot.val().category,
+        stores: snap.data(),
+        storeId: snap.id,
         loading: false,
-        storeUid: snapshot.key
       });
 
     });
 
-         firebase.auth().onAuthStateChanged((user) => {
-           if (user) {
+    const dbItems = db.collection("items");
+    const dbItemquery = dbItems.where("store", "==", docId);
 
-             const blobId = this.props.match.params.uid;
-
-             firebase.database().ref('items/users/' + user.uid).orderByChild('storeId').equalTo(`${blobId}`) //reference uid of logged in user like so
-                 .on('value', (snapshot) => {
-                   console.log(snapshot.val());
-                   const itemsObject = snapshot.val() || '';
-                   this.setState({ loading: false })
-                   const itemsList = Object.keys(itemsObject).map((key, index) => ({
-                     ...itemsObject[key],
-                     uid: key,
-                   }));
-                     this.setState({
-                       items: itemsList
-                     })
-                   });
-                 }
-              });
+    dbItemquery.onSnapshot(snap => {
+      const items = {}
+      snap.forEach(item => {
+       items[item.id] =  item.data()
+      })
+        this.setState({items})
+      })
         }
 
   componentWillUnmount() {
@@ -145,33 +136,26 @@ class StoresPageAuth extends Component {
     const {
       stores,
       items,
-      storeUid,
-      storesImg,
-      storesName,
-      storesDesc,
-      storesCat,
-      storeUrl,
+      storeId,
       loading
      } = this.state;
      const itemUrl = window.location.href;
      const user = firebase.auth().currentUser;
 
-     console.log(items);
-
     return (
       <Col md={{span:6, offset:3}}>
         <ul>
-             <li key={storeUid} index={storeUid} className="messages" >
+             <li key={stores.id} index={stores.id} className="messages" >
 
                 <Row>
                   <Col xs sm md className="storeHeader">
                     <div className="chat">
                     <div className="storeImg">
-                    <Image src={storesImg + `/-/scale_crop/500x500/center/`}/>
+                    <Image src={stores.imgUrl + `/-/scale_crop/500x500/center/`}/>
                     </div>
-                    <h2>{storesName}</h2>
-                    <span className="timestamp">{storesDesc}</span>
-                    <span className="cat">{storesCat}</span>
+                    <h2>{stores.name}</h2>
+                    <span className="timestamp">{stores.description || ''}</span>
+                    <span className="cat">{stores.category || ''}</span>
                       <Row >
                         <Col>
                           <Button variant="primary" size="sm" onClick={this.handleShow} block>
@@ -193,7 +177,7 @@ class StoresPageAuth extends Component {
              return (
                <li className="messages" key={key} index={index}>
                 <div className="chat">
-                  <Link to={`/items/${user.uid}/${items[key].item}`}>
+                  <Link to={`/items/${user.uid}/${items[key].name}`}>
                     <Row>
                     <Col xs={4} sm={3} md={3}>
                       <div className="itemImg">
@@ -201,7 +185,7 @@ class StoresPageAuth extends Component {
                       </div>
                     </Col>
                     <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
-                      <h2>{items[key].item}</h2>
+                      <h2>{items[key].name}</h2>
                       <span className="pricing">R{items[key].price}</span>
                       <span className="timestamp">{items[key].description}</span>
                     </Col>
@@ -236,10 +220,10 @@ class StoresPageAuth extends Component {
           } />
         <Form className="FormInput" onSubmit={this.onSubmit}>
         <Form.Control style={{display:`none`}} name="imgurl" value={this.state.imgUrl || ''} onChange={this.onChange} type="text" placeholder="imgUrl" />
-        <Form.Control style={{display:`none`}} name="storeId" value={this.state.storeId || ''} onChange={this.onChange} type="text" />
+        <Form.Control style={{display:`none`}} name="storeId" value={storeId || ''} onChange={this.onChange} type="text" />
             <Form.Group controlId="exampleForm.ControlInput1">
               <Form.Label>Item Name</Form.Label>
-              <Form.Control name="item" value={this.state.item || ''} onChange={this.onChange} type="text" placeholder="Item name" />
+              <Form.Control name="name" value={this.state.name || ''} onChange={this.onChange} type="text" placeholder="Item name" />
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlInput2">
               <Form.Control name="description" as="textarea" rows="3"  value={this.state.description || ''} onChange={this.onChange} type="text" placeholder="Description..." />

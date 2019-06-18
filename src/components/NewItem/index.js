@@ -12,15 +12,18 @@ import Uploader from './../Uploader';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
+import * as ROUTES from '../../constants/routes';
 import firebase from 'firebase';
+import firestore from "firebase/firestore";
 
 const INITIAL_STATE = {
-  item: [],
+  name: [],
   description: [],
   category: [],
   price: [],
   cta: [],
   storeId: [],
+  userId: [],
   error: null,
 };
 
@@ -40,25 +43,28 @@ constructor(props, context) {
 };
 
 onSubmit = event => {
-  const { item, description, price, category, imgUrl, storeId, cta } = this.state;
+  const { name, description, price, category, imgUrl, storeId, cta } = this.state;
   const user = firebase.auth().currentUser;
+  const db = firebase.firestore();
 
-    firebase.database().ref('items/users/' + user.uid).push({
-        item,
-        description,
-        price,
-        category,
-        imgUrl,
-        storeId,
-        cta
+  db.collection("items").add({
+          name,
+          description,
+          price,
+          category,
+          cta,
+          imgUrl,
+          store: storeId,
+          user: user.uid
       })
-    .then(authUser => {
-      this.setState({ ...INITIAL_STATE });
-
-    })
-    .catch(error => {
-      this.setState({ error });
-    });
+      .then(authUser => {
+          console.log("Document written with ID: ", authUser.id);
+          this.setState({ ...INITIAL_STATE });
+          this.props.history.push(ROUTES.HOME);
+      })
+      .catch(function(error) {
+          console.error("Error adding document: ", error);
+      });
 
   event.preventDefault();
 }
@@ -68,38 +74,25 @@ componentDidMount() {
 }
 
 componentWillMount(){
+       const user = firebase.auth().currentUser.uid;
+       const db = firebase.firestore();
+       const dbCol = db.collection("stores");
+       const dbquery = dbCol.where("user", "==", user);
 
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      firebase.database().ref('items/users/' + user.uid) //reference uid of logged in user like so
-          .on('value', (snapshot) => {
-            const itemsObject = snapshot.val() || '';
-            this.setState({ loading: false })
-            const itemsList = Object.keys(itemsObject).map((key, index) => ({
-              ...itemsObject[key],
-              uid: key,
-            }));
-              this.setState({
-                items: itemsList,
-              })
-            });
-          }
-       });
+       dbquery.onSnapshot(snap => {
+         const stores = {}
+         snap.forEach(store => {
+          stores[store.id] =  store.data()
+         })
+           this.setState({stores})
+         })
 
-       const user = firebase.auth().currentUser;
-       const db = firebase.database().ref(`stores/users/${user.uid}/`);
-
-       db.on('value', snapshot => {
-         const snap = snapshot.val();
-         this.setState({
-           stores: snap,
-         });
-       });
 }
 
 componentWillUnmount() {
   const user = firebase.auth().currentUser;
   firebase.database().ref(`items/users/` + user.uid).off();
+  firebase.database().ref(`stores/users/${user.uid}/`).off();
 }
 
 removeItem(key, e)  {
@@ -115,7 +108,7 @@ onChange = event => {
 
 render() {
 
-  const { items, stores, imgUrl } = this.state;
+  const { stores, imgUrl } = this.state;
   const uploadedImg = `${imgUrl}/-/scale_crop/500x500/center/`;
 
   return (
@@ -143,7 +136,7 @@ render() {
         <Form.Control style={{display:`none`}} name="imgurl" value={this.state.imgUrl || ''} onChange={this.onChange} type="text" placeholder="imgUrl" />
             <Form.Group controlId="exampleForm.ControlInput1">
               <Form.Label>Name</Form.Label>
-              <Form.Control name="item" value={this.state.item || ''} onChange={this.onChange} type="text" placeholder="Item name" />
+              <Form.Control name="name" value={this.state.name || ''} onChange={this.onChange} type="text" placeholder="Item name" />
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlInput2">
               <Form.Control name="description" as="textarea" rows="3"  value={this.state.description || ''} onChange={this.onChange} type="text" placeholder="Description" />
@@ -152,9 +145,9 @@ render() {
               <Form.Label>Select a Store</Form.Label>
               <Form.Control as="select" name="storeId" value={this.state.storeId || ''} onChange={this.onChange}>
                 <option>Select a Store</option>
-                {Object.keys(stores).map((key, index) => {
+                {Object.keys(stores).map((store, index) => {
                   return (
-                    <option key={key} index={index} value={key}>{stores[key].store}</option>
+                    <option key={store} index={index} value={store}>{stores[store].name}</option>
                     );
                   }
                 )}
@@ -182,8 +175,9 @@ render() {
               </Form.Control>
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlSelect12">
-              <Form.Label>Select your contact button</Form.Label>
+              <Form.Label>Select your item button</Form.Label>
               <Form.Control as="select" name="cta" value={this.state.cta || ''} onChange={this.onChange}>
+                <option>Select item button</option>
                 <option>Message Me</option>
                 <option>Make an offer</option>
                 <option>Order</option>

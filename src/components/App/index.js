@@ -32,21 +32,21 @@ const App = () => (
       <Router>
         <Navigation />
         <Container fluid className="px-0 mb-5">
-            <Route path={ROUTES.LANDING} component={LandingPage} />
-            <Route path={ROUTES.ORDERS} component={Orders} />
-            <Route path={ROUTES.EXPLORE} component={Explore} />
-            <Route path={ROUTES.SETTINGS} component={Settings} />
-            <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-            <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
-            <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
-            <Route path={ROUTES.HOME} component={HomePage}/>
-            <Route path={ROUTES.ACCOUNT} component={AccountPage} />
-            <Route path={ROUTES.ADMIN} component={AdminPage} />
-            <Route path={ROUTES.NEWITEM} component={NewItem} />
-            <Route path="/blob/:dataId" component={BlobPage} />
-            <Route exact path="/store/:userid/:uid" component={Profile} />
-            <Route exact path="/items/:userid/:itemid" component={Items} />
-        <FooterNavigation />
+          <Route path={ROUTES.LANDING} component={LandingPage} />
+          <Route path={ROUTES.ORDERS} component={Orders} />
+          <Route path={ROUTES.EXPLORE} component={Explore} />
+          <Route path={ROUTES.SETTINGS} component={Settings} />
+          <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+          <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
+          <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
+          <Route path={ROUTES.HOME} component={HomePage}/>
+          <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+          <Route path={ROUTES.ADMIN} component={AdminPage} />
+          <Route path={ROUTES.NEWITEM} component={NewItem} />
+          <Route path="/blob/:dataId" component={BlobPage} />
+          <Route exact path="/store/:userid/:uid" component={Profile} />
+          <Route exact path="/items/:userid/:itemid" component={Items} />
+          <FooterNavigation />
         </Container>
       </Router>
 );

@@ -48,30 +48,18 @@ class ItemsAuth extends Component {
   componentWillMount(){
     this.setState({ loading: true })
     const userkey = this.props.match.params.userid;
-    const storekey = this.props.match.params.itemid;
-    const dbItem = firebase.database().ref(`items/users/${userkey}`).orderByChild('item').equalTo(`${storekey}`)
-    const dbUser = firebase.database().ref(`users/${userkey}/`);
+    const user = firebase.auth().currentUser.uid;
+    const db = firebase.firestore();
+    const dbCol = db.collection("items");
+    const dbquery = dbCol.where("user", "==", userkey);
 
-    dbItem.on('value', (snapshot) => {
-      const itemsObject = snapshot.val() || '';
-      console.log(snapshot.val());
-      const itemsList = Object.keys(itemsObject).map((key, index) => ({
-        ...itemsObject[key],
-        uid: key,
-      }));
-        this.setState({
-          items: itemsList
-        })
-      });
-
-      dbUser.on('value', snapshot => {
-          const snap = snapshot.val();
-          this.setState({
-            userLocation: snap.location,
-            userWhatsapp: snap.whatsapp,
-            loading: false
-          });
-        });
+    this.unsubscribe = dbquery.onSnapshot(snap => {
+      const items = {}
+      snap.forEach(item => {
+       items[item.id] =  item.data()
+      })
+        this.setState({items, loading: false})
+      })
 
     }
 
@@ -81,8 +69,15 @@ class ItemsAuth extends Component {
       firebase.database().ref(`users/${userkey}/`).off();
     }
 
-  render () {
+    removeItem(key, e) {
+      const db = firebase.firestore();
+      const itemkey = key;
+      db.collection("items").doc(itemkey).delete();
+      this.props.history.goBack();
+    }
 
+  render () {
+    console.log(this.props.history);
     const { items, loading, userWhatsapp } = this.state;
     const itemUrl = window.location.href;
     return (
@@ -98,22 +93,17 @@ class ItemsAuth extends Component {
                    <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/` || "https://via.placeholder.com/150"}/>
                    </div>
                  </Col>
-                 <Col xs={12} style={{ paddingLeft: `20px`, paddingRight: `20px` }}>
+                    <Col xs={12} style={{ paddingLeft: `20px`, paddingRight: `20px` }}>
                      <h2>{items[key].item}</h2>
                      <span className="pricing">R{items[key].price}</span>
                      <span className="itemdesc">{items[key].description}</span>
                      <span className="cat">{items[key].category}</span>
-                    <Button block className="storebtn" href={`https://wa.me/27${userWhatsapp}/?text=(${items[key].cta})%20:%20${items[key].item}%20|%20R${items[key].price}`}>{items[key].cta}</Button>
+                      <Button block className="storebtn" href={`https://wa.me/27${userWhatsapp}/?text=(${items[key].cta})%20:%20${items[key].item}%20|%20R${items[key].price}`}>{items[key].cta}</Button>
                       <CopyToClipboard block className="storebtn" text={`${itemUrl}`} onCopy={() => this.setState({copied: true})}>
                         <Button>{this.state.copied ? <span>Copied.</span> : <span>Copy Link URL</span>}</Button>
                       </CopyToClipboard>
-               </Col>
-                 <Dropdown>
-                   <Dropdown.Toggle as="span" drop="left" className="timestamp delete" id="dropdown-basic"/>
-                   <Dropdown.Menu >
-                     <Dropdown.Item>Delete</Dropdown.Item>
-                   </Dropdown.Menu>
-                 </Dropdown>
+                      <Button block className="storebtn delete" onClick={this.removeItem.bind(this, key)}>Delete item</Button>
+                    </Col>
                  </Row>
                </div>
               </li>
@@ -135,36 +125,22 @@ class ItemsNonAuth extends Component {
         };
       }
 
-      componentDidMount(){
-        this.setState({ loading: true })
-        const userkey = this.props.match.params.userid;
-        const storekey = this.props.match.params.itemid;
-        const dbItem = firebase.database().ref(`items/users/${userkey}`).orderByChild('item').equalTo(`${storekey}`)
-        const dbUser = firebase.database().ref(`users/${userkey}/`);
+      componentWillMount(){
+          this.setState({ loading: true })
+          const userkey = this.props.match.params.userid;
+          const db = firebase.firestore();
+          const dbCol = db.collection("items");
+          const dbquery = dbCol.where("user", "==", userkey);
 
-        dbItem.on('value', (snapshot) => {
-          const itemsObject = snapshot.val() || '';
-          console.log(snapshot.val());
-          const itemsList = Object.keys(itemsObject).map((key, index) => ({
-            ...itemsObject[key],
-            uid: key,
-          }));
-            this.setState({
-              items: itemsList,
-              loading: false
+          this.unsubscribe = dbquery.onSnapshot(snap => {
+            const items = {}
+            snap.forEach(item => {
+             items[item.id] =  item.data()
             })
-          });
+              this.setState({items, loading: false})
+            })
 
-          dbUser.on('value', snapshot => {
-              const snap = snapshot.val();
-              this.setState({
-                userLocation: snap.location,
-                userWhatsapp: snap.whatsapp,
-                loading: false
-              });
-            });
-
-        }
+          }
 
         componentWillUnmount() {
           const userkey = this.props.match.params.userid;

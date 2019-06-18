@@ -15,6 +15,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import * as ROUTES from '../../constants/routes';
 
 import firebase from 'firebase/app';
+import firstore from 'firebase/firestore';
 
 const INITIAL_STATE = {
   item: [],
@@ -35,6 +36,8 @@ class Items extends Component {
       imgUrl: [],
       show: false,
     };
+
+    this.removeItem = this.removeItem.bind(this);
 
   };
 
@@ -61,34 +64,29 @@ class Items extends Component {
   }
 
   componentWillMount(){
+    const user = firebase.auth().currentUser.uid;
+    const db = firebase.firestore();
+    const dbCol = db.collection("items");
+    const dbquery = dbCol.where("user", "==", user);
 
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        firebase.database().ref('items/users/' + user.uid) //reference uid of logged in user like so
-            .on('value', (snapshot) => {
-              const itemsObject = snapshot.val() || '';
-              this.setState({ loading: false })
-              const itemsList = Object.keys(itemsObject).map((key, index) => ({
-                ...itemsObject[key],
-                uid: key,
-              }));
-                this.setState({
-                  items: itemsList,
-                })
-              });
-            }
-         });
-        }
+    this.unsubscribe = dbquery.onSnapshot(snap => {
+    const items = {}
+    snap.forEach(item => {
+     items[item.id] =  item.data()
+    })
+      this.setState({items})
+    })
 
-  componentWillUnmount() {
-    const user = firebase.auth().currentUser;
-    firebase.database().ref(`items/users/` + user.uid).off();
   }
 
-  removeItem(key, e)  {
-    const user = firebase.auth().currentUser;
-    const item = this.state.items[key].uid;
-    firebase.database().ref(`items/users/` + user.uid + `/` + item).remove();
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  removeItem(item, e) {
+    const db = firebase.firestore();
+    const itemkey = item;
+    db.collection("items").doc(itemkey).delete();
   }
 
   onChange = event => {
@@ -111,34 +109,36 @@ class Items extends Component {
           </Col>
         </Row>
         <ul>
-          {Object.keys(items).map((key, index) => {
-             return (
-               <li className="messages" key={key} index={index}>
-                <div className="chat">
-                  <Row>
-                  <Col xs={4} sm={3} md={3}>
-                    <div className="itemImg">
-                    <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/` || "https://via.placeholder.com/150"}/>
-                    </div>
-                  </Col>
-                  <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
-                    <Link to={{ pathname:`items/${user.uid}/${items[key].item}`, state:{userkey: `${user.uid}`} }}>
-                      <h2>{items[key].item}</h2>
-                      <span className="pricing">R{items[key].price}</span>
-                      <span className="desc">{items[key].description}</span>
-                      <span className="cat">{items[key].category}</span>
-                    </Link>
-                  </Col>
-                  <Dropdown>
-                    <Dropdown.Toggle as="span" drop="left" className="timestamp delete" id="dropdown-basic"/>
-                    <Dropdown.Menu >
-                      <Dropdown.Item onClick={this.removeItem.bind(this, key)}>Delete</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                  </Row>
-                </div>
-               </li>
-             );
+          {Object.keys(items).map((item, index) => {
+            return (
+              <li className="messages" key={item} index={index}>
+                 <div className="chat">
+
+                     <Row>
+                     <Col xs={4} sm={3} md={3}>
+                       <div className="itemImg">
+                         {items[item].imgUrl && <Image src={items[item].imgUrl + `/-/scale_crop/500x500/center/` || ''}/>}
+                       </div>
+                     </Col>
+                     <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
+                       <Link to={`/items/${items[item].user}/${items[item].name}`}>
+                       <h2>{items[item].name}</h2>
+                       <span className="pricing">R{items[item].price}</span>
+                       <span className="timestamp">{items[item].description}</span>
+                       </Link>
+                     </Col>
+
+                     <Dropdown>
+                       <Dropdown.Toggle as="span" drop="left" className="timestamp delete" id="dropdown-basic"/>
+                       <Dropdown.Menu >
+                         <Dropdown.Item onClick={this.removeItem.bind(this, item)}>Delete</Dropdown.Item>
+                       </Dropdown.Menu>
+                     </Dropdown>
+                     </Row>
+
+                 </div>
+                </li>
+            );
           })}
         </ul>
       </Col >

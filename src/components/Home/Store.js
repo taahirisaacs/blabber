@@ -17,7 +17,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import firebase from 'firebase/app';
 
 const INITIAL_STATE = {
-  store: [],
+  name: [],
   description: [],
   category: [],
   error: null,
@@ -36,18 +36,22 @@ class Stores extends Component {
     };
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.removeStore = this.removeStore.bind(this);
 
   };
 
   onSubmit = event => {
-    const { store, description, category, imgUrl } = this.state;
-    const user = firebase.auth().currentUser;
+    const { name, description, category, imgUrl } = this.state;
+    const user = firebase.auth().currentUser.uid;
+    const db = firebase.firestore();
+    const dbCol = db.collection("stores");
 
-      firebase.database().ref('stores/users/' + user.uid).push({
-          store,
+      dbCol.add({
+          name,
           description,
           category,
-          imgUrl
+          imgUrl,
+          user
         })
       .then(authUser => {
         this.setState({ ...INITIAL_STATE });
@@ -62,28 +66,23 @@ class Stores extends Component {
 
   componentWillMount(){
     this.setState({ loading: true });
+    const user = firebase.auth().currentUser.uid;
+    const db = firebase.firestore();
+    const dbCol = db.collection("stores");
+    const dbquery = dbCol.where("user", "==", user);
 
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        firebase.database().ref('stores/users/' + user.uid) //reference uid of logged in user like so
-            .on('value', (snapshot) => {
-              const storesObject = snapshot.val() || '';
-              this.setState({ loading: false })
-              const storesList = Object.keys(storesObject).map((key, index) => ({
-                ...storesObject[key],
-                uid: key,
-              }));
-                this.setState({
-                  stores: storesList,
-                })
-              });
-            }
-         });
+    this.unsubscribe = dbquery.onSnapshot(snap => {
+      const stores = {}
+      snap.forEach(store => {
+       stores[store.id] =  store.data()
+      })
+        this.setState({stores, loading: false})
+      })
+
         }
 
   componentWillUnmount() {
-    const user = firebase.auth().currentUser;
-    firebase.database().ref(`stores/users/` + user.uid).off();
+    this.unsubscribe();
   }
 
   handleClose() {
@@ -95,9 +94,9 @@ class Stores extends Component {
   }
 
   removeStore(key, e)  {
-    const user = firebase.auth().currentUser;
-    const store = this.state.stores[key].uid;
-    firebase.database().ref(`stores/users/` + user.uid + `/` + store).remove();
+    const db = firebase.firestore();
+    const storekey = key;
+    db.collection("stores").doc(storekey).delete();
   }
 
   onChange = event => {
@@ -141,8 +140,8 @@ class Stores extends Component {
                     </div>
                   </Col>
                   <Col xs={8} sm={8} md={10} style={{ paddingLeft: `0`, paddingRight: `45px` }}>
-                  <Link to={{ pathname:`store/${userid.uid}/${this.state.stores[key].uid}`, state:{userkey: `${userid.uid}`} }}>
-                    <h2>{stores[key].store}</h2>
+                  <Link to={{ pathname:`store/${userid.uid}/${[key]}`, state:{userkey: `${stores[key].user}`} }}>
+                    <h2>{stores[key].name}</h2>
                   </Link>
                     <span className="desc">{stores[key].description}</span>
                     <span className="cat">{stores[key].category}</span>
@@ -187,7 +186,7 @@ class Stores extends Component {
 
               <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>Store Name</Form.Label>
-                <Form.Control name="store" value={this.state.store || ''} onChange={this.onChange} type="text" placeholder="eg. Widget123" />
+                <Form.Control name="name" value={this.state.name || ''} onChange={this.onChange} type="text" placeholder="eg. Widget123" />
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlInput2">
                 <Form.Label>Description</Form.Label>

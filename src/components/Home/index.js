@@ -131,8 +131,6 @@ class MessageForm extends Component {
 
     });
 
-    console.log(db);
-
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         firebase.database().ref('messages/users/' + user.uid) //reference uid of logged in user like so

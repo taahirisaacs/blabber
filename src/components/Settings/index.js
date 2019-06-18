@@ -13,13 +13,13 @@ import Row from 'react-bootstrap/Row';
 const Settings = () => (
   <AuthUserContext.Consumer>
     {authUser => (
-        <Col md>
-            <h3>Settings</h3>
-            <p>Account: {authUser.email}</p>
-              <WhatsappUpdate />
-              <PasswordForgetForm />
-              <PasswordChangeForm className="mb-3"/>
-            <SignOutButton to={ROUTES.SIGN_IN} />
+      <Col xs={{span:'10', offset:'1'}}>
+        <h3>Settings</h3>
+        <p>Account: {authUser.email}</p>
+        <WhatsappUpdate className="mb-3"/>
+        <PasswordForgetForm />
+        <PasswordChangeForm className="mb-3"/>
+        <SignOutButton to={ROUTES.SIGN_IN} />
         </Col>
       )}
   </AuthUserContext.Consumer>
