@@ -58,7 +58,6 @@ class StoresPageAuth extends Component {
 
   onSubmit = event => {
     const { name, description, price, category, storeId, imgUrl, cta } = this.state;
-    console.log(storeId);
     const user = firebase.auth().currentUser.uid;
     const db = firebase.firestore();
 
@@ -145,7 +144,7 @@ class StoresPageAuth extends Component {
     return (
       <Col md={{span:6, offset:3}}>
         <ul>
-             <li key={stores.id} index={stores.id} className="messages" >
+          <li key={stores.id} index={stores.id} className="messages" >
 
                 <Row>
                   <Col xs sm md className="storeHeader">

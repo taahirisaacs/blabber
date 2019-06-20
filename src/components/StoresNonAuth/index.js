@@ -40,21 +40,24 @@ class StoresPageNonAuth extends Component {
 
   componentDidMount(){
     this.setState({ loading: true })
-
+    const docId = this.props.match.params.uid;
     const userkey = this.props.match.params.userid;
-    const storekey = this.props.match.params.uid;
-    const db = firebase.database().ref(`stores/users/${userkey}/${storekey}/`);
-    const dbUser = firebase.database().ref(`users/${userkey}/`);
-    const dbItem = firebase.database().ref(`items/users/${userkey}`).orderByChild('storeId').equalTo(`${storekey}`)
+    const db = firebase.firestore();
+    const dbCol = db.collection("stores").doc(docId);
 
-    db.on('value', snapshot => {
-        const snap = snapshot.val();
+    const dbUser = firebase.database().ref(`users/${userkey}/`);
+    const dbItem = firebase.database().ref(`items/users/${userkey}`).orderByChild('storeId').equalTo(`${docId}`);
+
+    const dbItems = db.collection("items");
+    const dbItemsquery = dbItems.where("user", "==", userkey);
+
+    dbCol.onSnapshot(snap => {
         this.setState({
-          storeImg: snap.imgUrl,
-          storeName: snap.store,
-          storeDesc: snap.description,
-          storeCat: snap.category,
-          storeId: snapshot.key,
+          storeImg: snap.data().imgUrl,
+          storeName: snap.data().store,
+          storeDesc: snap.data().description,
+          storeCat: snap.data().category,
+          storeId: snap.id,
           loading: false
         });
       });
@@ -68,17 +71,14 @@ class StoresPageNonAuth extends Component {
           });
         });
 
-    dbItem.on('value', (snapshot) => {
-      const itemsObject = snapshot.val() || '';
-      const itemsList = Object.keys(itemsObject).map((key, index) => ({
-        ...itemsObject[key],
-        uid: key,
-      }));
-        this.setState({
-          items: itemsList,
-          loading: false
-        })
-      });
+        this.unsubscribe = dbItemsquery.onSnapshot(snap => {
+          const items = {}
+
+          snap.forEach(item => {
+           items[item.id] =  item.data();
+          })
+            this.setState({items, loading: false});
+          })
 
     }
 
@@ -98,45 +98,45 @@ class StoresPageNonAuth extends Component {
     return (
 
       <Col md={{span:6, offset:3}}>
-      {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
+        {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
         <ul>
-             <li key={storeId} index={storeId} className="messages" >
-                <Row>
-                  <Col xs sm md className="storeHeader">
-                    <div className="chat">
-                      <div className="storeImg">
-                      <Image src={storeImg + `/-/scale_crop/500x500/center/`}/>
-                      </div>
-                        <h2>{storeName}</h2>
-                        <span className="city">{userLocation}</span>
-                        <span className="timestamp">{storeDesc}</span>
-                        <span className="cat">{storeCat}</span>
-                    </div>
-                  </Col>
-                </Row>
-             </li>
+          <li key={storeId} index={storeId} className="messages" >
+            <Row>
+              <Col xs sm md className="storeHeader">
+                <div className="chat">
+                  <div className="storeImg">
+                    <Image src={storeImg + `/-/scale_crop/500x500/center/`}/>
+                  </div>
+                  <h2>{storeName}</h2>
+                  <span className="city">{userLocation}</span>
+                  <span className="timestamp">{storeDesc}</span>
+                  <span className="cat">{storeCat}</span>
+                </div>
+              </Col>
+            </Row>
+          </li>
         </ul>
 
         <ul style={{marginBottom:`40px`,}}>
 
           {Object.keys(items).map((key, index) => {
-             return (
-               <li className="messages" key={key} index={index}>
+            return (
+              <li className="messages" key={key} index={index}>
                 <div className="chat">
-                  <Link to={`/items/${user}/${items[key].item}`}>
-                  <Row>
-                  <Col xs={4} sm={3} md={3}>
-                    <div className="itemImg">
-                    <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/` || "https://via.placeholder.com/150"}/>
-                    </div>
-                  </Col>
-                  <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
+                  <Link to={`/items/${items[key].store}/${items[key].name}`}>
+                    <Row>
+                      <Col xs={4} sm={3} md={3}>
+                        <div className="itemImg">
+                          <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/` || "https://via.placeholder.com/150"}/>
+                        </div>
+                      </Col>
+                      <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
 
-                      <h2>{items[key].item}</h2>
-                      <span className="pricing">R{items[key].price}</span>
-                      <span className="desc">{items[key].description}</span>
-                  </Col>
-                  </Row>
+                        <h2>{items[key].name}</h2>
+                        <span className="pricing">R{items[key].price}</span>
+                        <span className="desc">{items[key].description}</span>
+                      </Col>
+                    </Row>
                   </Link>
                 </div>
                </li>

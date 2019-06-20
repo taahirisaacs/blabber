@@ -45,7 +45,7 @@ const App = () => (
           <Route path={ROUTES.NEWITEM} component={NewItem} />
           <Route path="/blob/:dataId" component={BlobPage} />
           <Route exact path="/store/:userid/:uid" component={Profile} />
-          <Route exact path="/items/:userid/:itemid" component={Items} />
+          <Route exact path="/items/:storeid/:itemid" component={Items} />
           <FooterNavigation />
         </Container>
       </Router>

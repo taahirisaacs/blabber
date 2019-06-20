@@ -447,7 +447,24 @@ span.MuiTab-wrapper {
     background: #2068d5;
     border: 1px solid #2068d5;
     float: right;
-    margin-top: 25px;
+    margin-top: 15px;
+}
+button.storebtn.delete.btn.btn-primary.btn-block {
+    background: white;
+    border: 1px solid #dc3545;
+    color: #dc3545;
+}
+button.storebtn.copy_link.btn.btn-primary.btn-block {
+    background: #fff;
+    border: 1px solid #a5afbe;
+    color: #5f6d82;
+}
+span.divider {
+    display: inline-block;
+    width: 100%;
+    height: 1px;
+    background: #a2adbd;
+    margin: 25px 0px 5px;
 }
 .bottomNav {
     position: fixed;

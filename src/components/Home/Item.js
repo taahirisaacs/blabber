@@ -104,24 +104,24 @@ class Items extends Component {
         <Row className="laneTitle">
           <Col>
             <NavLink as="button" to={ROUTES.NEWITEM}>
-                <Button>+ Add new item</Button>
-          </NavLink>
+              <Button>+ Add new item</Button>
+            </NavLink>
           </Col>
         </Row>
         <ul>
           {Object.keys(items).map((item, index) => {
             return (
               <li className="messages" key={item} index={index}>
-                 <div className="chat">
+                <div className="chat">
 
-                     <Row>
-                     <Col xs={4} sm={3} md={3}>
-                       <div className="itemImg">
-                         {items[item].imgUrl && <Image src={items[item].imgUrl + `/-/scale_crop/500x500/center/` || ''}/>}
-                       </div>
-                     </Col>
-                     <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
-                       <Link to={`/items/${items[item].user}/${items[item].name}`}>
+                  <Row>
+                    <Col xs={4} sm={3} md={3}>
+                      <div className="itemImg">
+                        {items[item].imgUrl && <Image src={items[item].imgUrl + `/-/scale_crop/500x500/center/` || ''}/>}
+                      </div>
+                    </Col>
+                    <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
+                      <Link to={`/items/${items[item].store}/${items[item].name}`}>
                        <h2>{items[item].name}</h2>
                        <span className="pricing">R{items[item].price}</span>
                        <span className="timestamp">{items[item].description}</span>
