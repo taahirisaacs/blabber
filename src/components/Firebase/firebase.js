@@ -18,7 +18,7 @@ class Firebase {
     app.initializeApp(config);
 
     this.auth = app.auth();
-    this.db = app.database();
+    this.db = app.firestore();
   }
 
   // *** Auth API ***
@@ -38,11 +38,11 @@ class Firebase {
 
   // *** User API ***
 
-  user = uid => this.db.ref('users/' + uid);
+  user = uid => this.db.collection("users").doc(uid);
 
-  users = () => this.db.ref('users');
+  users = () => this.db.collection("users");
 
-  stores = () => this.db.ref('stores/users/');
+  stores = () => this.db.collection("stores");
 }
 
 export default Firebase;

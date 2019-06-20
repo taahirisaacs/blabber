@@ -54,7 +54,7 @@ onSubmit = event => {
           category,
           cta,
           imgUrl,
-          store: storeId,
+          store: storeId || null,
           user: user.uid
       })
       .then(authUser => {
@@ -113,26 +113,26 @@ render() {
 
   return (
     <Col md={{span:6, offset:3}} className="newitemform">
-        <span className="uploadImg">
-          <img src={uploadedImg}></img>
-        </span>
-        <Uploader
-          id='file'
-          name='file'
-          onChange={(file) => {
-            console.log('File changed: ', file)
+      <span className="uploadImg">
+        <img src={uploadedImg}></img>
+      </span>
+      <Uploader
+        id='file'
+        name='file'
+        onChange={(file) => {
+          console.log('File changed: ', file)
 
-            if (file) {
-              file.progress(info => console.log('File progress: ', info.progress))
-              file.done(info => console.log('File uploaded: ', info))
-            }
-          }}
-          onUploadComplete={info =>
-            this.setState ({
+          if (file) {
+            file.progress(info => console.log('File progress: ', info.progress))
+            file.done(info => console.log('File uploaded: ', info))
+          }
+        }}
+        onUploadComplete={info =>
+          this.setState ({
               imgUrl: info.cdnUrl,
-            })
-          } />
-        <Form className="FormInput" onSubmit={this.onSubmit}>
+          })
+        } />
+      <Form className="FormInput" onSubmit={this.onSubmit}>
         <Form.Control style={{display:`none`}} name="imgurl" value={this.state.imgUrl || ''} onChange={this.onChange} type="text" placeholder="imgUrl" />
             <Form.Group controlId="exampleForm.ControlInput1">
               <Form.Label>Name</Form.Label>

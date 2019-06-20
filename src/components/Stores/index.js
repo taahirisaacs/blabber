@@ -146,23 +146,23 @@ class StoresPageAuth extends Component {
         <ul>
           <li key={stores.id} index={stores.id} className="messages" >
 
-                <Row>
-                  <Col xs sm md className="storeHeader">
-                    <div className="chat">
-                    <div className="storeImg">
+            <Row>
+              <Col xs sm md className="storeHeader">
+                <div className="chat">
+                  <div className="storeImg">
                     <Image src={stores.imgUrl + `/-/scale_crop/500x500/center/`}/>
-                    </div>
-                    <h2>{stores.name}</h2>
-                    <span className="timestamp">{stores.description || ''}</span>
-                    <span className="cat">{stores.category || ''}</span>
-                      <Row >
-                        <Col>
-                          <Button variant="primary" size="sm" onClick={this.handleShow} block>
-                            + Add a new item
-                          </Button>
-                          <CopyToClipboard block className="storebtn" text={`${itemUrl}`} onCopy={() => this.setState({copied: true})}>
-                            <Button>{this.state.copied ? <span>Copied.</span> : <span>Copy Link URL</span>}</Button>
-                          </CopyToClipboard>
+                  </div>
+                  <h2>{stores.name}</h2>
+                  <span className="timestamp">{stores.description || ''}</span>
+                  <span className="cat">{stores.category || ''}</span>
+                  <Row >
+                    <Col>
+                      <Button variant="primary" size="sm" onClick={this.handleShow} block>
+                        + Add a new item
+                      </Button>
+                      <CopyToClipboard block className="storebtn" text={`${itemUrl}`} onCopy={() => this.setState({copied: true})}>
+                        <Button>{this.state.copied ? <span>Copied.</span> : <span>Copy Link URL</span>}</Button>
+                      </CopyToClipboard>
                         </Col>
                       </Row>
                     </div>

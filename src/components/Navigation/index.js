@@ -22,13 +22,13 @@ const Navigation = () => (
 
 const NavigationAuth = () => (
   <Navbar expand="lg" sticky="top">
-    <LinkContainer to={ROUTES.HOME}><Navbar.Brand><span className="sml">tiny</span>trader</Navbar.Brand></LinkContainer>
+    <LinkContainer to={ROUTES.HOME}><Navbar.Brand>TinyTrader</Navbar.Brand></LinkContainer>
   </Navbar>
 );
 
 const NavigationNonAuth = () => (
   <Navbar expand="lg" className="px-3">
-    <Navbar.Brand className="mx-0" href="/home">tiny trader</Navbar.Brand>
+    <Navbar.Brand className="mx-0" href="/home">TinyTrader</Navbar.Brand>
     <Nav>
       <LinkContainer as="button" className="signup" to={ROUTES.SIGN_UP}>
         <Nav.Item>Create your store</Nav.Item>

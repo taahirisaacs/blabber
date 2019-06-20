@@ -76,6 +76,7 @@ class MessageForm extends Component {
       dataId: [],
       show: false,
       index: 0,
+      users: [],
     };
 
     this.handleShow = this.handleShow.bind(this);
@@ -119,39 +120,22 @@ class MessageForm extends Component {
     this.setState({ loading: true });
 
     const user = firebase.auth().currentUser;
-    const db = firebase.database().ref(`users/${user.uid}/`);
 
-    db.on('value', (snapshot) => {
-      const uname = snapshot.val().username;
-      const ulocation = snapshot.val().location;
-      this.setState({
-        uname: uname,
-        ulocation: ulocation,
-      });
+    // const db = firebase.database().ref(`users/${user.uid}/`);
+    const db = firebase.firestore();
+    const dbCol = db.collection("users").doc(user.uid);
+    console.log(dbCol);
+
+    dbCol.onSnapshot(snap => {
+      const key = snap.id;
+      const users = snap.data();
+      console.log(users);
+
+      this.setState({users});
 
     });
 
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        firebase.database().ref('messages/users/' + user.uid) //reference uid of logged in user like so
-            .on('value', (snapshot) => {
-              var datasUpdate = [];
-              this.setState({ loading: false })
-                snapshot.forEach((child) =>{
-                    datasUpdate.push({
-                      dataId: child.key,
-                      date: child.val().timestamp,
-                      data: child.val().message,
-                      description: child.val().description,
-                    });
-                });
-                this.setState({
-                  datas: datasUpdate,
-                });
-              });
-            }
-         });
-        }
+  }
 
   componentWillUnmount() {
     const user = firebase.auth().currentUser;
@@ -209,11 +193,8 @@ class MessageForm extends Component {
       message,
       error,
       index,
-      uname,
-      ulocation,
+      users,
     } = this.state;
-
-
 
     const isInvalid =
       message === '';
@@ -225,10 +206,10 @@ class MessageForm extends Component {
           <Col xs sm md className="storeHeader">
             <div className="chat">
               <span className="storeImg">
-                <img src="https://res.cloudinary.com/djqr0a74c/image/upload/v1560070682/TinyTrader/taahir_2x.890a73ff.png"/>
+                <img src={users.profileUrl} />
               </span>
-              <h2>{uname}</h2>
-              <p className="profileSub">{ulocation}</p>
+              <h2>{users.username}</h2>
+              <p className="profileSub">{users.location}</p>
               <NavLink to={ROUTES.SETTINGS}>
                   <Button className="navItem mt-3 mb-3 settings" size="sm" variant="secondary" block>
                 Edit my profile

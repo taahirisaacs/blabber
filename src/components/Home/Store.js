@@ -126,36 +126,36 @@ class Stores extends Component {
           </Col>
         </Row>
 
-          {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
+        {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
 
         <ul>
           {Object.keys(stores).map((key, index) => {
-             return (
-               <li className="messages" key={key} index={index} style={{marginBottom:`10px`,}}>
+            return (
+              <li className="messages" key={key} index={index} style={{marginBottom:`10px`,}}>
                 <div className="chat">
                   <Row>
-                  <Col xs={4} sm={4} md={2}>
-                    <div className="itemImg storeList">
-                    <Image src={stores[key].imgUrl + `/-/scale_crop/250x250/center/`}/>
-                    </div>
-                  </Col>
-                  <Col xs={8} sm={8} md={10} style={{ paddingLeft: `0`, paddingRight: `45px` }}>
-                  <Link to={{ pathname:`store/${userid.uid}/${[key]}`, state:{userkey: `${stores[key].user}`} }}>
-                    <h2>{stores[key].name}</h2>
-                  </Link>
-                    <span className="desc">{stores[key].description}</span>
-                    <span className="cat">{stores[key].category}</span>
-                  </Col>
-                  <Dropdown>
-                    <Dropdown.Toggle as="span" drop="left" className="timestamp delete" id="dropdown-basic"/>
-                    <Dropdown.Menu >
-                      <Dropdown.Item onClick={this.removeStore.bind(this, key)}>Delete</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
+                    <Col xs={4} sm={4} md={2}>
+                      <div className="itemImg storeList">
+                        <Image src={stores[key].imgUrl + `/-/scale_crop/250x250/center/`}/>
+                      </div>
+                    </Col>
+                    <Col xs={8} sm={8} md={10} style={{ paddingLeft: `0`, paddingRight: `45px` }}>
+                      <Link to={{ pathname:`store/${userid.uid}/${[key]}`, state:{userkey: `${stores[key].user}`} }}>
+                        <h2>{stores[key].name}</h2>
+                      </Link>
+                      <span className="desc">{stores[key].description}</span>
+                      <span className="cat">{stores[key].category}</span>
+                    </Col>
+                    <Dropdown>
+                      <Dropdown.Toggle as="span" drop="left" className="timestamp delete" id="dropdown-basic"/>
+                      <Dropdown.Menu >
+                        <Dropdown.Item onClick={this.removeStore.bind(this, key)}>Delete</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </Row>
                 </div>
-               </li>
-             );
+              </li>
+            );
           })}
         </ul>
 

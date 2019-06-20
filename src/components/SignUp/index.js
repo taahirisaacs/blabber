@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { LoginLink } from '../SignIn';
+import Uploader from './../Uploader';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -84,71 +85,80 @@ class SignUpFormBase extends Component {
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
       email === '' ||
-      location === '' ||
       username === '';
 
     return (
-      <Form onSubmit={this.onSubmit}>
-        <Form.Group controlId="formUsername">
-          <Form.Group controlId="formImage">
+      <div>
+        <Uploader
+          id='file'
+          name='file'
+          onChange={(file) => {
+            console.log('File changed: ', file)
+
+            if (file) {
+              file.progress(info => console.log('File progress: ', info.progress))
+              file.done(info => console.log('File uploaded: ', info))
+            }
+          }}
+          onUploadComplete={info =>
+            this.setState ({
+              profileUrl: info.cdnUrl,
+            })
+          } />
+        <Form onSubmit={this.onSubmit}>
+          <Form.Control style={{display:`none`}} name="profileUrl" value={this.state.profileUrl || ''} onChange={this.onChange} type="text" placeholder="profileUrl" />
+          <Form.Group controlId="formUsername">
             <Form.Control
-              name="profileUrl"
-              value={profileUrl}
+              name="username"
+              value={username}
               onChange={this.onChange}
               type="text"
-              placeholder="Profile Url"
+              placeholder="Full Name"
             />
           </Form.Group>
-          <Form.Control
-            name="username"
-            value={username}
-            onChange={this.onChange}
-            type="text"
-            placeholder="Full Name"
-          />
-        </Form.Group>
-        <Form.Group controlId="formEmail">
-          <Form.Control
-            name="email"
-            value={email}
-            onChange={this.onChange}
-            type="text"
-            placeholder="Email Address"
-          />
-        </Form.Group>
-        <Form.Group controlId="formLocation">
-          <Form.Control
-            name="location"
-            value={location}
-            onChange={this.onChange}
-            type="text"
-            placeholder="Your location"
-          />
-        </Form.Group>
-        <Form.Group controlId="formPassOne">
-          <Form.Control
-            name="passwordOne"
-            value={passwordOne}
-            onChange={this.onChange}
-            type="password"
-            placeholder="Password"
-          />
-        </Form.Group>
-        <Form.Group controlId="formPassTwo">
-          <Form.Control
-            name="passwordTwo"
-            value={passwordTwo}
-            onChange={this.onChange}
-            type="password"
-            placeholder="Confirm Password"
-          />
-        </Form.Group>
-        <Button variant="primary" disabled={isInvalid} type="submit" block>
-          Sign Up
-        </Button>
+          <Form.Group controlId="formEmail">
+            <Form.Control
+              name="email"
+              value={email}
+              onChange={this.onChange}
+              type="text"
+              placeholder="Email Address"
+            />
+          </Form.Group>
+          <Form.Group controlId="formLocation">
+            <Form.Control
+              name="location"
+              value={location}
+              onChange={this.onChange}
+              type="text"
+              placeholder="Your location"
+            />
+          </Form.Group>
+          <Form.Group controlId="formPassOne">
+            <Form.Control
+              name="passwordOne"
+              value={passwordOne}
+              onChange={this.onChange}
+              type="password"
+              placeholder="Password"
+            />
+          </Form.Group>
+          <Form.Group controlId="formPassTwo">
+            <Form.Control
+              name="passwordTwo"
+              value={passwordTwo}
+              onChange={this.onChange}
+              type="password"
+              placeholder="Confirm Password"
+            />
+          </Form.Group>
+          <Button variant="primary" disabled={isInvalid} type="submit" block>
+            Sign Up
+          </Button>
 
-        {error && <p>{error.message}</p>}
-      </Form>
+          {error && <p>{error.message}</p>}
+        </Form>
+      </div>
     );
   }
 }
