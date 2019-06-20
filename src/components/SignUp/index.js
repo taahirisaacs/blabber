@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
+import { LoginLink } from '../SignIn';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
 const SignUpPage = () => (
-  <div>
-    <h1>Sign Up</h1>
+  <Row>
+    <Col xs={{span:'10', offset:'1'}}>
+      <h1 className="pageTitle">Sign up to create your store</h1>
       <SignUpForm />
-  </div>
+      <LoginLink />
+    </Col>
+  </Row>
 );
 
 const INITIAL_STATE = {
@@ -148,8 +154,8 @@ class SignUpFormBase extends Component {
 }
 
 const SignUpLink = () => (
-  <p>
-    Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
+  <p style={{textAlign:`center`, marginTop:`20px`}}>
+    Don't have a TinyTrader account yet? <Link to={ROUTES.SIGN_UP}>Create your store now!</Link>
   </p>
 );
 

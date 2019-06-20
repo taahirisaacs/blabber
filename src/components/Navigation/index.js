@@ -2,6 +2,7 @@ import React from 'react';
 import { LinkContainer } from "react-router-bootstrap";
 
 import Nav from 'react-bootstrap/Nav';
+import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -28,17 +29,11 @@ const NavigationAuth = () => (
 const NavigationNonAuth = () => (
   <Navbar expand="lg" className="px-3">
     <Navbar.Brand className="mx-0" href="/home">tiny trader</Navbar.Brand>
-    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-    <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-      <Nav>
-        <LinkContainer to={ROUTES.LANDING}>
-          <Nav.Item>Landing</Nav.Item>
-        </LinkContainer>
-        <LinkContainer to={ROUTES.SIGN_IN}>
-          <Nav.Item>Sign In</Nav.Item>
-        </LinkContainer>
-      </Nav>
-    </Navbar.Collapse>
+    <Nav>
+      <LinkContainer as="button" className="signup" to={ROUTES.SIGN_UP}>
+        <Nav.Item>Create your store</Nav.Item>
+      </LinkContainer>
+    </Nav>
   </Navbar>
 );
 

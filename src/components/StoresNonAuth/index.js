@@ -55,7 +55,7 @@ class StoresPageNonAuth extends Component {
     dbCol.onSnapshot(snap => {
         this.setState({
           storeImg: snap.data().imgUrl,
-          storeName: snap.data().store,
+          storeName: snap.data().name,
           storeDesc: snap.data().description,
           storeCat: snap.data().category,
           storeId: snap.id,

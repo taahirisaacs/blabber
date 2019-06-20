@@ -402,7 +402,7 @@ span.MuiTab-wrapper {
   color: #4a576a;
 }
 .storeHeader .cat {
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 .itemImg.storeList {
   background: #d9e0e9;
@@ -458,6 +458,16 @@ button.storebtn.copy_link.btn.btn-primary.btn-block {
     background: #fff;
     border: 1px solid #a5afbe;
     color: #5f6d82;
+}
+button.signup.nav-item {
+    border: 1px solid #6896dd;
+    background: #fff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6896dd;
+    margin-right: -5px;
 }
 span.divider {
     display: inline-block;
@@ -534,4 +544,10 @@ span.poweredby {
     font-size: 1rem;
     font-weight: 700;
     color: #65768d;
+}
+h1.pageTitle {
+    margin: 60px 0px 20px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: center;
 }

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
@@ -11,12 +13,14 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
 const SignInPage = () => (
-  <div>
-    <h1>Login</h1>
-    <SignInForm />
-    <PasswordForgetLink />
-    <SignUpLink />
-  </div>
+  <Row>
+    <Col xs={{span:'10', offset:'1'}}>
+      <h1 className="pageTitle">Log into your TinyTrader account</h1>
+      <SignInForm/>
+      <PasswordForgetLink />
+      <SignUpLink />
+    </Col>
+  </Row>
 );
 
 const INITIAL_STATE = {
@@ -87,6 +91,12 @@ class SignInFormBase extends Component {
   }
 }
 
+const LoginLink = () => (
+  <p style={{textAlign:`center`, marginTop:`20px`}}>
+    Already have a TinyTrader account? <Link to={ROUTES.SIGN_IN}>Log in here</Link>
+  </p>
+);
+
 const SignInForm = compose(
   withRouter,
   withFirebase,
@@ -94,4 +104,4 @@ const SignInForm = compose(
 
 export default SignInPage;
 
-export { SignInForm };
+export { SignInForm, LoginLink };
