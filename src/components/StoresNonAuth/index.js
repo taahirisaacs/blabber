@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
 import Uploader from './../Uploader';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -25,6 +26,7 @@ const INITIAL_STATE = {
   category: [],
   price: [],
   error: null,
+  copied: false,
 };
 
 class StoresPageNonAuth extends Component {
@@ -46,10 +48,9 @@ class StoresPageNonAuth extends Component {
     const dbCol = db.collection("stores").doc(docId);
 
     const dbUser = firebase.database().ref(`users/${userkey}/`);
-    const dbItem = firebase.database().ref(`items/users/${userkey}`).orderByChild('storeId').equalTo(`${docId}`);
 
     const dbItems = db.collection("items");
-    const dbItemsquery = dbItems.where("user", "==", userkey);
+    const dbItemsquery = dbItems.where("store", "==", docId);
 
     dbCol.onSnapshot(snap => {
         this.setState({
@@ -94,6 +95,7 @@ class StoresPageNonAuth extends Component {
     const { items, storeImg, storeName, storeDesc, storeCat, storeId, userLocation, userWhatsapp, loading} = this.state;
     const user = this.props.match.params.userid;
     const pretext = "Hello! I want to";
+    const itemUrl = window.location.href;
 
     return (
 
@@ -111,6 +113,9 @@ class StoresPageNonAuth extends Component {
                   <span className="city">{userLocation}</span>
                   <span className="timestamp">{storeDesc}</span>
                   <span className="cat">{storeCat}</span>
+                  <CopyToClipboard block className="storebtn copy_link" text={`${itemUrl}`} onCopy={() => this.setState({copied: true})}>
+                    <Button>{this.state.copied ? <span>Copied.</span> : <span>Copy Store URL</span>}</Button>
+                  </CopyToClipboard>
                 </div>
               </Col>
             </Row>

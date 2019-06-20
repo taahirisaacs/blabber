@@ -121,6 +121,7 @@ class ItemsNonAuth extends Component {
           loading: false,
           items: '',
           stores: '',
+          copied: false,
         };
       }
 
@@ -165,6 +166,8 @@ class ItemsNonAuth extends Component {
       render () {
 
         const { items, stores, storesId, loading, userWhatsapp } = this.state;
+        const itemUrl = window.location.href;
+
         return (
           <Col xs={12} md={{span:'4', offset:'4'}}>
             {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
@@ -185,6 +188,9 @@ class ItemsNonAuth extends Component {
                           <span className="itemdesc">{items[key].description}</span>
                           <span className="cat">{items[key].category}</span>
                           <Button block className="storebtn" href={`https://wa.me/27${userWhatsapp}/?text=(${items[key].cta})%20:%20${items[key].item}%20|%20R${items[key].price}`}>{items[key].cta}</Button>
+                          <CopyToClipboard block className="storebtn copy_link" text={`${itemUrl}`} onCopy={() => this.setState({copied: true})}>
+                            <Button>{this.state.copied ? <span>Copied.</span> : <span>Copy Item URL</span>}</Button>
+                          </CopyToClipboard>
                         </Col>
                       </Row>
                     </div>
