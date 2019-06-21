@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Image from 'react-bootstrap/Image';
 import Uploader from './../Uploader';
+import shortid from 'shortid';
 
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -46,6 +47,7 @@ onSubmit = event => {
   const { name, description, price, category, imgUrl, storeId, cta } = this.state;
   const user = firebase.auth().currentUser;
   const db = firebase.firestore();
+  const itemUid = shortid.generate();
 
   db.collection("items").add({
           name,
@@ -55,7 +57,8 @@ onSubmit = event => {
           cta,
           imgUrl,
           store: storeId || null,
-          user: user.uid
+          user: user.uid,
+          itemId: itemUid
       })
       .then(authUser => {
           console.log("Document written with ID: ", authUser.id);
@@ -134,7 +137,9 @@ render() {
         } />
       <Form className="FormInput" onSubmit={this.onSubmit}>
         <Form.Control style={{display:`none`}} name="imgurl" value={this.state.imgUrl || ''} onChange={this.onChange} type="text" placeholder="imgUrl" />
-            <Form.Group controlId="exampleForm.ControlInput1">
+
+
+        <Form.Group controlId="exampleForm.ControlInput1">
               <Form.Label>Name</Form.Label>
               <Form.Control name="name" value={this.state.name || ''} onChange={this.onChange} type="text" placeholder="Item name" />
             </Form.Group>

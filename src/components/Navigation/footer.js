@@ -25,40 +25,34 @@ const FooterNavigation = () => (
 const FooterNavigationAuth = () => (
   <Row className="bottomNav">
     <Col className="px-0">
-      <NavLink to={ROUTES.ADMIN}>
-        <span className="navItem">
-      <FontAwesomeIcon icon={faHome} />
-      </span>
-    </NavLink>
-    </Col>
-    <Col className="px-0">
-      <NavLink to={ROUTES.EXPLORE}>
-        <span className="navItem">
-          <FontAwesomeIcon icon={faSearch} />
-        </span>
-    </NavLink>
-    </Col>
-    <Col className="px-0">
-      <NavLink to={ROUTES.NEWITEM}>
-        <span className="navItem">
-          <FontAwesomeIcon icon={faPlusSquare} />
-        </span>
-    </NavLink>
-    </Col>
-    <Col className="px-0">
-      <NavLink to={ROUTES.ORDERS}>
-        <span className="navItem">
-      <FontAwesomeIcon icon={faReceipt} />
-      </span>
-    </NavLink>
-    </Col>
-    <Col className="px-0">
       <NavLink to={ROUTES.HOME}>
         <span className="navItem">
           <FontAwesomeIcon icon={faStore} />
         </span>
       </NavLink>
     </Col>
+    <Col className="px-0">
+      <NavLink to={ROUTES.NEWITEM}>
+        <span className="navItem">
+          <FontAwesomeIcon icon={faPlusSquare} />
+        </span>
+      </NavLink>
+    </Col>
+    <Col className="px-0">
+      <NavLink to={ROUTES.EXPLORE}>
+        <span className="navItem">
+          <FontAwesomeIcon icon={faSearch} />
+        </span>
+      </NavLink>
+    </Col>
+    <Col className="px-0">
+      <NavLink to={ROUTES.ORDERS}>
+        <span className="navItem">
+          <FontAwesomeIcon icon={faReceipt} />
+        </span>
+      </NavLink>
+    </Col>
+
 
   </Row>
 );

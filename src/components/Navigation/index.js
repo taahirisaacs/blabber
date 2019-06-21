@@ -31,7 +31,7 @@ const NavigationNonAuth = () => (
     <Navbar.Brand className="mx-0" href="/home">TinyTrader</Navbar.Brand>
     <Nav>
       <LinkContainer as="button" className="signup" to={ROUTES.SIGN_UP}>
-        <Nav.Item>Create your store</Nav.Item>
+        <Nav.Item>Start Trading</Nav.Item>
       </LinkContainer>
     </Nav>
   </Navbar>

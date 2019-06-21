@@ -13,6 +13,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Image from 'react-bootstrap/Image';
+import shortid from 'shortid';
 
 import firebase from 'firebase/app';
 import HomePage from '../Home';
@@ -60,6 +61,7 @@ class StoresPageAuth extends Component {
     const { name, description, price, category, storeId, imgUrl, cta } = this.state;
     const user = firebase.auth().currentUser.uid;
     const db = firebase.firestore();
+    const itemUid = shortid.generate();
 
       db.collection("items").add({
             name,
@@ -69,7 +71,8 @@ class StoresPageAuth extends Component {
             cta,
             imgUrl,
             store: storeId,
-            user
+            user,
+            itemId: itemUid
         })
       .then(authUser => {
         this.setState({ ...INITIAL_STATE });
@@ -109,7 +112,7 @@ class StoresPageAuth extends Component {
       })
         this.setState({items})
       })
-        }
+}
 
   componentWillUnmount() {
     const storeItem = this.state.storeId;
@@ -163,113 +166,112 @@ class StoresPageAuth extends Component {
                       <CopyToClipboard block className="storebtn" text={`${itemUrl}`} onCopy={() => this.setState({copied: true})}>
                         <Button>{this.state.copied ? <span>Copied.</span> : <span>Copy Link URL</span>}</Button>
                       </CopyToClipboard>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Col>
-                </Row>
-             </li>
+                    </Col>
+                  </Row>
+                </div>
+              </Col>
+            </Row>
+          </li>
         </ul>
         <ul style={{marginBottom:`100px`,}}>
           {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
           {Object.keys(items).map((key, index) => {
-             return (
-               <li className="messages" key={key} index={index}>
+            return (
+              <li className="messages" key={key} index={index}>
                 <div className="chat">
-                  <Link to={`/items/${user.uid}/${items[key].name}`}>
+                  <Link to={`/items/${items[key].store}/${items[key].itemId}`}>
                     <Row>
-                    <Col xs={4} sm={3} md={3}>
-                      <div className="itemImg">
-                      <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/`}/>
-                      </div>
-                    </Col>
-                    <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
-                      <h2>{items[key].name}</h2>
-                      <span className="pricing">R{items[key].price}</span>
-                      <span className="timestamp">{items[key].description}</span>
-                    </Col>
+                      <Col xs={4} sm={3} md={3}>
+                        <div className="itemImg">
+                          <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/`}/>
+                        </div>
+                      </Col>
+                      <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
+                        <h2>{items[key].name}</h2>
+                        <span className="pricing">R{items[key].price}</span>
+                        <span className="timestamp">{items[key].description}</span>
+                      </Col>
                     </Row>
                   </Link>
                 </div>
-               </li>
-             );
+              </li>
+            );
           })}
         </ul>
 
-    <Modal show={this.state.show} onHide={this.handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Add an item</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Uploader
-          id='file'
-          name='file'
-          onChange={(file) => {
-            console.log('File changed: ', file)
-
-            if (file) {
-              file.progress(info => console.log('File progress: ', info.progress))
-              file.done(info => console.log('File uploaded: ', info))
-            }
-          }}
-          onUploadComplete={info =>
-            this.setState ({
-              imgUrl: info.cdnUrl,
-            })
-          } />
-        <Form className="FormInput" onSubmit={this.onSubmit}>
-        <Form.Control style={{display:`none`}} name="imgurl" value={this.state.imgUrl || ''} onChange={this.onChange} type="text" placeholder="imgUrl" />
-        <Form.Control style={{display:`none`}} name="storeId" value={storeId || ''} onChange={this.onChange} type="text" />
-            <Form.Group controlId="exampleForm.ControlInput1">
-              <Form.Label>Item Name</Form.Label>
-              <Form.Control name="name" value={this.state.name || ''} onChange={this.onChange} type="text" placeholder="Item name" />
-            </Form.Group>
-            <Form.Group controlId="exampleForm.ControlInput2">
-              <Form.Control name="description" as="textarea" rows="3"  value={this.state.description || ''} onChange={this.onChange} type="text" placeholder="Description..." />
-            </Form.Group>
-            <Form.Group controlId="exampleForm.ControlInput3">
-              <Form.Label>Price</Form.Label>
-              <Form.Control name="price"  value={this.state.price || ''} onChange={this.onChange} type="number" pattern="[0-9]*" placeholder="100.00" />
-            </Form.Group>
-            <Form.Group controlId="exampleForm.ControlSelect1">
-              <Form.Label>Select a category</Form.Label>
-              <Form.Control as="select" name="category" value={this.state.category || ''} onChange={this.onChange}>
-                <option>Select a Category</option>
-                <option>👕 Clothing</option>
-                <option>👟 Shoes</option>
-                <option>🍔 Food</option>
-                <option>💻 Electronics</option>
-                <option>🚗 Cars</option>
-                <option>🚚 Logistics</option>
-                <option>📦 2nd Hand Goods</option>
-                <option>💅🏼 Salon</option>
-                <option>💇🏼‍♂️ Barber</option>
-                <option>🧹 Cleaning</option>
-              </Form.Control>
-            </Form.Group>
-            <Form.Group controlId="exampleForm.ControlSelect12">
-              <Form.Label>Select your contact button</Form.Label>
-              <Form.Control as="select" name="cta" value={this.state.cta || ''} onChange={this.onChange}>
-                <option>Message Me</option>
-                <option>Make an offer</option>
-                <option>Order</option>
-                <option>Pre-Order</option>
-                <option>Make a booking</option>
-                <option>Book now</option>
-                <option>Book a test drive</option>
-                <option>Reserve</option>
-                <option>RSVP</option>
-                <option>Request a quote</option>
-              </Form.Control>
-            </Form.Group>
-            <Modal.Footer >
-              <Button variant="secondary" onClick={this.handleClose}>
-                Close
-              </Button>
-              <Button variant="primary" onClick={this.handleClose} type="submit">
-                Add Item
-              </Button>
-            </Modal.Footer>
+        <Modal show={this.state.show} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add an item</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Uploader
+              id='file'
+              name='file'
+              onChange={(file) => {
+                console.log('File changed: ', file)
+                if (file) {
+                  file.progress(info => console.log('File progress: ', info.progress))
+                  file.done(info => console.log('File uploaded: ', info))
+                }
+              }}
+              onUploadComplete={info =>
+                this.setState ({
+                  imgUrl: info.cdnUrl,
+                })
+              } />
+            <Form className="FormInput" onSubmit={this.onSubmit}>
+              <Form.Control style={{display:`none`}} name="imgurl" value={this.state.imgUrl || ''} onChange={this.onChange} type="text" placeholder="imgUrl" />
+              <Form.Control style={{display:`none`}} name="storeId" value={storeId || ''} onChange={this.onChange} type="text" />
+              <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>Item Name</Form.Label>
+                <Form.Control name="name" value={this.state.name || ''} onChange={this.onChange} type="text" placeholder="Item name" />
+              </Form.Group>
+              <Form.Group controlId="exampleForm.ControlInput2">
+                <Form.Control name="description" as="textarea" rows="3"  value={this.state.description || ''} onChange={this.onChange} type="text" placeholder="Description..." />
+              </Form.Group>
+              <Form.Group controlId="exampleForm.ControlInput3">
+                <Form.Label>Price</Form.Label>
+                <Form.Control name="price"  value={this.state.price || ''} onChange={this.onChange} type="number" pattern="[0-9]*" placeholder="100.00" />
+              </Form.Group>
+              <Form.Group controlId="exampleForm.ControlSelect1">
+                <Form.Label>Select a category</Form.Label>
+                <Form.Control as="select" name="category" value={this.state.category || ''} onChange={this.onChange}>
+                  <option>Select a Category</option>
+                  <option>👕 Clothing</option>
+                  <option>👟 Shoes</option>
+                  <option>🍔 Food</option>
+                  <option>💻 Electronics</option>
+                  <option>🚗 Cars</option>
+                  <option>🚚 Logistics</option>
+                  <option>📦 2nd Hand Goods</option>
+                  <option>💅🏼 Salon</option>
+                  <option>💇🏼‍♂️ Barber</option>
+                  <option>🧹 Cleaning</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group controlId="exampleForm.ControlSelect12">
+                <Form.Label>Select your contact button</Form.Label>
+                <Form.Control as="select" name="cta" value={this.state.cta || ''} onChange={this.onChange}>
+                  <option>Message Me</option>
+                  <option>Make an offer</option>
+                  <option>Order</option>
+                  <option>Pre-Order</option>
+                  <option>Make a booking</option>
+                  <option>Book now</option>
+                  <option>Book a test drive</option>
+                  <option>Reserve</option>
+                  <option>RSVP</option>
+                  <option>Request a quote</option>
+                </Form.Control>
+              </Form.Group>
+              <Modal.Footer >
+                <Button variant="secondary" onClick={this.handleClose}>
+                  Close
+                </Button>
+                <Button variant="primary" onClick={this.handleClose} type="submit">
+                  Add Item
+                </Button>
+              </Modal.Footer>
             </Form>
           </Modal.Body>
         </Modal>

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { withFirebase } from '../Firebase';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 
 const INITIAL_STATE = {
   whatsapp: '',
@@ -20,8 +20,11 @@ class WhatappUpdate extends Component {
   onSubmit = event => {
     const { whatsapp } = this.state;
     const user = firebase.auth().currentUser;
+    const db = firebase.firestore();
+    const dbUsers = db.collection("users").doc(user.uid);
 
-    firebase.database().ref('users/' + user.uid).update({
+
+    dbUsers.update({
         whatsapp
       })
     .then(authUser => {

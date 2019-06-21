@@ -8,6 +8,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Uploader from './../Uploader';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -25,6 +26,10 @@ import firebase from 'firebase/app';
 import * as ROUTES from '../../constants/routes';
 import { AuthUserContext } from '../Session';
 
+const INITIAL_STATE = {
+  show: false,
+};
+
 const Items = (props) => (
 
     <AuthUserContext.Consumer>
@@ -38,26 +43,77 @@ class ItemsAuth extends Component {
   constructor(props) {
     super(props);
 
+    this.state = { ...INITIAL_STATE };
     this.state = {
       loading: false,
       items: '',
       copied: false,
     };
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
+
+  onSubmit = event => {
+    const { name, description, price, category, imgUrl, cta } = this.state;
+
+    const user = firebase.auth().currentUser.uid;
+    const db = firebase.firestore();
+    const itemkey = this.props.match.params.itemid;
+    db.collection("items").where("itemId", "==", itemkey)
+    .get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            console.log(doc.id, " => ", doc.data());
+            // Build doc ref from doc.id
+            db.collection("items").doc(doc.id).update({
+              name,
+              description,
+              price,
+              category,
+              cta,
+              imgUrl
+            })
+        })
+   })
+   .catch(error => {
+     this.setState({ error });
+   });
+
+ event.preventDefault();
+
+}
 
   componentWillMount(){
     this.setState({ loading: true })
     const itemkey = this.props.match.params.itemid;
     const db = firebase.firestore();
     const dbCol = db.collection("items");
-    const dbquery = dbCol.where("name", "==", itemkey);
+    const dbquery = dbCol.where("itemId", "==", itemkey);
+
+    const user = firebase.auth().currentUser;
+    const dbUsers = db.collection("users").doc(user.uid);
+
+    dbUsers.get()
+    .then(snap => {
+      this.setState({userWhatsapp: snap.data().whatsapp})
+    })
 
     this.unsubscribe = dbquery.onSnapshot(snap => {
-      const items = {}
+      const snapId = snap.docs[0].id;
+      const items = {};
       snap.forEach(item => {
        items[item.id] =  item.data()
       })
-        this.setState({items, loading: false})
+        this.setState({
+          items,
+          name: items[snapId].name,
+          description: items[snapId].description,
+          price: items[snapId].price,
+          category: items[snapId].category,
+          cta: items[snapId].cta,
+          imgUrl: items[snapId].imgUrl,
+          loading: false
+        })
       })
 
     }
@@ -73,10 +129,22 @@ class ItemsAuth extends Component {
       this.props.history.goBack();
     }
 
+    handleClose() {
+      this.setState({ show: false });
+    }
+
+    handleShow() {
+      this.setState({ show: true });
+    }
+    onChange = event => {
+      this.setState({ [event.target.name]: event.target.value });
+    };
+
   render () {
-    console.log(this.props);
+    console.log(this.state.name);
     const { items, loading, userWhatsapp } = this.state;
     const itemUrl = window.location.href;
+
     return (
       <Col>
         <ul style={{marginTop:`20px`, marginBottom:`90px`}}>
@@ -99,15 +167,95 @@ class ItemsAuth extends Component {
                       <CopyToClipboard block className="storebtn copy_link" text={`${itemUrl}`} onCopy={() => this.setState({copied: true})}>
                         <Button>{this.state.copied ? <span>Copied.</span> : <span>Copy Item URL</span>}</Button>
                       </CopyToClipboard>
+                      <Button className="storebtn copy_link" onClick={this.handleShow} block>
+                        Edit
+                      </Button>
                       <span className="divider"></span>
                       <Button block className="storebtn delete" onClick={this.removeItem.bind(this, key)}>Delete item</Button>
                     </Col>
-                 </Row>
-               </div>
+                  </Row>
+                </div>
+                <Modal show={this.state.show} onHide={this.handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Edit your item</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <Uploader
+                      id='file'
+                      name='file'
+                      onChange={(file) => {
+                        console.log('File changed: ', file)
+                        if (file) {
+                          file.progress(info => console.log('File progress: ', info.progress))
+                          file.done(info => console.log('File uploaded: ', info))
+                        }
+                        this.setState ({
+                          imgUrl: file.cdnUrl,
+                        })
+                      }}
+                      onUploadComplete={info =>
+                        this.setState ({
+                          imgUrl: info.cdnUrl,
+                        })
+                      } />
+                    <Form className="FormInput" onSubmit={this.onSubmit}>
+                      <Form.Control style={{display:`none`}} name="imgUrl" value={this.state.imgUrl || ''} onChange={this.onChange} type="text" placeholder="imgUrl" />
+                      <Form.Group controlId="exampleForm.ControlInput1">
+                        <Form.Label>Item Name</Form.Label>
+                        <Form.Control name="name" value={this.state.name || ''} onChange={this.onChange} type="text" placeholder="Item name" />
+                      </Form.Group>
+                      <Form.Group controlId="exampleForm.ControlInput2">
+                        <Form.Control name="description" as="textarea" rows="3"  value={this.state.description || ''}  onChange={this.onChange} type="text" placeholder="Description..." />
+                      </Form.Group>
+                      <Form.Group controlId="exampleForm.ControlInput3">
+                        <Form.Label>Price</Form.Label>
+                        <Form.Control name="price"  value={this.state.price || ''}  onChange={this.onChange} type="number" pattern="[0-9]*" placeholder="100.00" />
+                      </Form.Group>
+                      <Form.Group controlId="exampleForm.ControlSelect1">
+                        <Form.Label>Select a category</Form.Label>
+                        <Form.Control as="select" name="category" value={this.state.category || ''}  onChange={this.onChange}>
+                          <option>Select a Category</option>
+                          <option>👕 Clothing</option>
+                          <option>👟 Shoes</option>
+                          <option>🍔 Food</option>
+                          <option>💻 Electronics</option>
+                          <option>🚗 Cars</option>
+                          <option>🚚 Logistics</option>
+                          <option>📦 2nd Hand Goods</option>
+                          <option>💅🏼 Salon</option>
+                          <option>💇🏼‍♂️ Barber</option>
+                          <option>🧹 Cleaning</option>
+                        </Form.Control>
+                      </Form.Group>
+                      <Form.Group controlId="exampleForm.ControlSelect12">
+                        <Form.Label>Select your contact button</Form.Label>
+                        <Form.Control as="select" name="cta" value={this.state.cta || ''} onChange={this.onChange}>
+                          <option>Message Me</option>
+                          <option>Make an offer</option>
+                          <option>Order</option>
+                          <option>Pre-Order</option>
+                          <option>Make a booking</option>
+                          <option>Book now</option>
+                          <option>Book a test drive</option>
+                          <option>Reserve</option>
+                          <option>RSVP</option>
+                          <option>Request a quote</option>
+                        </Form.Control>
+                      </Form.Group>
+                      <Button block variant="primary" onClick={this.handleClose} type="submit">
+                        Save Changes
+                      </Button>
+                      <Button block variant="secondary" onClick={this.handleClose}>
+                        Cancel
+                      </Button>
+                    </Form>
+                  </Modal.Body>
+                </Modal>
               </li>
             );
           })}
         </ul>
+
       </Col>
     );
   }
@@ -132,12 +280,11 @@ class ItemsNonAuth extends Component {
           const db = firebase.firestore();
 
           const dbItems = db.collection("items");
-          const dbItemsquery = dbItems.where("name", "==", itemkey);
+          const dbItemsquery = dbItems.where("itemId", "==", itemkey);
 
           const dbStore = db.collection("stores").doc(storekey);
 
           dbStore.onSnapshot(snap => {
-            console.log(snap.id);
             this.setState({
               stores: snap.data(),
               storesId: snap.id,
@@ -147,6 +294,7 @@ class ItemsNonAuth extends Component {
           });
 
           this.unsubscribe = dbItemsquery.onSnapshot(snap => {
+
             const items = {}
 
             snap.forEach(item => {
