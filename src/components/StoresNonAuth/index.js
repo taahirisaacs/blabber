@@ -128,7 +128,7 @@ class StoresPageNonAuth extends Component {
             return (
               <li className="messages" key={key} index={index}>
                 <div className="chat">
-                  <Link to={`/items/${items[key].store}/${items[key].name}`}>
+                  <Link to={`/items/${items[key].store}/${items[key].itemId}`}>
                     <Row>
                       <Col xs={4} sm={3} md={3}>
                         <div className="itemImg">

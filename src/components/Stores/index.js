@@ -26,11 +26,11 @@ const INITIAL_STATE = {
   loading: false,
   store: [],
   storedesc: [],
-  name: [],
-  description: [],
-  category: [],
-  cta: [],
-  price: [],
+  name: '',
+  description: '',
+  category: '',
+  cta: '',
+  price: '',
   error: null,
   copied: false,
 };
@@ -160,10 +160,10 @@ class StoresPageAuth extends Component {
                   <span className="cat">{stores.category || ''}</span>
                   <Row >
                     <Col>
-                      <Button variant="primary" size="sm" onClick={this.handleShow} block>
+                      <Button className="storebtn" onClick={this.handleShow} block>
                         + Add a new item
                       </Button>
-                      <CopyToClipboard block className="storebtn" text={`${itemUrl}`} onCopy={() => this.setState({copied: true})}>
+                      <CopyToClipboard block className="storebtn copy_link" text={`${itemUrl}`} onCopy={() => this.setState({copied: true})}>
                         <Button>{this.state.copied ? <span>Copied.</span> : <span>Copy Link URL</span>}</Button>
                       </CopyToClipboard>
                     </Col>
@@ -189,7 +189,7 @@ class StoresPageAuth extends Component {
                       <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
                         <h2>{items[key].name}</h2>
                         <span className="pricing">R{items[key].price}</span>
-                        <span className="timestamp">{items[key].description}</span>
+                        <span className="timestamp desc">{items[key].description}</span>
                       </Col>
                     </Row>
                   </Link>

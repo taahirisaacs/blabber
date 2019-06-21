@@ -122,9 +122,9 @@ class Items extends Component {
                     </Col>
                     <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
                       <Link to={`/items/${items[item].store}/${items[item].itemId}`}>
-                       <h2>{items[item].name}</h2>
-                       <span className="pricing">R{items[item].price}</span>
-                       <span className="timestamp">{items[item].description}</span>
+                        <h2>{items[item].name}</h2>
+                        <span className="pricing">R{items[item].price}</span>
+                        <span className="timestamp desc">{items[item].description}</span>
                        </Link>
                      </Col>
 
