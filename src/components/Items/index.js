@@ -177,7 +177,7 @@ class ItemsAuth extends Component {
                 </div>
                 <Modal show={this.state.show} onHide={this.handleClose}>
                   <Modal.Header closeButton>
-                    <Modal.Title>Edit your item</Modal.Title>
+                    <Modal.Title>Edit your store</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
                     <Uploader
@@ -289,19 +289,18 @@ class ItemsNonAuth extends Component {
               stores: snap.data(),
               storesId: snap.id,
               loading: false,
-            });
-
-          });
+            })
+          })
 
           this.unsubscribe = dbItemsquery.onSnapshot(snap => {
-
             const items = {}
 
             snap.forEach(item => {
-             items[item.id] =  item.data();
+             items[item.id] =  item.data()
             })
               this.setState({items, loading: false});
             })
+
 
           }
 
@@ -335,7 +334,7 @@ class ItemsNonAuth extends Component {
                           <span className="pricing">R{items[key].price}</span>
                           <span className="itemdesc">{items[key].description}</span>
                           <span className="cat">{items[key].category}</span>
-                          <Button block className="storebtn" href={`https://wa.me/27${userWhatsapp}/?text=(${items[key].cta})%20:%20${items[key].name}%20|%20R${items[key].price}`}>{items[key].cta}</Button>
+                          <Button block className="storebtn" href={`https://wa.me/27${stores.whatsapp}/?text=(${items[key].cta})%20:%20${items[key].name}%20|%20R${items[key].price}`}>{items[key].cta}</Button>
                           <CopyToClipboard block className="storebtn copy_link" text={`${itemUrl}`} onCopy={() => this.setState({copied: true})}>
                             <Button>{this.state.copied ? <span>Copied.</span> : <span>Copy Item URL</span>}</Button>
                           </CopyToClipboard>

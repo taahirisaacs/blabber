@@ -125,19 +125,19 @@ class Items extends Component {
                         <h2>{items[item].name}</h2>
                         <span className="pricing">R{items[item].price}</span>
                         <span className="timestamp desc">{items[item].description}</span>
-                       </Link>
-                     </Col>
+                      </Link>
+                    </Col>
 
-                     <Dropdown>
-                       <Dropdown.Toggle as="span" drop="left" className="timestamp delete" id="dropdown-basic"/>
-                       <Dropdown.Menu >
-                         <Dropdown.Item onClick={this.removeItem.bind(this, item)}>Delete</Dropdown.Item>
-                       </Dropdown.Menu>
-                     </Dropdown>
-                     </Row>
+                    <Dropdown>
+                      <Dropdown.Toggle as="span" drop="left" className="timestamp delete" id="dropdown-basic"/>
+                      <Dropdown.Menu >
+                        <Dropdown.Item onClick={this.removeItem.bind(this, item)}>Delete</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </Row>
 
-                 </div>
-                </li>
+                </div>
+              </li>
             );
           })}
         </ul>

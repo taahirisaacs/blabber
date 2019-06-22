@@ -19,6 +19,7 @@ import firebase from 'firebase/app';
 const INITIAL_STATE = {
   name: [],
   description: [],
+  whatsapp: [],
   category: [],
   error: null,
   loading: false,
@@ -41,17 +42,18 @@ class Stores extends Component {
   };
 
   onSubmit = event => {
-    const { name, description, category, imgUrl } = this.state;
+    const { name, description, whatsapp, category, imgUrl } = this.state;
     const user = firebase.auth().currentUser.uid;
     const db = firebase.firestore();
     const dbCol = db.collection("stores");
 
       dbCol.add({
-          name,
-          description,
-          category,
-          imgUrl,
-          user
+          name: name || '',
+          description: description || '',
+          whatsapp: whatsapp || '',
+          category: category || '',
+          imgUrl: imgUrl || '',
+          user: user || ''
         })
       .then(authUser => {
         this.setState({ ...INITIAL_STATE });
@@ -165,24 +167,24 @@ class Stores extends Component {
           </Modal.Header>
 
           <Modal.Body>
-          <Uploader
-            id='file'
-            name='file'
-            onChange={(file) => {
-              console.log('File changed: ', file)
+            <Uploader
+              id='file'
+              name='file'
+              onChange={(file) => {
+                console.log('File changed: ', file)
 
-              if (file) {
-                file.progress(info => console.log('File progress: ', info.progress))
-                file.done(info => console.log('File uploaded: ', info))
-              }
-            }}
-            onUploadComplete={info =>
-              this.setState ({
-                imgUrl: info.cdnUrl,
-              })
-            } />
-          <Form className="FormInput" onSubmit={this.onSubmit}>
-          <Form.Control style={{display:`none`}} name="imgurl" value={this.state.imgUrl || ''} onChange={this.onChange} type="text" placeholder="imgUrl" />
+                if (file) {
+                  file.progress(info => console.log('File progress: ', info.progress))
+                  file.done(info => console.log('File uploaded: ', info))
+                }
+              }}
+              onUploadComplete={info =>
+                this.setState ({
+                  imgUrl: info.cdnUrl,
+                })
+              } />
+            <Form className="FormInput" onSubmit={this.onSubmit}>
+              <Form.Control style={{display:`none`}} name="imgurl" value={this.state.imgUrl || ''} onChange={this.onChange} type="text" placeholder="imgUrl" />
 
               <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>Store Name</Form.Label>
@@ -191,6 +193,10 @@ class Stores extends Component {
               <Form.Group controlId="exampleForm.ControlInput2">
                 <Form.Label>Description</Form.Label>
                 <Form.Control name="description" as="textarea" rows="3"  value={this.state.description || ''} onChange={this.onChange} type="text" placeholder="eg. Widget123" />
+              </Form.Group>
+              <Form.Group controlId="exampleForm.ControlInput2">
+                <Form.Label>WhatsApp Number</Form.Label>
+                <Form.Control name="whatsapp"  value={this.state.whatsapp || ''} onChange={this.onChange} type="text" />
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Label>Select a category</Form.Label>

@@ -15,7 +15,7 @@ import * as ROUTES from '../../constants/routes';
 const SignUpPage = () => (
   <Row>
     <Col xs={{span:'10', offset:'1'}}>
-      <h1 className="pageTitle">Sign up to create your store</h1>
+      <h1 className="pageTitle">Sign up to start trading</h1>
       <SignUpForm />
       <LoginLink />
     </Col>
@@ -165,7 +165,7 @@ class SignUpFormBase extends Component {
 
 const SignUpLink = () => (
   <p style={{textAlign:`center`, marginTop:`20px`}}>
-    Don't have a TinyTrader account yet? <Link to={ROUTES.SIGN_UP}>Create your store now!</Link>
+    Don't have a TinyTrader account yet? <Link to={ROUTES.SIGN_UP}>Create a free account today</Link>
   </p>
 );
 

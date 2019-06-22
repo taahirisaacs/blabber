@@ -73,16 +73,16 @@ class SignInFormBase extends Component {
           />
         </Form.Group>
         <Form.Group controlId="formPassword">
-        <Form.Control
-          name="password"
-          value={password}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
+          <Form.Control
+            name="password"
+            value={password}
+            onChange={this.onChange}
+            type="password"
+            placeholder="Password"
+          />
         </Form.Group>
         <Button variant="primary" disabled={isInvalid} type="submit" block>
-          Sign In
+          Log In
         </Button>
 
         {error && <p>{error.message}</p>}
