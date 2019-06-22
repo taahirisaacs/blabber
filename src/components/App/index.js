@@ -32,7 +32,7 @@ const App = () => (
       <Router>
         <Navigation />
         <Container fluid className="px-0 mb-5">
-          <Route path={ROUTES.LANDING} component={LandingPage} />
+          <Route exact path={ROUTES.LANDING} component={LandingPage} />
           <Route path={ROUTES.ORDERS} component={Orders} />
           <Route path={ROUTES.EXPLORE} component={Explore} />
           <Route path={ROUTES.SETTINGS} component={Settings} />

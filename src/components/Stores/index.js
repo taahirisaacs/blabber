@@ -47,11 +47,6 @@ class StoresPageAuth extends Component {
       storeId: [],
       show: false,
       storeUrl: window.location.href,
-      storesImg: [],
-      storesName: [],
-      storesDesc: [],
-      storesCat: [],
-      storeUid: []
     };
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -64,15 +59,15 @@ class StoresPageAuth extends Component {
     const itemUid = shortid.generate();
 
       db.collection("items").add({
-            name,
-            description,
-            price,
-            category,
-            cta,
-            imgUrl,
-            store: storeId,
-            user,
-            itemId: itemUid
+            name: name || '',
+            description: description || '',
+            price: price || '',
+            category: category || '',
+            cta: cta || '',
+            imgUrl: imgUrl || '',
+            store: storeId || '',
+            user: user || '',
+            itemId: itemUid || ''
         })
       .then(authUser => {
         this.setState({ ...INITIAL_STATE });
@@ -92,8 +87,7 @@ class StoresPageAuth extends Component {
     const db = firebase.firestore();
     const dbCol = db.collection("stores").doc(docId);
 
-    dbCol.onSnapshot(snap => {
-      console.log(snap.id);
+    this.unsubscribe = dbCol.onSnapshot(snap => {
       this.setState({
         stores: snap.data(),
         storeId: snap.id,
@@ -105,7 +99,7 @@ class StoresPageAuth extends Component {
     const dbItems = db.collection("items");
     const dbItemquery = dbItems.where("store", "==", docId);
 
-    dbItemquery.onSnapshot(snap => {
+    this.unsubscribe = dbItemquery.onSnapshot(snap => {
       const items = {}
       snap.forEach(item => {
        items[item.id] =  item.data()
@@ -115,10 +109,7 @@ class StoresPageAuth extends Component {
 }
 
   componentWillUnmount() {
-    const storeItem = this.state.storeId;
-    const user = firebase.auth().currentUser;
-    firebase.database().ref(`stores/users/${user.uid}/${storeItem}/`).off();
-    firebase.database().ref(`items/users/${user.uid}/`).off();
+    this.unsubscribe();
   }
 
   handleClose() {
@@ -143,6 +134,7 @@ class StoresPageAuth extends Component {
      } = this.state;
      const itemUrl = window.location.href;
      const user = firebase.auth().currentUser;
+     console.log(storeId);
 
     return (
       <Col md={{span:6, offset:3}}>
@@ -252,6 +244,7 @@ class StoresPageAuth extends Component {
               <Form.Group controlId="exampleForm.ControlSelect12">
                 <Form.Label>Select your contact button</Form.Label>
                 <Form.Control as="select" name="cta" value={this.state.cta || ''} onChange={this.onChange}>
+                  <option>Select a button</option>
                   <option>Message Me</option>
                   <option>Make an offer</option>
                   <option>Order</option>

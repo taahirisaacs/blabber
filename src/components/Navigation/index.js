@@ -27,12 +27,14 @@ const NavigationAuth = () => (
 );
 
 const NavigationNonAuth = () => (
-  <Navbar expand="lg" className="px-3">
-    <Navbar.Brand className="mx-0" href="/home">TinyTrader</Navbar.Brand>
-    <Nav>
-      <LinkContainer as="button" className="signup" to={ROUTES.SIGN_UP}>
-        <Nav.Item>Start Trading</Nav.Item>
-      </LinkContainer>
+  <Navbar expand="lg" className="px-3" sticky="top">
+    <LinkContainer to={ROUTES.LANDING}>
+      <Navbar.Brand className="mx-0">TinyTrader</Navbar.Brand>
+    </LinkContainer>
+      <Nav>
+        <LinkContainer as="button" className="signup" to={ROUTES.SIGN_UP}>
+          <Nav.Item>Start Trading</Nav.Item>
+        </LinkContainer>
     </Nav>
   </Navbar>
 );

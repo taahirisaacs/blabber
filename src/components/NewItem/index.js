@@ -48,17 +48,19 @@ onSubmit = event => {
   const user = firebase.auth().currentUser;
   const db = firebase.firestore();
   const itemUid = shortid.generate();
+  const timestamp = Date.now();
 
   db.collection("items").add({
-          name,
-          description,
-          price,
-          category,
-          cta,
-          imgUrl,
+          name: name || '',
+          description: description || '',
+          price: price || '',
+          category: category || '',
+          cta: cta || '',
+          imgUrl: imgUrl || '',
           store: storeId || null,
           user: user.uid,
-          itemId: itemUid
+          itemId: itemUid,
+          timestamp
       })
       .then(authUser => {
           console.log("Document written with ID: ", authUser.id);
@@ -138,68 +140,67 @@ render() {
       <Form className="FormInput" onSubmit={this.onSubmit}>
         <Form.Control style={{display:`none`}} name="imgurl" value={this.state.imgUrl || ''} onChange={this.onChange} type="text" placeholder="imgUrl" />
 
-
         <Form.Group controlId="exampleForm.ControlInput1">
-              <Form.Label>Name</Form.Label>
-              <Form.Control name="name" value={this.state.name || ''} onChange={this.onChange} type="text" placeholder="Item name" />
-            </Form.Group>
-            <Form.Group controlId="exampleForm.ControlInput2">
-              <Form.Control name="description" as="textarea" rows="3"  value={this.state.description || ''} onChange={this.onChange} type="text" placeholder="Description" />
-            </Form.Group>
-            <Form.Group controlId="exampleForm.ControlSelect2">
-              <Form.Label>Select a Store</Form.Label>
-              <Form.Control as="select" name="storeId" value={this.state.storeId || ''} onChange={this.onChange}>
-                <option>Select a Store</option>
-                {Object.keys(stores).map((store, index) => {
-                  return (
-                    <option key={store} index={index} value={store}>{stores[store].name}</option>
-                    );
-                  }
-                )}
-              </Form.Control>
-            </Form.Group>
+          <Form.Label>Name</Form.Label>
+          <Form.Control name="name" value={this.state.name || ''} onChange={this.onChange} type="text" placeholder="Item name" />
+        </Form.Group>
+        <Form.Group controlId="exampleForm.ControlInput2">
+          <Form.Control name="description" as="textarea" rows="3"  value={this.state.description || ''} onChange={this.onChange} type="text" placeholder="Description" />
+        </Form.Group>
+        <Form.Group controlId="exampleForm.ControlSelect2">
+          <Form.Label>Select a Store</Form.Label>
+          <Form.Control as="select" name="storeId" value={this.state.storeId || ''} onChange={this.onChange}>
+            <option>Select a Store</option>
+            {Object.keys(stores).map((store, index) => {
+              return (
+                <option key={store} index={index} value={store}>{stores[store].name}</option>
+              );
+            }
+            )}
+          </Form.Control>
+        </Form.Group>
 
-            <Form.Group controlId="exampleForm.ControlInput3">
-              <Form.Label>Price</Form.Label>
-              <Form.Control name="price"  value={this.state.price || ''} onChange={this.onChange} type="number" pattern="[0-9]*" />
-            </Form.Group>
-            <Form.Group controlId="exampleForm.ControlSelect1">
-              <Form.Label>Select a category</Form.Label>
-              <Form.Control as="select" name="category" value={this.state.category || ''} onChange={this.onChange}>
-                <option>Select a Category</option>
-                <option>👕 Clothing</option>
-                <option>👟 Shoes</option>
-                <option>🍔 Food</option>
-                <option>💻 Electronics</option>
-                <option>🚗 Cars</option>
-                <option>🚚 Logistics</option>
-                <option>📦 2nd Hand Goods</option>
-                <option>💅🏼 Salon</option>
-                <option>💇🏼‍♂️ Barber</option>
-                <option>🧹 Cleaning</option>
-              </Form.Control>
-            </Form.Group>
-            <Form.Group controlId="exampleForm.ControlSelect12">
-              <Form.Label>Select your item button</Form.Label>
-              <Form.Control as="select" name="cta" value={this.state.cta || ''} onChange={this.onChange}>
-                <option>Select item button</option>
-                <option>Message Me</option>
-                <option>Make an offer</option>
-                <option>Order</option>
-                <option>Pre-Order</option>
-                <option>Make a booking</option>
-                <option>Book now</option>
-                <option>Book a test drive</option>
-                <option>Reserve</option>
-                <option>RSVP</option>
-                <option>Request a quote</option>
-              </Form.Control>
-            </Form.Group>
-              <Button variant="primary" onClick={this.handleClose} type="submit" block>
-                Add Item
-              </Button>
-            </Form>
-    </Col >
+        <Form.Group controlId="exampleForm.ControlInput3">
+          <Form.Label>Price</Form.Label>
+          <Form.Control name="price"  value={this.state.price || ''} onChange={this.onChange} type="number" pattern="[0-9]*" />
+        </Form.Group>
+        <Form.Group controlId="exampleForm.ControlSelect1">
+          <Form.Label>Select a category</Form.Label>
+          <Form.Control as="select" name="category" value={this.state.category || ''} onChange={this.onChange}>
+            <option>Select a Category</option>
+            <option>👕 Clothing</option>
+            <option>👟 Shoes</option>
+            <option>🍔 Food</option>
+            <option>💻 Electronics</option>
+            <option>🚗 Cars</option>
+            <option>🚚 Logistics</option>
+            <option>📦 2nd Hand Goods</option>
+            <option>💅🏼 Salon</option>
+            <option>💇🏼‍♂️ Barber</option>
+            <option>🧹 Cleaning</option>
+          </Form.Control>
+        </Form.Group>
+        <Form.Group controlId="exampleForm.ControlSelect12">
+          <Form.Label>Select your item button</Form.Label>
+          <Form.Control as="select" name="cta" value={this.state.cta || ''} onChange={this.onChange}>
+            <option>Select item button</option>
+            <option>Message Me</option>
+            <option>Make an offer</option>
+            <option>Order</option>
+            <option>Pre-Order</option>
+            <option>Make a booking</option>
+            <option>Book now</option>
+            <option>Book a test drive</option>
+            <option>Reserve</option>
+            <option>RSVP</option>
+            <option>Request a quote</option>
+          </Form.Control>
+        </Form.Group>
+        <Button variant="primary" onClick={this.handleClose} type="submit" block>
+          Add Item
+        </Button>
+      </Form>
+    </Col>
   );
 }
 }

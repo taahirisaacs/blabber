@@ -40,19 +40,19 @@ class StoresPageNonAuth extends Component {
 
   }
 
-  componentDidMount(){
+  componentWillMount(){
     this.setState({ loading: true })
+
     const docId = this.props.match.params.uid;
     const userkey = this.props.match.params.userid;
     const db = firebase.firestore();
     const dbCol = db.collection("stores").doc(docId);
 
-    const dbUser = firebase.database().ref(`users/${userkey}/`);
-
+    const dbUser = db.collection("users").doc(userkey);
     const dbItems = db.collection("items");
     const dbItemsquery = dbItems.where("store", "==", docId);
 
-    dbCol.onSnapshot(snap => {
+    this.unsubscribe = dbCol.onSnapshot(snap => {
         this.setState({
           storeImg: snap.data().imgUrl,
           storeName: snap.data().name,
@@ -60,19 +60,18 @@ class StoresPageNonAuth extends Component {
           storeCat: snap.data().category,
           storeId: snap.id,
           loading: false
-        });
-      });
+        })
+      })
 
-      dbUser.on('value', snapshot => {
-          const snap = snapshot.val();
+    this.unsubscribe = dbUser.onSnapshot(snap => {
           this.setState({
-            userLocation: snap.location,
-            userWhatsapp: snap.whatsapp,
+            userLocation: snap.data().location,
+            userWhatsapp: snap.data().whatsapp,
             loading: false
-          });
-        });
+          })
+        })
 
-        this.unsubscribe = dbItemsquery.onSnapshot(snap => {
+    this.unsubscribe = dbItemsquery.onSnapshot(snap => {
           const items = {}
 
           snap.forEach(item => {
@@ -84,11 +83,7 @@ class StoresPageNonAuth extends Component {
     }
 
       componentWillUnmount() {
-      const userkey = this.props.match.params.userid;
-      const storekey = this.props.match.params.uid;
-      firebase.database().ref(`stores/users/${userkey}/${storekey}/`).off();
-      firebase.database().ref(`items/users/${userkey}/`).off();
-      firebase.database().ref(`users/${userkey}/`).off();
+      this.unsubscribe();
     }
 
   render() {
