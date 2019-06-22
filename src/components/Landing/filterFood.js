@@ -27,7 +27,7 @@ import firebase from 'firebase/app';
 import * as ROUTES from '../../constants/routes';
 import { AuthUserContext } from '../Session';
 
-class Landing extends Component {
+class filterFood extends Component {
   constructor(props) {
     super(props);
 
@@ -45,7 +45,7 @@ class Landing extends Component {
 
           const db = firebase.firestore();
 
-          db.collection("items").orderBy("timestamp").limit(25).get()
+          db.collection("items").where("category", "==", "🍔 Food").limit(25).get()
           .then(snap => {
             const items= {}
             snap.forEach(doc => {
@@ -65,7 +65,8 @@ class Landing extends Component {
         const itemUrl = window.location.href;
 
         return (
-          <Col style={{paddingTop:`30px`, paddingBottom:`10px`}} xs={12} md={{span:'4', offset:'4'}}>
+          <Col style={{paddingTop:`30px`}} xs={12} md={{span:'4', offset:'4'}}>
+            <h4 className="catTitle">🍔 Food near you</h4>
             {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
             <ul>
               {Object.keys(items).map((item, index) => {
@@ -95,9 +96,8 @@ class Landing extends Component {
             </ul>
             <FooterNavigation />
           </Col>
-
         );
       }
 }
 
-export default Landing;
+export default filterFood;

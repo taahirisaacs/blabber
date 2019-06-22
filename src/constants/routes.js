@@ -9,3 +9,5 @@ export const ORDERS = '/orders';
 export const EXPLORE = '/explore';
 export const SETTINGS = '/settings';
 export const NEWITEM = '/newitem';
+export const FILT_FOOD = '/food';
+export const FILT_CLOTHING = '/clothing';

@@ -7,8 +7,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import Navigation from '../Navigation';
-import FooterNavigation from '../Navigation/footer';
 import LandingPage from '../Landing';
+import FilterFood from '../Landing/filterFood';
+import FilterClothing from '../Landing/filterClothing';
 import SignUpPage from '../SignUp';
 import SignInPage from '../SignIn';
 import PasswordForgetPage from '../PasswordForget';
@@ -33,6 +34,8 @@ const App = () => (
         <Navigation />
         <Container fluid className="px-0 mb-5">
           <Route exact path={ROUTES.LANDING} component={LandingPage} />
+          <Route exact path={ROUTES.FILT_FOOD} component={FilterFood} />
+          <Route exact path={ROUTES.FILT_CLOTHING} component={FilterClothing} />
           <Route path={ROUTES.ORDERS} component={Orders} />
           <Route path={ROUTES.EXPLORE} component={Explore} />
           <Route path={ROUTES.SETTINGS} component={Settings} />
@@ -46,7 +49,6 @@ const App = () => (
           <Route path="/blob/:dataId" component={BlobPage} />
           <Route exact path="/store/:userid/:uid" component={Profile} />
           <Route exact path="/items/:storeid/:itemid" component={Items} />
-          <FooterNavigation />
         </Container>
       </Router>
 );

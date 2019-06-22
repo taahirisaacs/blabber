@@ -60,7 +60,7 @@ onSubmit = event => {
           store: storeId || null,
           user: user.uid,
           itemId: itemUid,
-          timestamp
+          timestamp: timestamp
       })
       .then(authUser => {
           console.log("Document written with ID: ", authUser.id);

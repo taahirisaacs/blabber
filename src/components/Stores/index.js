@@ -57,6 +57,7 @@ class StoresPageAuth extends Component {
     const user = firebase.auth().currentUser.uid;
     const db = firebase.firestore();
     const itemUid = shortid.generate();
+    const timestamp = Date.now();
 
       db.collection("items").add({
             name: name || '',
@@ -67,7 +68,8 @@ class StoresPageAuth extends Component {
             imgUrl: imgUrl || '',
             store: storeId || '',
             user: user || '',
-            itemId: itemUid || ''
+            itemId: itemUid || '',
+            timstamp: timestamp
         })
       .then(authUser => {
         this.setState({ ...INITIAL_STATE });

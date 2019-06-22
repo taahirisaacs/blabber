@@ -1,6 +1,6 @@
 import React from 'react';
 import { LinkContainer } from "react-router-bootstrap";
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -59,7 +59,30 @@ const FooterNavigationAuth = () => (
 );
 
 const FooterNonAuth = () => (
-  null
+  <Row className="bottomNav">
+    <Col className="px-0">
+      <Link to={ROUTES.LANDING}>
+        <span className="navItem">
+          All
+        </span>
+      </Link>
+    </Col>
+    <Col className="px-0">
+      <NavLink to={ROUTES.FILT_FOOD}>
+        <span className="navItem">
+          🍔
+        </span>
+      </NavLink>
+    </Col>
+    <Col className="px-0">
+      <NavLink to={ROUTES.FILT_CLOTHING}>
+        <span className="navItem">
+          👕
+        </span>
+      </NavLink>
+    </Col>
+
+  </Row>
 );
 
 export default FooterNavigation;
