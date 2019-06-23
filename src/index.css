@@ -280,7 +280,7 @@ button.mesDel {
     padding: 10px 0px!important;
 }
 a.navbar-brand {
-    color: #94a1b4!important;
+    color: #4d5662!important;
     font-weight: bold;
     margin: 0 auto;
 }
@@ -448,8 +448,8 @@ span.MuiTab-wrapper {
     color: #fff;
     padding: 5px 15px;
     border-radius: 100px;
-    background: #2068d5;
-    border: 1px solid #2068d5;
+    background: #1fb040;
+    border: 1px solid #1fb040;
     float: right;
     margin-top: 15px;
 }
@@ -464,13 +464,13 @@ button.storebtn.copy_link.btn.btn-primary.btn-block {
     color: #5f6d82;
 }
 button.signup.nav-item {
-  border: 1px solid #467cd0;
-  background: #467cd0;
-  padding: 4px 15px;
-  border-radius: 100px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #ffffff;
+    border: 1px solid #206be0;
+    background: #206be0;
+    padding: 3px 12px;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #ffffff;
 }
 span.divider {
     display: inline-block;
@@ -579,8 +579,7 @@ h4.catTitle {
   padding-bottom: 10px;
 }
 span.storename svg {
-  font-size: 16px;
-  width: 16px;
+  font-size: 0.6rem;
   height: auto;
   display: inline;
   padding: 0px 0px 1px;
