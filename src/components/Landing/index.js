@@ -11,6 +11,9 @@ import Typography from '@material-ui/core/Typography';
 import Uploader from './../Uploader';
 import FooterNavigation from '../Navigation/footer';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStore } from '@fortawesome/free-solid-svg-icons';
+
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import TextareaAutosize from 'react-autosize-textarea';
@@ -45,7 +48,7 @@ class Landing extends Component {
 
           const db = firebase.firestore();
 
-          db.collection("items").orderBy("timestamp").limit(25).get()
+          db.collection("items").orderBy("timestamp", "desc").limit(25).get()
           .then(snap => {
             const items= {}
             snap.forEach(doc => {

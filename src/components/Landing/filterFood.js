@@ -10,6 +10,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Uploader from './../Uploader';
 import FooterNavigation from '../Navigation/footer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStore } from '@fortawesome/free-solid-svg-icons';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -82,11 +84,9 @@ class filterFood extends Component {
                         </Col>
                         <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
                           <Link to={`/items/${items[item].store.id}/${items[item].itemId}`}>
-
                             <h2>{items[item].name}</h2>
+                            <span className="storename"><FontAwesomeIcon icon={faStore} /> {items[item].store.name}</span>
                             <span className="pricing">R{items[item].price}</span>
-                            <span className="timestamp desc">{items[item].store.name}</span>
-                            <span className="cat">{items[item].category}</span>
                           </Link>
                         </Col>
                       </Row>

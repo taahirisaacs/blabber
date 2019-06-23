@@ -71,7 +71,7 @@ class StoresPageAuth extends Component {
             store: { id: storeId || '', name: storeName || ''},
             user: user || '',
             itemId: itemUid || '',
-            timstamp: timestamp
+            timestamp: timestamp
         })
       .then(authUser => {
         this.setState({ ...INITIAL_STATE });

@@ -3,6 +3,9 @@ import { LinkContainer } from "react-router-bootstrap";
 import { NavLink, Link } from 'react-router-dom';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStore } from '@fortawesome/free-solid-svg-icons';
+
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import AppBar from '@material-ui/core/AppBar';
@@ -83,11 +86,9 @@ class filterClothing extends Component {
                         </Col>
                         <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
                           <Link to={`/items/${items[item].store.id}/${items[item].itemId}`}>
-
                             <h2>{items[item].name}</h2>
+                            <span className="storename"><FontAwesomeIcon icon={faStore} /> {items[item].store.name}</span>
                             <span className="pricing">R{items[item].price}</span>
-                            <span className="timestamp desc">{items[item].description}</span>
-                            <span className="cat">{items[item].category}</span>
                           </Link>
                         </Col>
                       </Row>

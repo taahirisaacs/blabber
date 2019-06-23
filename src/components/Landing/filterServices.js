@@ -12,6 +12,9 @@ import Uploader from './../Uploader';
 import FooterNavigation from '../Navigation/footer';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import TextareaAutosize from 'react-autosize-textarea';
@@ -84,7 +87,13 @@ class filterClothing extends Component {
                           <Link to={{ pathname:`/store/${stores[store].user}/${store}`, state:{userkey: `${store}`} }}>
                             <h2>{stores[store].name}</h2>
                             <span className="desc">{stores[store].description}</span>
-                            <span className="cat">{stores[store].category}</span>
+                            <span className="stars">
+                              <FontAwesomeIcon icon={faStar} />
+                              <FontAwesomeIcon icon={faStar} />
+                              <FontAwesomeIcon icon={faStar} />
+                              <FontAwesomeIcon icon={faStar} />
+                              <FontAwesomeIcon icon={faStar} />
+                            </span>
                           </Link>
                         </Col>
                       </Row>
