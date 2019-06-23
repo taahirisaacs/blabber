@@ -4,7 +4,6 @@ import { PasswordForgetForm } from '../PasswordForget';
 import PasswordChangeForm from '../PasswordChange';
 import WhatsappUpdate from '../WhatsappUpdate';
 import * as ROUTES from '../../constants/routes';
-import SignOutButton from '../SignOut';
 import FooterNavigation from '../Navigation/footer';
 
 
@@ -20,7 +19,6 @@ const Settings = () => (
         <WhatsappUpdate className="mb-3"/>
         <PasswordForgetForm />
         <PasswordChangeForm className="mb-3"/>
-        <SignOutButton to={ROUTES.SIGN_IN} />
         <FooterNavigation />
         </Col>
       )}

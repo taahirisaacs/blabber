@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { Link, NavLink } from 'react-router-dom';
 import FooterNavigation from '../Navigation/footer';
+import SignOutButton from '../SignOut';
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Tabs from '@material-ui/core/Tabs';
@@ -215,6 +216,7 @@ class MessageForm extends Component {
                 <Button className="navItem mt-3 mb-3 settings" size="sm" variant="secondary" block>
                   Edit my profile
                 </Button>
+                <SignOutButton to={ROUTES.LANDING} />
               </NavLink>
             </div>
           </Col>

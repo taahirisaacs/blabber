@@ -43,6 +43,8 @@ class Firebase {
   users = () => this.db.collection("users");
 
   stores = () => this.db.collection("stores");
+
+  items = () => this.db.collection("items");
 }
 
 export default Firebase;

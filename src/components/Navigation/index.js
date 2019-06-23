@@ -22,7 +22,7 @@ const Navigation = () => (
 
 const NavigationAuth = () => (
   <Navbar expand="lg" sticky="top">
-    <LinkContainer to={ROUTES.HOME}><Navbar.Brand>TinyTrader</Navbar.Brand></LinkContainer>
+    <LinkContainer to={ROUTES.LANDING}><Navbar.Brand>TinyTrader</Navbar.Brand></LinkContainer>
   </Navbar>
 );
 
