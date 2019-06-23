@@ -383,7 +383,6 @@ span.cat {
     border-radius: 100px;
 }
 span.MuiTab-wrapper {
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     text-transform: none;
     font-weight: 600;
     font-size: 0.9rem;
@@ -394,7 +393,7 @@ span.MuiTab-wrapper {
   margin-top: 20px;
 }
 .storeHeader h2 {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
 }
 .storeHeader .timestamp {
   font-size: 0.95rem;
@@ -489,7 +488,7 @@ span.divider {
   display: block;
   margin: 0 auto;
 }
-a .navItem {
+a .navItemLanding {
     font-size: 1.2rem;
     text-decoration: none;
     display: block;
@@ -498,7 +497,7 @@ a .navItem {
     border: 1px solid #fff;
     font-weight: 600;
 }
-a.active .navItem {
+a.active .navItemLanding {
     border: 1px solid #8994a5;
     border-radius: 100px;
 }
@@ -543,6 +542,7 @@ button.settings {
   border: 1px solid #c2cddd;
   color: #354152;
   font-weight: 600;
+  font-size: 1rem;
 }
 span.poweredby {
     display: block;
@@ -552,7 +552,7 @@ span.poweredby {
     color: #65768d;
 }
 h1.pageTitle {
-    margin: 40px 0px;
+    margin: 30px 0px 20px;
     font-size: 1.1rem;
     font-weight: 700;
     text-align: center;
@@ -565,4 +565,10 @@ h4.catTitle {
     background: #fff;
     padding: 10px;
     border-radius: 100px;
+}
+.MuiBreadcrumbs-root.breadcrumbs {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  padding-bottom: 10px;
 }

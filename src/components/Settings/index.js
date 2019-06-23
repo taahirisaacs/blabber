@@ -5,6 +5,7 @@ import PasswordChangeForm from '../PasswordChange';
 import WhatsappUpdate from '../WhatsappUpdate';
 import * as ROUTES from '../../constants/routes';
 import SignOutButton from '../SignOut';
+import FooterNavigation from '../Navigation/footer';
 
 
 import Col from 'react-bootstrap/Col';
@@ -20,6 +21,7 @@ const Settings = () => (
         <PasswordForgetForm />
         <PasswordChangeForm className="mb-3"/>
         <SignOutButton to={ROUTES.SIGN_IN} />
+        <FooterNavigation />
         </Col>
       )}
   </AuthUserContext.Consumer>

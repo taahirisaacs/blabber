@@ -10,6 +10,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Uploader from './../Uploader';
 import FooterNavigation from '../Navigation/footer';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -65,7 +66,8 @@ class filterClothing extends Component {
         const itemUrl = window.location.href;
 
         return (
-          <Col style={{paddingTop:`30px`}} xs={12} md={{span:'4', offset:'4'}}>
+          <Col style={{paddingTop:`20px`, paddingBottom:`10px`}} xs={12} md={{span:'4', offset:'4'}}>
+
             <h4 className="catTitle">👕 Clothing near you</h4>
             {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
             <ul>

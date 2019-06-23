@@ -1,8 +1,12 @@
 import React from 'react';
+import FooterNavigation from '../Navigation/footer';
+
 
 const Explore = () => (
   <div>
-    <h1>Explore</h1>
+    <h3>Explore</h3>
+  <p>User will be able to find stores and items</p>
+    <FooterNavigation />
   </div>
 );
 

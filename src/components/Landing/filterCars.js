@@ -10,6 +10,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Uploader from './../Uploader';
 import FooterNavigation from '../Navigation/footer';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -27,7 +28,7 @@ import firebase from 'firebase/app';
 import * as ROUTES from '../../constants/routes';
 import { AuthUserContext } from '../Session';
 
-class Landing extends Component {
+class filterClothing extends Component {
   constructor(props) {
     super(props);
 
@@ -45,7 +46,7 @@ class Landing extends Component {
 
           const db = firebase.firestore();
 
-          db.collection("items").orderBy("timestamp").limit(25).get()
+          db.collection("items").where("category", "==", "🚗 Cars").limit(25).get()
           .then(snap => {
             const items= {}
             snap.forEach(doc => {
@@ -65,7 +66,9 @@ class Landing extends Component {
         const itemUrl = window.location.href;
 
         return (
-          <Col style={{paddingTop:`20px`, paddingBottom:`10px`}} xs={12} md={{span:'4', offset:'4'}}>
+          <Col style={{paddingTop:`20px`}} xs={12} md={{span:'4', offset:'4'}}>
+
+            <h4 className="catTitle">🚗 Cars near you</h4>
             {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
             <ul>
               {Object.keys(items).map((item, index) => {
@@ -95,9 +98,8 @@ class Landing extends Component {
             </ul>
             <FooterNavigation />
           </Col>
-
         );
       }
 }
 
-export default Landing;
+export default filterClothing;

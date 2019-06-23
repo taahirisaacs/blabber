@@ -9,6 +9,7 @@ import Row from 'react-bootstrap/Row';
 import Image from 'react-bootstrap/Image';
 import Uploader from './../Uploader';
 import shortid from 'shortid';
+import FooterNavigation from '../Navigation/footer';
 
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -38,7 +39,7 @@ constructor(props, context) {
     loading: false,
     items: '',
     stores: '',
-    imgUrl: [],
+    imgUrl: '',
     show: false,
   };
 };
@@ -173,6 +174,7 @@ render() {
             <option>🍔 Food</option>
             <option>💻 Electronics</option>
             <option>🚗 Cars</option>
+            <option>⚙️ Services</option>
             <option>🚚 Logistics</option>
             <option>📦 2nd Hand Goods</option>
             <option>💅🏼 Salon</option>
@@ -200,6 +202,7 @@ render() {
           Add Item
         </Button>
       </Form>
+      <FooterNavigation />
     </Col>
   );
 }

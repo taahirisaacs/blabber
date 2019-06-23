@@ -62,8 +62,8 @@ const FooterNonAuth = () => (
   <Row className="bottomNav">
     <Col className="px-0">
       <Link to={ROUTES.LANDING}>
-        <span className="navItem">
-          All
+        <span className="navItemLanding">
+          🏚
         </span>
       </Link>
     </Col>
@@ -78,6 +78,27 @@ const FooterNonAuth = () => (
       <NavLink to={ROUTES.FILT_CLOTHING}>
         <span className="navItem">
           👕
+        </span>
+      </NavLink>
+    </Col>
+    <Col className="px-0">
+      <NavLink to={ROUTES.FILT_ELEC}>
+        <span className="navItem">
+          💻
+        </span>
+      </NavLink>
+    </Col>
+    <Col className="px-0">
+      <NavLink to={ROUTES.FILT_CAR}>
+        <span className="navItem">
+          🚗
+        </span>
+      </NavLink>
+    </Col>
+    <Col className="px-0">
+      <NavLink to={ROUTES.FILT_SERVICES}>
+        <span className="navItem">
+          ⚙️
         </span>
       </NavLink>
     </Col>

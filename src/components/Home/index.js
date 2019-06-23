@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { Link, NavLink } from 'react-router-dom';
+import FooterNavigation from '../Navigation/footer';
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Tabs from '@material-ui/core/Tabs';
@@ -211,8 +212,8 @@ class MessageForm extends Component {
               <h2>{users.username}</h2>
               <p className="profileSub">{users.location}</p>
               <NavLink to={ROUTES.SETTINGS}>
-                  <Button className="navItem mt-3 mb-3 settings" size="sm" variant="secondary" block>
-                Edit my profile
+                <Button className="navItem mt-3 mb-3 settings" size="sm" variant="secondary" block>
+                  Edit my profile
                 </Button>
               </NavLink>
             </div>
@@ -229,16 +230,16 @@ class MessageForm extends Component {
         </Row>
         <SwipeableViews index={index} onChangeIndex={this.handleChangeIndex}>
 
-        <Row className="px-2">
-          <Items />
-        </Row>
+          <Row className="px-2">
+            <Items />
+          </Row>
 
           <Row className="px-2">
             <Stores />
           </Row>
 
         </SwipeableViews>
-
+        <FooterNavigation />
     </Container>
     );
   }

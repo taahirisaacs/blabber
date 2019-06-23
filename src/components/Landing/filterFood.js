@@ -65,7 +65,8 @@ class filterFood extends Component {
         const itemUrl = window.location.href;
 
         return (
-          <Col style={{paddingTop:`30px`}} xs={12} md={{span:'4', offset:'4'}}>
+          <Col style={{paddingTop:`20px`, paddingBottom:`10px`}} xs={12} md={{span:'4', offset:'4'}}>
+
             <h4 className="catTitle">🍔 Food near you</h4>
             {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
             <ul>

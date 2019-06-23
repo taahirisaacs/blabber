@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { LinkContainer } from "react-router-bootstrap";
 import { NavLink, Link } from 'react-router-dom';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import FooterNavigation from '../Navigation/footer';
 
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -255,7 +256,7 @@ class ItemsAuth extends Component {
             );
           })}
         </ul>
-
+        <FooterNavigation />
       </Col>
     );
   }

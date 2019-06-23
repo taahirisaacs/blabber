@@ -10,6 +10,9 @@ import Navigation from '../Navigation';
 import LandingPage from '../Landing';
 import FilterFood from '../Landing/filterFood';
 import FilterClothing from '../Landing/filterClothing';
+import FilterElec from '../Landing/filterElec';
+import FilterCars from '../Landing/filterCars';
+import FilterServices from '../Landing/filterServices';
 import SignUpPage from '../SignUp';
 import SignInPage from '../SignIn';
 import PasswordForgetPage from '../PasswordForget';
@@ -36,6 +39,9 @@ const App = () => (
           <Route exact path={ROUTES.LANDING} component={LandingPage} />
           <Route exact path={ROUTES.FILT_FOOD} component={FilterFood} />
           <Route exact path={ROUTES.FILT_CLOTHING} component={FilterClothing} />
+          <Route exact path={ROUTES.FILT_ELEC} component={FilterElec} />
+          <Route exact path={ROUTES.FILT_CAR} component={FilterCars} />
+          <Route exact path={ROUTES.FILT_SERVICES} component={FilterServices} />
           <Route path={ROUTES.ORDERS} component={Orders} />
           <Route path={ROUTES.EXPLORE} component={Explore} />
           <Route path={ROUTES.SETTINGS} component={Settings} />

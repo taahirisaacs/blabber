@@ -14,6 +14,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Image from 'react-bootstrap/Image';
 import shortid from 'shortid';
+import FooterNavigation from '../Navigation/footer';
 
 import firebase from 'firebase/app';
 import HomePage from '../Home';
@@ -43,7 +44,7 @@ class StoresPageAuth extends Component {
     this.state = {
       stores: '',
       items: '',
-      imgUrl: [],
+      imgUrl: '',
       storeId: [],
       show: false,
       storeUrl: window.location.href,
@@ -236,6 +237,7 @@ class StoresPageAuth extends Component {
                   <option>🍔 Food</option>
                   <option>💻 Electronics</option>
                   <option>🚗 Cars</option>
+                  <option>⚙️ Services</option>
                   <option>🚚 Logistics</option>
                   <option>📦 2nd Hand Goods</option>
                   <option>💅🏼 Salon</option>
@@ -270,6 +272,7 @@ class StoresPageAuth extends Component {
             </Form>
           </Modal.Body>
         </Modal>
+        <FooterNavigation />
       </Col>
     );
   }
