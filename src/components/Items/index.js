@@ -142,7 +142,6 @@ class ItemsAuth extends Component {
     };
 
   render () {
-    console.log(this.state.name);
     const { items, loading, userWhatsapp } = this.state;
     const itemUrl = window.location.href;
 
@@ -221,6 +220,7 @@ class ItemsAuth extends Component {
                           <option>🍔 Food</option>
                           <option>💻 Electronics</option>
                           <option>🚗 Cars</option>
+                          <option>⚙️ Services</option>
                           <option>🚚 Logistics</option>
                           <option>📦 2nd Hand Goods</option>
                           <option>💅🏼 Salon</option>

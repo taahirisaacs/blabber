@@ -25,6 +25,7 @@ const INITIAL_STATE = {
   price: [],
   cta: [],
   storeId: [],
+  storeName: [],
   userId: [],
   error: null,
 };
@@ -45,7 +46,7 @@ constructor(props, context) {
 };
 
 onSubmit = event => {
-  const { name, description, price, category, imgUrl, storeId, cta } = this.state;
+  const { name, description, price, category, imgUrl, storeId, storeName, cta } = this.state;
   const user = firebase.auth().currentUser;
   const db = firebase.firestore();
   const itemUid = shortid.generate();
@@ -58,7 +59,7 @@ onSubmit = event => {
           category: category || '',
           cta: cta || '',
           imgUrl: imgUrl || '',
-          store: storeId || null,
+          store: { id: storeId || '', name: storeName || ''},
           user: user.uid,
           itemId: itemUid,
           timestamp: timestamp
@@ -108,14 +109,20 @@ removeItem(key, e)  {
 }
 
 onChange = event => {
-  this.setState({ [event.target.name]: event.target.value });
+  this.setState({ [event.target.name]: event.target.value});
+};
+
+onChangeOptions = event => {
+  this.setState({ [event.target.name]: event.target.value});
+  this.setState({ storeName: event.target.options[event.target.selectedIndex].text});
 };
 
 
 render() {
 
-  const { stores, imgUrl } = this.state;
+  const { stores, storeName, imgUrl } = this.state;
   const uploadedImg = `${imgUrl}/-/scale_crop/500x500/center/`;
+  console.log(storeName);
 
   return (
     <Col md={{span:6, offset:3}} className="newitemform">
@@ -150,11 +157,11 @@ render() {
         </Form.Group>
         <Form.Group controlId="exampleForm.ControlSelect2">
           <Form.Label>Select a Store</Form.Label>
-          <Form.Control as="select" name="storeId" value={this.state.storeId || ''} onChange={this.onChange}>
+          <Form.Control as="select" name="storeId" value={this.state.storeId || ''} store="storeName" storename={this.state.storeName || ''} onChange={this.onChangeOptions}>
             <option>Select a Store</option>
             {Object.keys(stores).map((store, index) => {
               return (
-                <option key={store} index={index} value={store}>{stores[store].name}</option>
+                <option key={store} index={index} value={store} storename={stores[store].name}>{stores[store].name}</option>
               );
             }
             )}

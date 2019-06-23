@@ -16,7 +16,7 @@ const Settings = () => (
     {authUser => (
       <Col xs={{span:'10', offset:'1'}}>
         <h3>Settings</h3>
-        <p>Account: {authUser.email}</p>
+        <p>{authUser.username}</p>
         <WhatsappUpdate className="mb-3"/>
         <PasswordForgetForm />
         <PasswordChangeForm className="mb-3"/>

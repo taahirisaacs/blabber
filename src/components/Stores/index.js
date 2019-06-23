@@ -46,6 +46,7 @@ class StoresPageAuth extends Component {
       items: '',
       imgUrl: '',
       storeId: [],
+      storeName: [],
       show: false,
       storeUrl: window.location.href,
     };
@@ -54,7 +55,7 @@ class StoresPageAuth extends Component {
   }
 
   onSubmit = event => {
-    const { name, description, price, category, storeId, imgUrl, cta } = this.state;
+    const { name, description, price, category, storeId, storeName, imgUrl, cta } = this.state;
     const user = firebase.auth().currentUser.uid;
     const db = firebase.firestore();
     const itemUid = shortid.generate();
@@ -67,7 +68,7 @@ class StoresPageAuth extends Component {
             category: category || '',
             cta: cta || '',
             imgUrl: imgUrl || '',
-            store: storeId || '',
+            store: { id: storeId || '', name: storeName || ''},
             user: user || '',
             itemId: itemUid || '',
             timstamp: timestamp
@@ -94,13 +95,14 @@ class StoresPageAuth extends Component {
       this.setState({
         stores: snap.data(),
         storeId: snap.id,
+        storeName: snap.data().name,
         loading: false,
       });
 
     });
 
     const dbItems = db.collection("items");
-    const dbItemquery = dbItems.where("store", "==", docId);
+    const dbItemquery = dbItems.where("store.id", "==", docId);
 
     this.unsubscribe = dbItemquery.onSnapshot(snap => {
       const items = {}
@@ -127,12 +129,18 @@ class StoresPageAuth extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  onChangeOptions = event => {
+    this.setState({ [event.target.name]: event.target.value});
+    this.setState({ storeName: event.target.options[event.target.selectedIndex].text});
+  };
+
   render() {
 
     const {
       stores,
       items,
       storeId,
+      storeName,
       loading
      } = this.state;
      const itemUrl = window.location.href;
@@ -174,7 +182,7 @@ class StoresPageAuth extends Component {
             return (
               <li className="messages" key={key} index={index}>
                 <div className="chat">
-                  <Link to={`/items/${items[key].store}/${items[key].itemId}`}>
+                  <Link to={`/items/${items[key].store.id}/${items[key].itemId}`}>
                     <Row>
                       <Col xs={4} sm={3} md={3}>
                         <div className="itemImg">
@@ -217,6 +225,7 @@ class StoresPageAuth extends Component {
             <Form className="FormInput" onSubmit={this.onSubmit}>
               <Form.Control style={{display:`none`}} name="imgurl" value={this.state.imgUrl || ''} onChange={this.onChange} type="text" placeholder="imgUrl" />
               <Form.Control style={{display:`none`}} name="storeId" value={storeId || ''} onChange={this.onChange} type="text" />
+              <Form.Control style={{display:`none`}} name="storeName" value={storeName || ''} onChange={this.onChange} type="text" />
               <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>Item Name</Form.Label>
                 <Form.Control name="name" value={this.state.name || ''} onChange={this.onChange} type="text" placeholder="Item name" />

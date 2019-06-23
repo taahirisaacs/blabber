@@ -67,7 +67,7 @@ class filterFood extends Component {
         return (
           <Col style={{paddingTop:`20px`, paddingBottom:`10px`}} xs={12} md={{span:'4', offset:'4'}}>
 
-            <h4 className="catTitle">🍔 Food near you</h4>
+            <h4 className="catTitle">🍔 Food</h4>
             {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
             <ul>
               {Object.keys(items).map((item, index) => {
@@ -81,11 +81,11 @@ class filterFood extends Component {
                           </div>
                         </Col>
                         <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
-                          <Link to={`/items/${items[item].store}/${items[item].itemId}`}>
+                          <Link to={`/items/${items[item].store.id}/${items[item].itemId}`}>
 
                             <h2>{items[item].name}</h2>
                             <span className="pricing">R{items[item].price}</span>
-                            <span className="timestamp desc">{items[item].description}</span>
+                            <span className="timestamp desc">{items[item].store.name}</span>
                             <span className="cat">{items[item].category}</span>
                           </Link>
                         </Col>

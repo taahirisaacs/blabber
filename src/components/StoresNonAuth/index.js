@@ -50,7 +50,7 @@ class StoresPageNonAuth extends Component {
 
     const dbUser = db.collection("users").doc(userkey);
     const dbItems = db.collection("items");
-    const dbItemsquery = dbItems.where("store", "==", docId);
+    const dbItemsquery = dbItems.where("store.id", "==", docId);
 
     this.unsubscribe = dbCol.onSnapshot(snap => {
         this.setState({
@@ -123,7 +123,7 @@ class StoresPageNonAuth extends Component {
             return (
               <li className="messages" key={key} index={index}>
                 <div className="chat">
-                  <Link to={`/items/${items[key].store}/${items[key].itemId}`}>
+                  <Link to={`/items/${items[key].store.id}/${items[key].itemId}`}>
                     <Row>
                       <Col xs={4} sm={3} md={3}>
                         <div className="itemImg">
