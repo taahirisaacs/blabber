@@ -126,10 +126,30 @@ li.messages:last-child {
     display: block;
 }
 span.storename {
-    display: block;
+    display: inline-block;
     font-size: 0.8rem;
-    color: #909caf;
+    font-weight: 700;
+    color: #808ca1;
     margin-bottom: 10px;
+}
+span.storenameInner {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #808ca1;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+.chat h2.titleInner {
+    color: #354153;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+span.subtle {
+    color: #9aa5b6;
+    padding-right: 3px;
 }
 span.timestamp.tag {
     border-radius: 4px;
@@ -281,6 +301,7 @@ button.mesDel {
 }
 a.navbar-brand {
     color: #4d5662!important;
+    font-size: 1.1rem;
     font-weight: bold;
     margin: 0 auto;
 }
@@ -487,6 +508,16 @@ span.divider {
     background: #fff;
     margin: 0!important;
     text-align: center;
+    padding: 12px 5px 3px;
+}
+.bottomNavPublic {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: #fff;
+    margin: 0!important;
+    text-align: center;
     padding: 12px 5px;
 }
 .svg-inline--fa {
@@ -563,6 +594,15 @@ h1.pageTitle {
     font-weight: 700;
     text-align: center;
 }
+h1.pageIntro {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.1;
+    text-align: center;
+    margin: 0 auto 20px;
+    color: #737f90;
+    width: 260px;
+}
 h4.catTitle {
     font-size: 1rem;
     font-weight: 600;
@@ -589,4 +629,11 @@ span.stars svg {
     font-size: 0.7rem;
     margin-right: 3px;
     color: #f1b809;
+}
+svg.icon_store {
+    font-size: 1.2rem;
+}
+.navItem p {
+    font-size: 0.85rem;
+    font-weight: 500;
 }

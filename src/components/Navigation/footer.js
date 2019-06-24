@@ -25,17 +25,19 @@ const FooterNavigation = () => (
 const FooterNavigationAuth = () => (
   <Row className="bottomNav">
     <Col className="px-0">
-      <NavLink to={ROUTES.ORDERS}>
+      <NavLink to={ROUTES.EXPLORE}>
         <span className="navItem">
-          <FontAwesomeIcon icon={faReceipt} />
+          <FontAwesomeIcon icon={faSearch} className="icon_store"/>
+        <p>Explore</p>
         </span>
       </NavLink>
     </Col>
 
     <Col className="px-0">
-      <NavLink to={ROUTES.EXPLORE}>
+      <NavLink to={ROUTES.ORDERS}>
         <span className="navItem">
-          <FontAwesomeIcon icon={faSearch} />
+          <FontAwesomeIcon icon={faReceipt} className="icon_store"/>
+        <p>Orders</p>
         </span>
       </NavLink>
     </Col>
@@ -43,7 +45,8 @@ const FooterNavigationAuth = () => (
     <Col className="px-0">
       <NavLink to={ROUTES.NEWITEM}>
         <span className="navItem">
-          <FontAwesomeIcon icon={faPlusSquare} />
+          <FontAwesomeIcon icon={faPlusSquare} className="icon_store" />
+          <p>Add Item</p>
         </span>
       </NavLink>
     </Col>
@@ -51,7 +54,8 @@ const FooterNavigationAuth = () => (
     <Col className="px-0">
       <NavLink to={ROUTES.HOME}>
         <span className="navItem">
-          <FontAwesomeIcon icon={faStore} />
+          <FontAwesomeIcon icon={faStore} className="icon_store"/>
+          <p>My Store</p>
         </span>
       </NavLink>
     </Col>
@@ -59,7 +63,7 @@ const FooterNavigationAuth = () => (
 );
 
 const FooterNonAuth = () => (
-  <Row className="bottomNav">
+  <Row className="bottomNavPublic">
     <Col className="px-0">
       <Link to={ROUTES.LANDING}>
         <span className="navItemLanding">

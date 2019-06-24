@@ -85,7 +85,7 @@ class filterFood extends Component {
                         <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
                           <Link to={`/items/${items[item].store.id}/${items[item].itemId}`}>
                             <h2>{items[item].name}</h2>
-                            <span className="storename"><FontAwesomeIcon icon={faStore} /> {items[item].store.name}</span>
+                            <span className="subtle">from</span><span className="storename">{items[item].store.name}</span>
                             <span className="pricing">R{items[item].price}</span>
                           </Link>
                         </Col>

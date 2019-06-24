@@ -69,6 +69,7 @@ class Landing extends Component {
 
         return (
           <Col style={{paddingTop:`20px`, paddingBottom:`10px`}} xs={12} md={{span:'4', offset:'4'}}>
+            <h1 className="pageIntro">A digital marketplace for small traders.</h1>
             {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
             <ul>
               {Object.keys(items).map((item, index) => {

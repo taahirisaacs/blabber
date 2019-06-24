@@ -13,6 +13,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Image from 'react-bootstrap/Image';
+import * as ROUTES from '../../constants/routes';
 
 import firebase from 'firebase/app';
 import HomePage from '../Home';
@@ -139,11 +140,13 @@ class StoresPageNonAuth extends Component {
                     </Row>
                   </Link>
                 </div>
-               </li>
-             );
+              </li>
+            );
           })}
         </ul>
-        <span className="poweredby">Powered by TinyTrader®</span>
+        <Link to={ROUTES.SIGN_UP}>
+          <span className="poweredby">Open Your Own Store</span>
+        </Link>
       </Col>
     );
   }

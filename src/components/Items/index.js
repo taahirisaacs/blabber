@@ -331,7 +331,8 @@ class ItemsNonAuth extends Component {
                           </div>
                         </Col>
                         <Col xs={12} style={{ paddingLeft: `20px`, paddingRight: `20px` }}>
-                          <h2>{items[key].name}</h2>
+                          <span className="storenameInner">{items[key].store.name}</span>
+                          <h2 className="titleInner">{items[key].name}</h2>
                           <span className="pricing">R{items[key].price}</span>
                           <span className="itemdesc">{items[key].description}</span>
                           <span className="cat">{items[key].category}</span>
@@ -345,7 +346,10 @@ class ItemsNonAuth extends Component {
                   </li>
                 );
               })}
+              {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
+
               <li className="messages" key={stores.id} index={stores.id} style={{marginBottom:`10px`,}}>
+
                 <div className="chat">
                   <Row>
                     <Col xs={4} sm={4} md={2}>
@@ -364,6 +368,9 @@ class ItemsNonAuth extends Component {
                 </div>
               </li>
             </ul>
+            <Link to={ROUTES.SIGN_UP}>
+              <span className="poweredby">Open Your Own Store</span>
+            </Link>
           </Col>
         );
       }
