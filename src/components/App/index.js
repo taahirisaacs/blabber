@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/Col';
 
 import Navigation from '../Navigation';
 import LandingPage from '../Landing';
+import LandingCat from '../Landing/filterCategories';
 import FilterFood from '../Landing/filterFood';
 import FilterClothing from '../Landing/filterClothing';
 import FilterElec from '../Landing/filterElec';
@@ -37,6 +38,7 @@ const App = () => (
         <Navigation />
         <Container fluid className="px-0 pb-5 mb-2">
           <Route exact path={ROUTES.LANDING} component={LandingPage} />
+          <Route exact path={ROUTES.LANDING_CAT} component={LandingCat} />
           <Route exact path={ROUTES.FILT_FOOD} component={FilterFood} />
           <Route exact path={ROUTES.FILT_CLOTHING} component={FilterClothing} />
           <Route exact path={ROUTES.FILT_ELEC} component={FilterElec} />
