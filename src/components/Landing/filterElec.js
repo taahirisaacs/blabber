@@ -43,7 +43,7 @@ class filterClothing extends Component {
         };
       }
 
-      componentWillMount(){
+      componentDidMount(){
 
           this.setState({ loading: true })
 
@@ -88,6 +88,7 @@ class filterClothing extends Component {
                           <Link to={`/items/${items[item].store.id}/${items[item].itemId}`}>
                             <h2>{items[item].name}</h2>
                             <span className="subtle">from</span><span className="storename">{items[item].store.name}</span>
+                            <div className="break"></div>
                             <span className="pricing">R{items[item].price}</span>
                           </Link>
                         </Col>

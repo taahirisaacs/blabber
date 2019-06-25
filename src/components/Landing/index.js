@@ -42,25 +42,28 @@ class Landing extends Component {
         };
       }
 
-      componentWillMount(){
-
-          this.setState({ loading: true })
-
-          const db = firebase.firestore();
-
-          db.collection("items").orderBy("timestamp", "desc").limit(25).get()
-          .then(snap => {
-            const items= {}
-            snap.forEach(doc => {
-            items[doc.id] = doc.data()
-            })
-            this.setState({items, loading: false})
-          })
-
+      componentDidMount(){
+          this.setState({ loading: true });
+          this.getItems();
       }
 
-        componentWillUnmount() {
-        }
+      componentWillUnmount() {
+        if(this.unsubscribe)
+          this.unsubscribe();
+      }
+
+      getItems = () => {
+        const db = firebase.firestore();
+
+        this.subscribe = db.collection("items").orderBy("timestamp", "desc").limit(25).get()
+        .then(snap => {
+          const items= {}
+          snap.forEach(doc => {
+          items[doc.id] = doc.data()
+          })
+          this.setState({items, loading: false})
+        })
+      }
 
       render () {
 
@@ -84,7 +87,6 @@ class Landing extends Component {
                         </Col>
                         <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
                           <Link to={`/items/${items[item].store.id}/${items[item].itemId}`}>
-
                             <h2>{items[item].name}</h2>
                             <span className="pricing">R{items[item].price}</span>
                             <span className="timestamp desc">{items[item].description}</span>

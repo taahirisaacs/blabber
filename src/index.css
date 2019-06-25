@@ -637,3 +637,8 @@ svg.icon_store {
     font-size: 0.85rem;
     font-weight: 500;
 }
+.break {
+    display: block;
+    height: 1px;
+    width: 100%;
+}

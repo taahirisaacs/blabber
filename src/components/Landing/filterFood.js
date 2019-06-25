@@ -41,25 +41,28 @@ class filterFood extends Component {
         };
       }
 
-      componentWillMount(){
-
-          this.setState({ loading: true })
-
-          const db = firebase.firestore();
-
-          db.collection("items").where("category", "==", "🍔 Food").limit(25).get()
-          .then(snap => {
-            const items= {}
-            snap.forEach(doc => {
-            items[doc.id] = doc.data()
-            })
-            this.setState({items, loading: false})
-          })
-
+      componentDidMount(){
+          this.setState({ loading: true });
+          this.getFood();
       }
 
-        componentWillUnmount() {
-        }
+      componentWillUnmount() {
+        if(this.unsubscribe)
+          this.unsubscribe();
+      }
+
+      getFood = () => {
+        const db = firebase.firestore();
+
+        this.subscribe = db.collection("items").where("category", "==", "🍔 Food").limit(25).get()
+        .then(snap => {
+          const items= {}
+          snap.forEach(doc => {
+          items[doc.id] = doc.data()
+          })
+          this.setState({items, loading: false})
+        })
+      }
 
       render () {
 
@@ -86,6 +89,7 @@ class filterFood extends Component {
                           <Link to={`/items/${items[item].store.id}/${items[item].itemId}`}>
                             <h2>{items[item].name}</h2>
                             <span className="subtle">from</span><span className="storename">{items[item].store.name}</span>
+                            <div className="break"></div>
                             <span className="pricing">R{items[item].price}</span>
                           </Link>
                         </Col>

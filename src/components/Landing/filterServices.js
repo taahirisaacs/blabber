@@ -42,7 +42,7 @@ class filterClothing extends Component {
         };
       }
 
-      componentWillMount(){
+      componentDidMount(){
 
           this.setState({ loading: true })
 

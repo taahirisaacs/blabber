@@ -43,7 +43,7 @@ class filterClothing extends Component {
         };
       }
 
-      componentWillMount(){
+      componentDidMount(){
 
           this.setState({ loading: true })
 
@@ -69,7 +69,7 @@ class filterClothing extends Component {
         const itemUrl = window.location.href;
 
         return (
-          <Col style={{paddingTop:`20px`}} xs={12} md={{span:'4', offset:'4'}}>
+          <Col style={{paddingTop:`20px`, paddingBottom:`10px`}} xs={12} md={{span:'4', offset:'4'}}>
 
             <h4 className="catTitle">🚗 Cars</h4>
             {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
@@ -87,7 +87,9 @@ class filterClothing extends Component {
                         <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
                           <Link to={`/items/${items[item].store.id}/${items[item].itemId}`}>
                             <h2>{items[item].name}</h2>
+
                             <span className="subtle">from</span><span className="storename">{items[item].store.name}</span>
+                            <div className="break"></div>
                             <span className="pricing">R{items[item].price}</span>
                           </Link>
                         </Col>
