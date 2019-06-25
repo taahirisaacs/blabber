@@ -121,17 +121,16 @@ class Items extends Component {
                         {items[item].imgUrl && <Image src={items[item].imgUrl + `/-/scale_crop/500x500/center/` || ''}/>}
                       </div>
                     </Col>
-                    <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
+                    <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0` }}>
                       <Link to={`/items/${items[item].store.id}/${items[item].itemId}`}>
-                        <TextTruncate
-                          className="storenameInner"
-                          line={1}
-                          truncateText="…"
-                          text={items[item].store.name}
-                        />
                         <h2>{items[item].name}</h2>
                         <span className="pricing">R{items[item].price}</span>
-
+                        <TextTruncate
+                          className="timestamp"
+                          line={1}
+                          truncateText="…"
+                          text={items[item].description}
+                        />
                       </Link>
                     </Col>
 

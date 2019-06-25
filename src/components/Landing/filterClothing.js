@@ -25,6 +25,7 @@ import Image from 'react-bootstrap/Image';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Spinner from 'react-bootstrap/Spinner';
+import TextTruncate from 'react-text-truncate';
 
 import firebase from 'firebase/app';
 
@@ -69,7 +70,7 @@ class filterClothing extends Component {
         const itemUrl = window.location.href;
 
         return (
-          <Col style={{paddingTop:`20px`, paddingBottom:`10px`}} xs={12} md={{span:'4', offset:'4'}}>
+          <Col style={{padding:`20px 10px 10px`}} xs={12} md={{span:'4', offset:'4'}}>
 
             <h4 className="catTitle">👕 Clothing</h4>
             {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
@@ -84,9 +85,13 @@ class filterClothing extends Component {
                             {items[item].imgUrl && <Image src={items[item].imgUrl + `/-/scale_crop/500x500/center/` || ''}/>}
                           </div>
                         </Col>
-                        <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `25px` }}>
+                        <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`}}>
                           <Link to={`/items/${items[item].store.id}/${items[item].itemId}`}>
-                            <h2>{items[item].name}</h2>
+                            <TextTruncate
+                              line={1}
+                              truncateText="…"
+                              text={items[item].name}
+                            />
                             <span className="subtle">from</span><span className="storename">{items[item].store.name}</span>
                             <div className="break"></div>
                             <span className="pricing">R{items[item].price}</span>

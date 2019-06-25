@@ -3,6 +3,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
 import Uploader from './../Uploader';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import TextTruncate from 'react-text-truncate';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -189,10 +190,15 @@ class StoresPageAuth extends Component {
                           <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/`}/>
                         </div>
                       </Col>
-                      <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
+                      <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`}}>
                         <h2>{items[key].name}</h2>
                         <span className="pricing">R{items[key].price}</span>
-                        <span className="timestamp desc">{items[key].description}</span>
+                        <TextTruncate
+                          className="timestamp"
+                          line={1}
+                          truncateText="…"
+                          text={items[key].description}
+                        />
                       </Col>
                     </Row>
                   </Link>

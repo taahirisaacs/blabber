@@ -72,8 +72,8 @@ class Landing extends Component {
         const itemUrl = window.location.href;
 
         return (
-          <Col style={{paddingTop:`20px`, paddingBottom:`10px`}} xs={12} md={{span:'4', offset:'4'}}>
-            <h1 className="pageIntro">A digital marketplace for small traders.</h1>
+          <Col style={{padding:`20px 10px 10px`,}} xs={12} md={{span:'4', offset:'4'}}>
+            <h1 className="pageIntro">A digital marketplace for tiny traders.</h1>
             {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
             <ul>
               {Object.keys(items).map((item, index) => {
@@ -86,17 +86,20 @@ class Landing extends Component {
                             {items[item].imgUrl && <Image src={items[item].imgUrl + `/-/scale_crop/500x500/center/` || ''}/>}
                           </div>
                         </Col>
-                        <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `25px` }}>
+                        <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`}}>
                           <Link to={`/items/${items[item].store.id}/${items[item].itemId}`}>
-                            <h2>{items[item].name}</h2>
+                            <TextTruncate
+                              line={1}
+                              truncateText="…"
+                              text={items[item].name}
+                            />
                             <span className="pricing">R{items[item].price}</span>
                             <TextTruncate
                               className="timestamp"
-                              line={2}
+                              line={1}
                               truncateText="…"
                               text={items[item].description}
                             />
-                            <span className="cat">{items[item].category}</span>
                           </Link>
                         </Col>
                       </Row>

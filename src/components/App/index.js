@@ -35,7 +35,7 @@ import { withAuthentication } from '../Session';
 const App = () => (
       <Router>
         <Navigation />
-        <Container fluid className="px-0 mb-5">
+        <Container fluid className="px-0 pb-5 mb-1">
           <Route exact path={ROUTES.LANDING} component={LandingPage} />
           <Route exact path={ROUTES.FILT_FOOD} component={FilterFood} />
           <Route exact path={ROUTES.FILT_CLOTHING} component={FilterClothing} />

@@ -114,11 +114,7 @@ class MessageForm extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  componentDidMount() {
-    document.title = 'Profile';
-  }
-
-  componentWillMount(){
+  componentDidMount(){
     this.setState({ loading: true });
 
     const user = firebase.auth().currentUser;
@@ -213,7 +209,7 @@ class MessageForm extends Component {
               <h2>{users.username}</h2>
               <p className="profileSub">{users.location}</p>
               <NavLink to={ROUTES.SETTINGS}>
-                <Button className="navItem mt-3 mb-3 settings" size="sm" variant="secondary" block>
+                <Button className="navItem mt-3 mb-2 settings" size="xs" variant="secondary" block>
                   Edit my profile
                 </Button>
                 <SignOutButton to={ROUTES.LANDING} />

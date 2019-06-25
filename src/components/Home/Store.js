@@ -137,12 +137,12 @@ class Stores extends Component {
               <li className="messages" key={key} index={index} style={{marginBottom:`10px`,}}>
                 <div className="chat">
                   <Row>
-                    <Col xs={4} sm={4} md={2}>
+                    <Col xs={3} sm={3} md={2}>
                       <div className="itemImg storeList">
                         <Image src={stores[key].imgUrl + `/-/scale_crop/250x250/center/`}/>
                       </div>
                     </Col>
-                    <Col xs={8} sm={8} md={10} style={{ paddingLeft: `0`, paddingRight: `45px` }}>
+                    <Col xs={9} sm={9} md={10} style={{ paddingLeft: `0`}}>
                       <Link to={{ pathname:`store/${userid.uid}/${[key]}`, state:{userkey: `${stores[key].user}`} }}>
                         <h2>{stores[key].name}</h2>
                         <TextTruncate

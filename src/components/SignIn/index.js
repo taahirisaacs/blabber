@@ -15,7 +15,7 @@ import * as ROUTES from '../../constants/routes';
 const SignInPage = () => (
   <Row>
     <Col xs={{span:'10', offset:'1'}}>
-      <h1 className="pageTitle">Log into your TinyTrader account</h1>
+      <h1 className="pageTitle">Log into your account</h1>
       <SignInForm/>
       <PasswordForgetLink />
       <SignUpLink />

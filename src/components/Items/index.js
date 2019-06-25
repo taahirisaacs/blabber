@@ -3,6 +3,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { NavLink, Link } from 'react-router-dom';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import FooterNavigation from '../Navigation/footer';
+import TextTruncate from 'react-text-truncate';
 
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -154,7 +155,7 @@ class ItemsAuth extends Component {
                 <div className="chat">
                   <Row>
                     <Col xs={12}>
-                      <div className="itemImg">
+                      <div className="itemImgInner">
                         <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/` || "https://via.placeholder.com/150"}/>
                       </div>
                     </Col>
@@ -324,10 +325,10 @@ class ItemsNonAuth extends Component {
               {Object.keys(items).map((key, index) => {
                 return (
                   <li className="messages" key={key} index={index}>
-                    <div className="chat">
+                    <div className="chat chatInner">
                       <Row>
                         <Col xs={12}>
-                          <div className="itemImg">
+                          <div className="itemImgInner">
                             <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/` || "https://via.placeholder.com/150"}/>
                           </div>
                         </Col>
@@ -347,7 +348,6 @@ class ItemsNonAuth extends Component {
                   </li>
                 );
               })}
-              {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
 
               <li className="messages" key={stores.id} index={stores.id} style={{marginBottom:`10px`,}}>
 
@@ -361,7 +361,12 @@ class ItemsNonAuth extends Component {
                     <Col xs={8} sm={8} md={10} style={{ paddingLeft: `0`, paddingRight: `45px` }}>
                       <Link to={{ pathname:`/store/${stores.user}/${storesId}`, state:{userkey: `${storesId}`} }}>
                         <h2>{stores.name}</h2>
-                        <span className="desc">{stores.description}</span>
+                        <TextTruncate
+                          className="timestamp"
+                          line={1}
+                          truncateText="…"
+                          text={stores.description}
+                        />
                         <span className="cat">{stores.category}</span>
                       </Link>
                     </Col>

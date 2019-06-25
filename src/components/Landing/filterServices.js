@@ -69,7 +69,7 @@ class filterClothing extends Component {
         const itemUrl = window.location.href;
 
         return (
-          <Col style={{paddingTop:`20px`, paddingBottom:`10px`}} xs={12} md={{span:'4', offset:'4'}}>
+          <Col style={{padding:`20px 10px 10px`}} xs={12} md={{span:'4', offset:'4'}}>
 
             <h4 className="catTitle">⚙️ Services</h4>
             {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
@@ -79,17 +79,17 @@ class filterClothing extends Component {
                   <li className="messages" key={store} index={index} style={{marginBottom:`10px`,}}>
                     <div className="chat">
                       <Row>
-                        <Col xs={4} sm={4} md={2}>
+                        <Col xs={3} sm={4} md={2}>
                           <div className="itemImg storeList">
                             <Image src={stores[store].imgUrl + `/-/scale_crop/250x250/center/`}/>
                           </div>
                         </Col>
-                        <Col xs={8} sm={8} md={10} style={{ paddingLeft: `0`, paddingRight: `25px` }}>
+                        <Col xs={9} sm={8} md={10} style={{ paddingLeft: `0`}}>
                           <Link to={{ pathname:`/store/${stores[store].user}/${store}`, state:{userkey: `${store}`} }}>
                             <h2>{stores[store].name}</h2>
                             <TextTruncate
                               className="timestamp"
-                              line={2}
+                              line={1}
                               truncateText="…"
                               text={stores[store].description}
                             />
