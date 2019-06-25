@@ -9,6 +9,7 @@ import Modal from 'react-bootstrap/Modal';
 import Image from 'react-bootstrap/Image';
 import Uploader from './../Uploader';
 import { Link } from 'react-router-dom';
+import TextTruncate from 'react-text-truncate';
 
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -144,9 +145,14 @@ class Stores extends Component {
                     <Col xs={8} sm={8} md={10} style={{ paddingLeft: `0`, paddingRight: `45px` }}>
                       <Link to={{ pathname:`store/${userid.uid}/${[key]}`, state:{userkey: `${stores[key].user}`} }}>
                         <h2>{stores[key].name}</h2>
+                        <TextTruncate
+                          className="timestamp"
+                          line={1}
+                          truncateText="…"
+                          text={stores[key].description}
+                        />
+                        <span className="cat">{stores[key].category}</span>
                       </Link>
-                      <span className="desc">{stores[key].description}</span>
-                      <span className="cat">{stores[key].category}</span>
                     </Col>
                     <Dropdown>
                       <Dropdown.Toggle as="span" drop="left" className="timestamp delete" id="dropdown-basic"/>

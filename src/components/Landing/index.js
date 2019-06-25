@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { LinkContainer } from "react-router-bootstrap";
 import { NavLink, Link } from 'react-router-dom';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import TextTruncate from 'react-text-truncate';
 
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -85,11 +86,16 @@ class Landing extends Component {
                             {items[item].imgUrl && <Image src={items[item].imgUrl + `/-/scale_crop/500x500/center/` || ''}/>}
                           </div>
                         </Col>
-                        <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
+                        <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `25px` }}>
                           <Link to={`/items/${items[item].store.id}/${items[item].itemId}`}>
                             <h2>{items[item].name}</h2>
                             <span className="pricing">R{items[item].price}</span>
-                            <span className="timestamp desc">{items[item].description}</span>
+                            <TextTruncate
+                              className="timestamp"
+                              line={2}
+                              truncateText="…"
+                              text={items[item].description}
+                            />
                             <span className="cat">{items[item].category}</span>
                           </Link>
                         </Col>

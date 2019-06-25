@@ -84,7 +84,7 @@ class filterClothing extends Component {
                             {items[item].imgUrl && <Image src={items[item].imgUrl + `/-/scale_crop/500x500/center/` || ''}/>}
                           </div>
                         </Col>
-                        <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
+                        <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `25px` }}>
                           <Link to={`/items/${items[item].store.id}/${items[item].itemId}`}>
                             <h2>{items[item].name}</h2>
 

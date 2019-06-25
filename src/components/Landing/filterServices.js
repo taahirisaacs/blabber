@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { LinkContainer } from "react-router-bootstrap";
 import { NavLink, Link } from 'react-router-dom';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import TextTruncate from 'react-text-truncate';
 
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -83,10 +84,15 @@ class filterClothing extends Component {
                             <Image src={stores[store].imgUrl + `/-/scale_crop/250x250/center/`}/>
                           </div>
                         </Col>
-                        <Col xs={8} sm={8} md={10} style={{ paddingLeft: `0`, paddingRight: `45px` }}>
+                        <Col xs={8} sm={8} md={10} style={{ paddingLeft: `0`, paddingRight: `25px` }}>
                           <Link to={{ pathname:`/store/${stores[store].user}/${store}`, state:{userkey: `${store}`} }}>
                             <h2>{stores[store].name}</h2>
-                            <span className="desc">{stores[store].description}</span>
+                            <TextTruncate
+                              className="timestamp"
+                              line={2}
+                              truncateText="…"
+                              text={stores[store].description}
+                            />
                             <span className="stars">
                               <FontAwesomeIcon icon={faStar} />
                               <FontAwesomeIcon icon={faStar} />

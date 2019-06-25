@@ -159,7 +159,8 @@ class ItemsAuth extends Component {
                       </div>
                     </Col>
                     <Col xs={12} style={{ paddingLeft: `20px`, paddingRight: `20px` }}>
-                      <h2>{items[key].name}</h2>
+                      <span className="storenameInner">{items[key].store.name}</span>
+                      <h2 className="titleInner">{items[key].name}</h2>
                       <span className="pricing">R{items[key].price}</span>
                       <span className="itemdesc">{items[key].description}</span>
                       <span className="cat">{items[key].category}</span>

@@ -11,6 +11,7 @@ import Image from 'react-bootstrap/Image';
 import Uploader from './../Uploader';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import TextTruncate from 'react-text-truncate';
 
 import * as ROUTES from '../../constants/routes';
 
@@ -122,10 +123,15 @@ class Items extends Component {
                     </Col>
                     <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0`, paddingRight: `40px` }}>
                       <Link to={`/items/${items[item].store.id}/${items[item].itemId}`}>
+                        <TextTruncate
+                          className="storenameInner"
+                          line={1}
+                          truncateText="…"
+                          text={items[item].store.name}
+                        />
                         <h2>{items[item].name}</h2>
                         <span className="pricing">R{items[item].price}</span>
-                        <span className="timestamp desc">{items[item].description}</span>
-                        <span className="timestamp desc">{items[item].store.name}</span>
+
                       </Link>
                     </Col>
 
