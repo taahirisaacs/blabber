@@ -276,7 +276,7 @@ class ItemsNonAuth extends Component {
         };
       }
 
-      componentWillMount(){
+      componentDidMount(){
           this.setState({ loading: true })
           const itemkey = this.props.match.params.itemid;
           const storekey = this.props.match.params.storeid;

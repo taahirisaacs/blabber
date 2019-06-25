@@ -548,6 +548,9 @@ span.divider {
   display: block;
   margin: 0 auto;
 }
+a:hover {
+  text-decoration: none!important;
+}
 a .navItemLanding {
     font-size: 1.2rem;
     text-decoration: none;
@@ -560,12 +563,16 @@ a .navItemLanding {
 a.active .navItemLanding {
     border: 1px solid #8994a5;
     border-radius: 100px;
+    text-decoration: none;
+}
+a.active:hover .navItemLanding {
+    text-decoration: none!important;
 }
 .bottomNav a, .bottomNav a:hover {
   color: #9aa7b7;
 }
 .bottomNav .active, .bottomNav .active:hover {
-  text-decoration: none;
+  text-decoration: none!important;
   color: #394450;
 }
 .newitemform {
@@ -610,6 +617,7 @@ span.poweredby {
     font-size: 1rem;
     font-weight: 700;
     color: #65768d;
+    margin-top: 30px;
 }
 h1.pageTitle {
     margin: 30px 0px 20px;

@@ -79,12 +79,12 @@ class filterClothing extends Component {
                   <li className="messages" key={store} index={index} style={{marginBottom:`10px`,}}>
                     <div className="chat">
                       <Row>
-                        <Col xs={3} sm={4} md={2}>
+                        <Col xs={4} sm={4} md={2}>
                           <div className="itemImg storeList">
                             <Image src={stores[store].imgUrl + `/-/scale_crop/250x250/center/`}/>
                           </div>
                         </Col>
-                        <Col xs={9} sm={8} md={10} style={{ paddingLeft: `0`}}>
+                        <Col xs={8} sm={8} md={10} style={{ paddingLeft: `0`}}>
                           <Link to={{ pathname:`/store/${stores[store].user}/${store}`, state:{userkey: `${store}`} }}>
                             <h2>{stores[store].name}</h2>
                             <TextTruncate
