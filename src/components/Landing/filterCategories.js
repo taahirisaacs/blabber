@@ -79,40 +79,28 @@ class filterCategories extends Component {
         const itemUrl = window.location.href;
 
         return (
-            <Container fluid>
-              <Col xs={12} className="px-1">
-                <h1 className="pageTitleCat">An online market for micro businesses.</h1>
-                <Form onSubmit={this.onSubmit} className="homeSearch">
-                  <Form.Group controlId="formDrop">
-                    <Form.Control as="select" name="cta" value={this.state.cta || ''} onChange={this.onChange}>
-                      <option>Select your location</option>
-                      <option>South Africa 🇿🇦</option>
-                      <option>Cape Town</option>
-                      <option>Joburg</option>
-                      <option>Durban</option>
-                      <option>Pretoria</option>
-                      <option>Other</option>
+            <Container fluid style={{paddingTop:`10px`}}>
 
-                    </Form.Control>
-                  </Form.Group>
-                  <Form.Group controlId="formSearch">
-                    <Form.Control
-                      name="where"
-                      value={this.state.where || ''}
-                      onChange={this.onChange}
-                      type="text"
-                      placeholder="What are you looking for?"
-                    />
-                  </Form.Group>
-                </Form>
-              </Col>
+              <Form onSubmit={this.onSubmit} className="homeSearch">
 
+                <Form.Group controlId="formSearch">
+                  <Form.Control
+                    name="where"
+                    value={this.state.where || ''}
+                    onChange={this.onChange}
+                    type="text"
+                    className="input"
+                    placeholder="What are you looking for? 🔍"
+                  />
+                </Form.Group>
+              </Form>
               <h3 className="pageSubTitleCat">Choose a category</h3>
               <Row className="px-2">
                 <Col xs={6} className="px-2">
-                  <div className="catBlock">
+                  <div className="catBlock disB">
                     <span className="catIcon">🏪</span>
                     <span className="catName">Spaza Shop</span>
+                    <span className="catCount">Coming soon</span>
                   </div>
                 </Col>
                 <Col xs={6} className="px-2">
@@ -120,6 +108,7 @@ class filterCategories extends Component {
                     <div className="catBlock">
                       <span className="catIcon">💻</span>
                       <span className="catName">Electronics</span>
+                      <span className="catCount"><span className="dot "></span>2837 Online</span>
                     </div>
                   </NavLink>
                 </Col>
@@ -128,13 +117,15 @@ class filterCategories extends Component {
                     <div className="catBlock">
                       <span className="catIcon">👕</span>
                       <span className="catName">Clothing</span>
+                      <span className="catCount"><span className="dot "></span>2837 Online</span>
                     </div>
                   </NavLink>
                 </Col>
                 <Col xs={6} className="px-2">
-                  <div className="catBlock">
+                  <div className="catBlock disB">
                     <span className="catIcon">💇🏼‍♂️</span>
                     <span className="catName">Barber/Salon</span>
+                    <span className="catCount">Coming soon</span>
                   </div>
                 </Col>
                 <Col xs={6} className="px-2">
@@ -142,6 +133,7 @@ class filterCategories extends Component {
                     <div className="catBlock">
                       <span className="catIcon">🚗</span>
                       <span className="catName">Cars</span>
+                      <span className="catCount"><span className="dot "></span>2837 Online</span>
                     </div>
                   </NavLink>
                 </Col>
@@ -150,37 +142,44 @@ class filterCategories extends Component {
                     <div className="catBlock">
                       <span className="catIcon">🍔</span>
                       <span className="catName">Food</span>
+                      <span className="catCount"><span className="dot "></span>2837 Online</span>
                     </div>
                   </NavLink>
                 </Col>
                 <Col xs={6} className="px-2">
-                  <div className="catBlock">
+                  <div className="catBlock disB">
                     <span className="catIcon">🧵</span>
                     <span className="catName">Arts & Crafts</span>
+                    <span className="catCount">Coming soon</span>
                   </div>
                 </Col>
                 <Col xs={6} className="px-2">
-                  <div className="catBlock">
+                  <div className="catBlock disB">
                     <span className="catIcon">👟</span>
                     <span className="catName">Sneakers</span>
+                    <span className="catCount">Coming soon</span>
                   </div>
+
                 </Col>
-                <Col xs={6} className="px-2">
-                  <div className="catBlock">
+                <Col xs={6} className="px-2 disB">
+                  <div className="catBlock disB">
                     <span className="catIcon">🚚</span>
                     <span className="catName">Movers</span>
+<span className="catCount">Coming soon</span>
                   </div>
                 </Col>
-                <Col xs={6} className="px-2">
-                  <div className="catBlock">
+                <Col xs={6} className="px-2 disB">
+                  <div className="catBlock disB">
                     <span className="catIcon">♻️</span>
                     <span className="catName">Thrift</span>
+                  <span className="catCount">Coming soon</span>
                   </div>
                 </Col>
-                <Col xs={6} className="px-2">
-                  <div className="catBlock">
+                <Col xs={6} className="px-2 disB">
+                  <div className="catBlock disB">
                     <span className="catIcon">🧹</span>
                     <span className="catName">Cleaners</span>
+                  <span className="catCount">Coming soon</span>
                   </div>
                 </Col>
                 <Col xs={6} className="px-2">
@@ -188,9 +187,29 @@ class filterCategories extends Component {
                     <div className="catBlock">
                       <span className="catIcon">⚙️</span>
                       <span className="catName">Other Services</span>
+                      <span className="catCount"><span className="dot "></span>2837 Online</span>
                     </div>
                   </NavLink>
                 </Col>
+                <Container fluid className="px-1 mx-0 Footer">
+                  <Form onSubmit={this.onSubmit} className="homeSearch">
+                    <Form.Group controlId="formDrop"  className="mx-0 px-0">
+                      <Form.Control as="select" name="cta" value={this.state.cta || ''} onChange={this.onChange}>
+                        <option>Change your location  ↓</option>
+                        <option>South Africa 🇿🇦</option>
+                        <option>Cape Town</option>
+                        <option>Joburg</option>
+                        <option>Durban</option>
+                        <option>Pretoria</option>
+                        <option>Other</option>
+
+                      </Form.Control>
+                    </Form.Group>
+                  </Form>
+                  <Navbar.Brand className="mx-0 footer"><span className="catIcon foIcon">🏪</span>TinyTrader</Navbar.Brand>
+                  <h1 className="pageTitleCat">An online market for micro businesses.</h1>
+
+                </Container>
               </Row>
             </Container>
         );

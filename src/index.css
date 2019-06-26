@@ -240,7 +240,35 @@ span.timestamp.delete a {
 }
 .form-group {
     margin-top: 0.8rem!important;
-    margin-bottom: 0.95rem!important;
+    margin-bottom: 0rem!important;
+    margin: 20px 0px;
+    border: 1px solid #c4d0e4;
+    border-radius: 100px;
+    background: #d3dbea;
+}
+.form-control {
+    font-weight: 600!important;
+    text-align: center!important;
+    color: #737d8c;
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #798496;
+    text-align: center!important;
+    background: #ffffff;
+    background-clip: padding-box;
+    border: 1px solid #f6fafe;
+}
+.form-control:focus {
+    color: #737d8c;
+    background-color: #f5faff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
 }
 form.FormInput textarea {
     display: inline-block;
@@ -511,10 +539,11 @@ button.storebtn.copy_link.btn.btn-primary.btn-block {
     color: #5f6d82;
 }
 button.signup.nav-item {
-    border: 1px solid #206be0;
-    background: #206be0;
-    padding: 3px 12px;
+    border: 1px solid #3f81c9;
+    background: #4081ca;
+    padding: 9px 15px;
     border-radius: 100px;
+    line-height: 1;
     font-size: 0.85rem;
     font-weight: 600;
     color: #ffffff;
@@ -675,7 +704,9 @@ svg.icon_store {
     height: 1px;
     width: 100%;
 }
-
+px-2.col-6 {
+    margin-bottom: 25px;
+}
 .pageTitleCat {
   font-size: 1.6rem;
   font-weight: 500;
@@ -686,14 +717,21 @@ svg.icon_store {
 .catBlock {
     background: #fff;
     border-radius: 8px;
-    padding: 15px;
+    padding: 20px 15px;
     margin-bottom: 20px;
+    min-height: 128px;
+    display: table-cell;
+    vertical-align: middle;
+    color: #343e4c;
+    width: 200px;
+    height: 145px;
+    text-align: center;
 }
 .catIcon {
     display: block;
     text-align: center;
     line-height: 1;
-    font-size: 2.5rem;
+    font-size: 2rem;
 }
 .catName {
     display: block;
@@ -701,10 +739,7 @@ svg.icon_store {
     font-size: 0.9rem;
     font-weight: 600;
 }
-form.homeSearch {
-    border-bottom: 1px solid #8b98a9;
-    margin-bottom: 1rem;
-}
+
 input#formSearch, select#formDrop {
     border-radius: 100px;
 }
@@ -714,5 +749,75 @@ h3.pageSubTitleCat {
     font-weight: 700;
     text-align: center;
     margin-bottom: 1rem;
-    color: #6a7584;
+    color: #8d97a7;
+}
+.px-1.Footer {
+    background: #fff;
+    border-radius: 8px;
+    text-align: center;
+    padding: 4px 15px 15px;
+    margin-bottom: -25px;
+    margin: 11px auto -60px;
+}
+form.homeSearch {
+    margin: 5px 13px;
+}
+.px-2.col-6 {
+    margin-bottom: 20px;
+}
+.pageTitleCat {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.1;
+    padding: 0rem 4rem 0.15rem;
+    text-align: center;
+    color: #929ba9;
+}
+span.mx-0.footer.navbar-brand {
+    font-weight: 600;
+    color: #4b596f;
+    margin-bottom: -6px;
+    font-size: 1.2rem;
+    margin-top: 23px;
+}
+h3.pageSubTitleCat {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 1.05rem;
+    margin-bottom: 1rem;
+    color: #717c8c;
+}
+.catBlock.disB .catIcon, .catBlock.disB .catName, .catBlock.disB .catCount {
+    opacity: .5;
+}
+span.dot {
+    display: inline-block;
+    width: 11px;
+    height: 11px;
+    background: #84d068;
+    border-radius: 100px;
+    margin-right: 6px;
+}
+span.catCount {
+    text-align: center;
+    display: inline-block;
+    font-size: 0.7rem;
+    color: #6c7684;
+    font-weight: 700;
+}
+input#formSearch::placeholder {
+    color: #8792a1;
+}
+input#formSearch {
+    color: #525a67;
+    background: #fff;
+}
+input#formSearch:focus {
+    color: #525a67;
+    background: #fafcff;
+    border: 2px solid #c8d2e2!important;
+    outline: none;
+    box-shadow: none;
 }
