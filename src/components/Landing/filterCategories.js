@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
 
 import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import TextareaAutosize from 'react-autosize-textarea';
 import Col from 'react-bootstrap/Col';
@@ -83,16 +84,19 @@ class filterCategories extends Component {
 
               <Form onSubmit={this.onSubmit} className="homeSearch">
 
-                <Form.Group controlId="formSearch">
+                <InputGroup>
                   <Form.Control
                     name="where"
                     value={this.state.where || ''}
                     onChange={this.onChange}
                     type="text"
-                    className="input"
-                    placeholder="What are you looking for? 🔍"
+                    className="formSearch"
+                    placeholder="What are you looking for?"
                   />
-                </Form.Group>
+                  <InputGroup.Append className="p-0">
+                    <Button className="searchBtn">Go</Button>
+                  </InputGroup.Append>
+                </InputGroup>
               </Form>
               <h3 className="pageSubTitleCat">Choose a category</h3>
               <Row className="px-2">
@@ -108,7 +112,7 @@ class filterCategories extends Component {
                     <div className="catBlock">
                       <span className="catIcon">💻</span>
                       <span className="catName">Electronics</span>
-                      <span className="catCount"><span className="dot "></span>2837 Online</span>
+                      <span className="catCount"><span className="dot "></span>498 Online</span>
                     </div>
                   </NavLink>
                 </Col>
@@ -117,7 +121,7 @@ class filterCategories extends Component {
                     <div className="catBlock">
                       <span className="catIcon">👕</span>
                       <span className="catName">Clothing</span>
-                      <span className="catCount"><span className="dot "></span>2837 Online</span>
+                      <span className="catCount"><span className="dot "></span>209 Online</span>
                     </div>
                   </NavLink>
                 </Col>
@@ -133,7 +137,7 @@ class filterCategories extends Component {
                     <div className="catBlock">
                       <span className="catIcon">🚗</span>
                       <span className="catName">Cars</span>
-                      <span className="catCount"><span className="dot "></span>2837 Online</span>
+                      <span className="catCount"><span className="dot "></span>281 Online</span>
                     </div>
                   </NavLink>
                 </Col>
@@ -142,7 +146,7 @@ class filterCategories extends Component {
                     <div className="catBlock">
                       <span className="catIcon">🍔</span>
                       <span className="catName">Food</span>
-                      <span className="catCount"><span className="dot "></span>2837 Online</span>
+                      <span className="catCount"><span className="dot "></span>373 Online</span>
                     </div>
                   </NavLink>
                 </Col>
@@ -187,7 +191,7 @@ class filterCategories extends Component {
                     <div className="catBlock">
                       <span className="catIcon">⚙️</span>
                       <span className="catName">Other Services</span>
-                      <span className="catCount"><span className="dot "></span>2837 Online</span>
+                      <span className="catCount"><span className="dot "></span>124 Online</span>
                     </div>
                   </NavLink>
                 </Col>
