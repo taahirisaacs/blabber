@@ -195,15 +195,15 @@ class filterCategories extends Component {
                     </div>
                   </NavLink>
                 </Col>
-                <Container fluid className="px-1 mx-0 Footer">
+                <Container fluid className="mx-0 Footer">
                   <h3 className="pageSubTitleFooter">Change your location</h3>
                   <Form onSubmit={this.onSubmit} className="homeSelect">
                     <Form.Group controlId="formDrop"  className="mx-0 px-0">
                       <Form.Control as="select" name="cta" multiple={false} value={this.state.cta || ''} onChange={this.onChange}>
-                        <option>Cape Town, South Africa</option>
-                        <option>Joburg</option>
-                        <option>Durban</option>
-                        <option>Pretoria</option>
+                        <option>Cape Town, South Africa 🇿🇦</option>
+                        <option>Joburg, South Africa 🇿🇦</option>
+                        <option>Durban, South Africa 🇿🇦</option>
+                        <option>Pretoria, South Africa 🇿🇦</option>
                         <option>Other</option>
                       </Form.Control>
                     </Form.Group>

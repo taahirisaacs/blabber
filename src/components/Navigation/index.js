@@ -27,13 +27,13 @@ const NavigationAuth = () => (
 );
 
 const NavigationNonAuth = () => (
-  <Navbar expand="lg" className="px-3" sticky="top">
+  <Navbar expand="lg" className="px-2" sticky="top">
     <LinkContainer to={ROUTES.LANDING_CAT}>
       <Navbar.Brand className="mx-0">🏪TinyTrader</Navbar.Brand>
     </LinkContainer>
-      <Nav>
-        <LinkContainer as="button" className="signup" to={ROUTES.SIGN_UP}>
-          <Nav.Item>Start Trading</Nav.Item>
+    <Nav>
+      <LinkContainer as="button" className="signup" to={ROUTES.SIGN_UP}>
+        <Nav.Item>Start Trading</Nav.Item>
         </LinkContainer>
     </Nav>
   </Navbar>
