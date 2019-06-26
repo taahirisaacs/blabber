@@ -248,7 +248,6 @@ span.timestamp.delete a {
 }
 .form-control {
     font-weight: 600!important;
-    text-align: center!important;
     color: #737d8c;
     display: block;
     width: 100%;
@@ -258,7 +257,6 @@ span.timestamp.delete a {
     font-weight: 400;
     line-height: 1.5;
     color: #798496;
-    text-align: center!important;
     background: #ffffff;
     background-clip: padding-box;
     border: 1px solid #f6fafe;
@@ -707,13 +705,7 @@ svg.icon_store {
 px-2.col-6 {
     margin-bottom: 25px;
 }
-.pageTitleCat {
-  font-size: 1.6rem;
-  font-weight: 500;
-  line-height: 1;
-  padding: 1rem 1rem 0.5rem;
-  text-align: center;
-}
+
 .catBlock {
     background: #fff;
     border-radius: 8px;
@@ -724,7 +716,7 @@ px-2.col-6 {
     vertical-align: middle;
     color: #343e4c;
     width: 200px;
-    height: 145px;
+    height: auto;
     text-align: center;
 }
 .catIcon {
@@ -732,16 +724,49 @@ px-2.col-6 {
     text-align: center;
     line-height: 1;
     font-size: 2rem;
+    margin-bottom: 3px;
 }
 .catName {
     display: block;
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 17px;
     font-weight: 600;
+    margin-bottom: -8px;
 }
-
-input#formSearch, select#formDrop {
+select#formDrop {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-align-last:center;
+    color: #4c5a6f;
+    line-height: 1;
+    padding: .6em 1em .5em;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    border: 1px solid #ced4da;
     border-radius: 100px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+}
+select#formDrop::-ms-expand {
+    display: none;
+}
+select#formDrop:hover {
+    border-color: #888;
+}
+select#formDrop:focus {
+    border-color: #aaa;
+    box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+    box-shadow: 0 0 0 3px -moz-mac-focusring;
+    color: #222;
+    outline: none;
+}
+select#formDrop option {
+    font-weight:normal;
 }
 h3.pageSubTitleCat {
     font-size: 0.85rem;
@@ -760,33 +785,51 @@ h3.pageSubTitleCat {
     margin: 11px auto -60px;
 }
 form.homeSearch {
-    margin: 5px 13px;
+    margin: 5px 0px;
+}
+form.homeSelect {
+    margin: 5px 20px;
 }
 .px-2.col-6 {
     margin-bottom: 20px;
+    display: table;
+}
+.px-2.col-6 a{
+  display: table;
+  width: 100%;
+  height: auto;
 }
 .pageTitleCat {
     font-size: 1rem;
-    font-weight: 400;
+    font-weight: 500;
     line-height: 1.1;
-    padding: 0rem 4rem 0.15rem;
-    text-align: center;
+    padding: 0rem 20px 0.15rem;
     color: #929ba9;
 }
 span.mx-0.footer.navbar-brand {
     font-weight: 600;
     color: #4b596f;
-    margin-bottom: -6px;
-    font-size: 1.2rem;
-    margin-top: 23px;
+    margin-bottom: -5px;
+    font-size: 1.1rem;
+    margin-top: 20px;
+    line-height: 1.3;
 }
 h3.pageSubTitleCat {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
     font-weight: 700;
     text-align: center;
-    margin-top: 1.05rem;
+    margin-top: 1.5rem;
     margin-bottom: 1rem;
+    color: #717c8c;
+}
+h3.pageSubTitleFooter {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 0px;
     color: #717c8c;
 }
 .catBlock.disB .catIcon, .catBlock.disB .catName, .catBlock.disB .catCount {
@@ -794,8 +837,8 @@ h3.pageSubTitleCat {
 }
 span.dot {
     display: inline-block;
-    width: 11px;
-    height: 11px;
+    width: 9px;
+    height: 9px;
     background: #84d068;
     border-radius: 100px;
     margin-right: 6px;
@@ -806,18 +849,21 @@ span.catCount {
     font-size: 0.7rem;
     color: #6c7684;
     font-weight: 700;
-}
-input#formSearch::placeholder {
-    color: #8792a1;
+    text-transform: uppercase;
 }
 input#formSearch {
     color: #525a67;
     background: #fff;
+    border-radius: 100px;
+    font-size: 0.95rem;
+    padding: 0px 20px;
+}
+input#formSearch::placeholder {
+    color: #8792a1;
 }
 input#formSearch:focus {
     color: #525a67;
     background: #fafcff;
-    border: 2px solid #c8d2e2!important;
     outline: none;
     box-shadow: none;
 }

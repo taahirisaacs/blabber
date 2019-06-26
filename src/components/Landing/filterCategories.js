@@ -41,7 +41,7 @@ class filterCategories extends Component {
           items: [],
           stores: '',
           copied: false,
-          cta: [],
+          cta: '',
           where: [],
         };
       }
@@ -165,21 +165,21 @@ class filterCategories extends Component {
                   <div className="catBlock disB">
                     <span className="catIcon">🚚</span>
                     <span className="catName">Movers</span>
-<span className="catCount">Coming soon</span>
+                    <span className="catCount">Coming soon</span>
                   </div>
                 </Col>
                 <Col xs={6} className="px-2 disB">
                   <div className="catBlock disB">
                     <span className="catIcon">♻️</span>
                     <span className="catName">Thrift</span>
-                  <span className="catCount">Coming soon</span>
+                    <span className="catCount">Coming soon</span>
                   </div>
                 </Col>
                 <Col xs={6} className="px-2 disB">
                   <div className="catBlock disB">
                     <span className="catIcon">🧹</span>
                     <span className="catName">Cleaners</span>
-                  <span className="catCount">Coming soon</span>
+                    <span className="catCount">Coming soon</span>
                   </div>
                 </Col>
                 <Col xs={6} className="px-2">
@@ -192,22 +192,20 @@ class filterCategories extends Component {
                   </NavLink>
                 </Col>
                 <Container fluid className="px-1 mx-0 Footer">
-                  <Form onSubmit={this.onSubmit} className="homeSearch">
+                  <h3 className="pageSubTitleFooter">Change your location</h3>
+                  <Form onSubmit={this.onSubmit} className="homeSelect">
                     <Form.Group controlId="formDrop"  className="mx-0 px-0">
-                      <Form.Control as="select" name="cta" value={this.state.cta || ''} onChange={this.onChange}>
-                        <option>Change your location  ↓</option>
-                        <option>South Africa 🇿🇦</option>
-                        <option>Cape Town</option>
+                      <Form.Control as="select" name="cta" multiple={false} value={this.state.cta || ''} onChange={this.onChange}>
+                        <option>Cape Town, South Africa</option>
                         <option>Joburg</option>
                         <option>Durban</option>
                         <option>Pretoria</option>
                         <option>Other</option>
-
                       </Form.Control>
                     </Form.Group>
                   </Form>
                   <Navbar.Brand className="mx-0 footer"><span className="catIcon foIcon">🏪</span>TinyTrader</Navbar.Brand>
-                  <h1 className="pageTitleCat">An online market for micro businesses.</h1>
+                  <h1 className="pageTitleCat">An online marketplace for local traders & micro businesses.</h1>
 
                 </Container>
               </Row>
