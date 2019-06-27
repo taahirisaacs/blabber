@@ -52,8 +52,6 @@ class filterCategories extends Component {
           query: '',
           response: [],
         };
-
-        this.search= this.search.bind(this);
       }
 
       componentDidMount(){
@@ -94,46 +92,16 @@ class filterCategories extends Component {
           snap.forEach(doc => {
           items[doc.id] = doc.data()
           })
-          this.setState({items, loading: false})
+          this.setState({items, loading: false});
         })
       }
 
-      unauthenticated_search(query) {
-
-        console.log(query);
-        // [START search_index_unsecure]
-        const client = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_SEARCH_KEY);
-        const index = client.initIndex('items');
-
-        // Perform an Algolia search:
-        // https://www.algolia.com/doc/api-reference/api-methods/search/
-        index
-          .search({
-            query: query,
-            attributesToRetrieve: ['*'],
-            attributesToHighlight: ['*'],
-            facets: ['*'],
-            hitsPerPage: 50,
-            minWordSizefor1Typo: 4,
-            typoTolerance: true
-
-          })
-          .then((responses) => this.setState({ response: responses.hits }));
-        // [END search_index_unsecure]
-      }
 
       search = (event) => {
         const {where} = this.state;
         const query = where;
         console.log(query);
-        if (!PROJECT_ID) {
-          console.warn('Please set PROJECT_ID in /index.js!');
-        } else if (!ALGOLIA_APP_ID) {
-          console.warn('Please set ALGOLIA_APP_ID in /index.js!');
-        } else if (ALGOLIA_SEARCH_KEY) {
-          console.log('Performing unauthenticated search...');
-          return this.unauthenticated_search(query);
-        }
+        this.props.history.push(`/search?query=${query}`);
       }
 
 
@@ -151,7 +119,7 @@ class filterCategories extends Component {
             <Container fluid style={{paddingTop:`10px`}}>
 
 
-              <Form className="homeSearch">
+              <Form className="homeSearch" >
 
                 <InputGroup>
                   <Form.Control
