@@ -55,9 +55,11 @@ class filterCategories extends Component {
       }
 
       componentDidMount(){
+          document.title = "Create Your Free Online Store, Sell Products & Services Online. | Tiny Trader"
           this.setState({ loading: true });
           this.getItems();
           this.fromDB();
+
       }
 
       componentWillUnmount() {

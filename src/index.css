@@ -868,3 +868,16 @@ button.searchBtn {
     background: #1d7ce4;
     z-index: 4!important;
 }
+h4.badSearchTitle {
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+}
+span.badSearchIcon {
+    display: block;
+    font-size: 40px;
+}

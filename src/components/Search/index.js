@@ -62,11 +62,15 @@ class Search extends Component {
       }
 
       componentDidMount(){
-
+          const values = queryString.parse(this.props.location.search)
+          const query = values.query;
+          document.title = `${query} in your area | Tiny Trader`
           this.setState({ loading: true });
           this.getItems();
           this.fromDB();
           this.unauthenticated_search();
+
+
       }
 
       componentWillUnmount() {
@@ -171,8 +175,10 @@ class Search extends Component {
         return (
             <Container fluid style={{paddingTop:`10px`}}>
               <Row>
+              {response.length ? (
                 <Col className="mt-2">
                 <h4 className="catTitle">"{query}" in your area</h4>
+
                 <Row className="tabbar mx-0">
                   <Col md>
                     <Tabs TabIndicatorProps={{style: {backgroundColor:`#6a7b95`}}} value={index} variant="fullWidth"  onChange={this.handleChange} >
@@ -181,6 +187,7 @@ class Search extends Component {
                     </Tabs>
                   </Col>
                 </Row>
+
                 <SwipeableViews index={index} onChangeIndex={this.handleChangeIndex}>
 
                   <Row className="px-2">
@@ -264,6 +271,127 @@ class Search extends Component {
                 </SwipeableViews>
 
                 </Col>
+              ) : (
+                <Col className="mt-2">
+
+                <h4 className="catTitle"><span className="badSearchIcon">😟</span>Sorry Nothing found for "{query}"</h4>
+                <h3 className="pageSubTitleCat">Choose a category</h3>
+                <Row className="px-2">
+                  <Col xs={6} className="px-2">
+                    <div className="catBlock disB">
+                      <span className="catIcon">🏪</span>
+                      <span className="catName">Spaza Shop</span>
+                      <span className="catCount">Coming soon</span>
+                    </div>
+                  </Col>
+                  <Col xs={6} className="px-2">
+                    <NavLink to={ROUTES.FILT_ELEC}>
+                      <div className="catBlock">
+                        <span className="catIcon">💻</span>
+                        <span className="catName">Electronics</span>
+                        <span className="catCount"><span className="dot "></span>498 Online</span>
+                      </div>
+                    </NavLink>
+                  </Col>
+                  <Col xs={6} className="px-2">
+                    <NavLink to={ROUTES.FILT_CLOTHING}>
+                      <div className="catBlock">
+                        <span className="catIcon">👕</span>
+                        <span className="catName">Clothing</span>
+                        <span className="catCount"><span className="dot "></span>209 Online</span>
+                      </div>
+                    </NavLink>
+                  </Col>
+                  <Col xs={6} className="px-2">
+                    <div className="catBlock disB">
+                      <span className="catIcon">💇🏼‍♂️</span>
+                      <span className="catName">Barber/Salon</span>
+                      <span className="catCount">Coming soon</span>
+                    </div>
+                  </Col>
+                  <Col xs={6} className="px-2">
+                    <NavLink to={ROUTES.FILT_CAR}>
+                      <div className="catBlock">
+                        <span className="catIcon">🚗</span>
+                        <span className="catName">Cars</span>
+                        <span className="catCount"><span className="dot "></span>281 Online</span>
+                      </div>
+                    </NavLink>
+                  </Col>
+                  <Col xs={6} className="px-2">
+                    <NavLink to={ROUTES.FILT_FOOD}>
+                      <div className="catBlock">
+                        <span className="catIcon">🍔</span>
+                        <span className="catName">Food</span>
+                        <span className="catCount"><span className="dot "></span>373 Online</span>
+                      </div>
+                    </NavLink>
+                  </Col>
+                  <Col xs={6} className="px-2">
+                    <div className="catBlock disB">
+                      <span className="catIcon">🧵</span>
+                      <span className="catName">Arts & Crafts</span>
+                      <span className="catCount">Coming soon</span>
+                    </div>
+                  </Col>
+                  <Col xs={6} className="px-2">
+                    <div className="catBlock disB">
+                      <span className="catIcon">👟</span>
+                      <span className="catName">Sneakers</span>
+                      <span className="catCount">Coming soon</span>
+                    </div>
+
+                  </Col>
+                  <Col xs={6} className="px-2 disB">
+                    <div className="catBlock disB">
+                      <span className="catIcon">🚚</span>
+                      <span className="catName">Movers</span>
+                      <span className="catCount">Coming soon</span>
+                    </div>
+                  </Col>
+                  <Col xs={6} className="px-2 disB">
+                    <div className="catBlock disB">
+                      <span className="catIcon">♻️</span>
+                      <span className="catName">Thrift</span>
+                      <span className="catCount">Coming soon</span>
+                    </div>
+                  </Col>
+                  <Col xs={6} className="px-2 disB">
+                    <div className="catBlock disB">
+                      <span className="catIcon">🧹</span>
+                      <span className="catName">Cleaners</span>
+                      <span className="catCount">Coming soon</span>
+                    </div>
+                  </Col>
+                  <Col xs={6} className="px-2">
+                    <NavLink to={ROUTES.FILT_SERVICES}>
+                      <div className="catBlock">
+                        <span className="catIcon">⚙️</span>
+                        <span className="catName">Other Services</span>
+                        <span className="catCount"><span className="dot "></span>124 Online</span>
+                      </div>
+                    </NavLink>
+                  </Col>
+                  <Container fluid className="mx-0 Footer">
+                    <h3 className="pageSubTitleFooter">Change your location</h3>
+                    <Form onSubmit={this.onSubmit} className="homeSelect">
+                      <Form.Group controlId="formDrop"  className="mx-0 px-0">
+                        <Form.Control as="select" name="cta" multiple={false} value={this.state.cta || ''} onChange={this.onChange}>
+                          <option>Cape Town, South Africa 🇿🇦</option>
+                          <option>Joburg, South Africa 🇿🇦</option>
+                          <option>Durban, South Africa 🇿🇦</option>
+                          <option>Pretoria, South Africa 🇿🇦</option>
+                          <option>Other</option>
+                        </Form.Control>
+                      </Form.Group>
+                    </Form>
+                    <Navbar.Brand className="mx-0 footer"><span className="catIcon foIcon">🏪</span>TinyTrader</Navbar.Brand>
+                    <h1 className="pageTitleCat">An online marketplace for local traders & micro businesses.</h1>
+
+                  </Container>
+                </Row>
+                </Col>
+              )}
               </Row>
 
             </Container>
