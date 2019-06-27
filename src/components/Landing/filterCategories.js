@@ -33,6 +33,11 @@ import firebase from 'firebase/app';
 import * as ROUTES from '../../constants/routes';
 import { AuthUserContext } from '../Session';
 
+const algoliasearch = require('algoliasearch');
+const PROJECT_ID = 'blabber-2fef9';          // Required - your Firebase project ID
+const ALGOLIA_APP_ID = 'WQJ5Z7N2SV';     // Required - your Algolia app ID
+const ALGOLIA_SEARCH_KEY = '8172cbec423eced5e7ac8eda3cb4bf02'; // Optional - Only used for unauthenticated search
+
 class filterCategories extends Component {
   constructor(props) {
     super(props);
@@ -44,7 +49,11 @@ class filterCategories extends Component {
           copied: false,
           cta: '',
           where: [],
+          query: '',
+          response: [],
         };
+
+        this.search= this.search.bind(this);
       }
 
       componentDidMount(){
@@ -89,7 +98,43 @@ class filterCategories extends Component {
         })
       }
 
+      unauthenticated_search(query) {
 
+        console.log(query);
+        // [START search_index_unsecure]
+        const client = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_SEARCH_KEY);
+        const index = client.initIndex('items');
+
+        // Perform an Algolia search:
+        // https://www.algolia.com/doc/api-reference/api-methods/search/
+        index
+          .search({
+            query: query,
+            attributesToRetrieve: ['*'],
+            attributesToHighlight: ['*'],
+            facets: ['*'],
+            hitsPerPage: 50,
+            minWordSizefor1Typo: 4,
+            typoTolerance: true
+
+          })
+          .then((responses) => this.setState({ response: responses.hits }));
+        // [END search_index_unsecure]
+      }
+
+      search = (event) => {
+        const {where} = this.state;
+        const query = where;
+        console.log(query);
+        if (!PROJECT_ID) {
+          console.warn('Please set PROJECT_ID in /index.js!');
+        } else if (!ALGOLIA_APP_ID) {
+          console.warn('Please set ALGOLIA_APP_ID in /index.js!');
+        } else if (ALGOLIA_SEARCH_KEY) {
+          console.log('Performing unauthenticated search...');
+          return this.unauthenticated_search(query);
+        }
+      }
 
 
       onChange = event => {
@@ -98,13 +143,15 @@ class filterCategories extends Component {
 
       render () {
 
-        const { items, loading } = this.state;
+        const { items, loading, response } = this.state;
         const itemUrl = window.location.href;
+        console.log(response);
 
         return (
             <Container fluid style={{paddingTop:`10px`}}>
 
-              <Form onSubmit={this.onSubmit} className="homeSearch">
+
+              <Form className="homeSearch">
 
                 <InputGroup>
                   <Form.Control
@@ -116,10 +163,47 @@ class filterCategories extends Component {
                     placeholder="What are you looking for?"
                   />
                   <InputGroup.Append className="p-0">
-                    <Button className="searchBtn">Go</Button>
+                    <Button className="searchBtn" onClick={this.search}>Go</Button>
                   </InputGroup.Append>
                 </InputGroup>
               </Form>
+
+              <Row>
+                <Col className="mt-2">
+                  {Object.keys(response).map((res, index) => {
+                    return (
+                      <li className="messages" key={res} index={res}>
+                        <div className="chat">
+
+                          <Row>
+                            <Col xs={4} sm={3} md={3}>
+                              <div className="itemImg">
+                                {response[res].imgUrl && <Image src={response[res].imgUrl + `/-/scale_crop/500x500/center/` || ''}/>}
+
+                              </div>
+                            </Col>
+                            <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0` }}>
+                              <Link to={`/items/${response[res].store.id}/${response[res].itemId}`}>
+                                <h2>{response[res].name}</h2>
+                                <span className="pricing">R{response[res].price}</span>
+                                <TextTruncate
+                                  className="timestamp"
+                                  line={1}
+                                  truncateText="…"
+                                  text={response[res].description}
+                                />
+                              </Link>
+                            </Col>
+
+                          </Row>
+
+                        </div>
+                      </li>
+                    );
+                  })}
+                </Col>
+              </Row>
+
               <h3 className="pageSubTitleCat">Choose a category</h3>
               <Row className="px-2">
                 <Col xs={6} className="px-2">

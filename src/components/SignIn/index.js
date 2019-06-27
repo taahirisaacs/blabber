@@ -13,7 +13,7 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
 const SignInPage = () => (
-  <Row>
+  <Row className="mx-0">
     <Col xs={{span:'10', offset:'1'}}>
       <h1 className="pageTitle">Log into your account</h1>
       <SignInForm/>

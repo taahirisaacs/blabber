@@ -15,7 +15,7 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
 const SignUpPage = () => (
-  <Row>
+  <Row className="mx-0">
     <Col xs={{span:'10', offset:'1'}}>
       <h1 className="pageTitle">Sign up to start trading</h1>
       <SignUpForm />
