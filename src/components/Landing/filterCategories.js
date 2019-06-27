@@ -50,11 +50,30 @@ class filterCategories extends Component {
       componentDidMount(){
           this.setState({ loading: true });
           this.getItems();
+          this.fromDB();
       }
 
       componentWillUnmount() {
         if(this.unsubscribe)
           this.unsubscribe();
+      }
+
+        fromDB = () => {
+        const db = firebase.firestore();
+        const itemDatas = db.collection("items").get()
+        .then(function(querySnapshot) {
+              const itemData = [];
+                querySnapshot.forEach(function(doc) {
+                  itemData.push({
+                    name: doc.data().name,
+                    description: doc.data().description,
+                    timestamp: doc.data().timestamp,
+                    price: doc.data().price,
+                    category: doc.data().category,
+                    objectID: doc.id
+                  })
+                })
+        })
       }
 
       getItems = () => {
@@ -69,6 +88,9 @@ class filterCategories extends Component {
           this.setState({items, loading: false})
         })
       }
+
+
+
 
       onChange = event => {
         this.setState({ [event.target.name]: event.target.value});
@@ -216,6 +238,7 @@ class filterCategories extends Component {
             </Container>
         );
       }
+
 }
 
 export default filterCategories;

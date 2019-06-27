@@ -15,7 +15,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
 import * as ROUTES from '../../constants/routes';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import firestore from "firebase/firestore";
 
 const INITIAL_STATE = {
@@ -45,6 +45,8 @@ constructor(props, context) {
   };
 };
 
+
+
 onSubmit = event => {
   const { name, description, price, category, imgUrl, storeId, storeName, cta } = this.state;
   const user = firebase.auth().currentUser;
@@ -68,6 +70,7 @@ onSubmit = event => {
           console.log("Document written with ID: ", authUser.id);
           this.setState({ ...INITIAL_STATE });
           this.props.history.push(ROUTES.HOME);
+
       })
       .catch(function(error) {
           console.error("Error adding document: ", error);

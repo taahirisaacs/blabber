@@ -4,6 +4,8 @@ import { compose } from 'recompose';
 import { LoginLink } from '../SignIn';
 import Uploader from './../Uploader';
 
+import AlgoliaPlaces from 'algolia-places-react';
+
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -126,13 +128,42 @@ class SignUpFormBase extends Component {
             />
           </Form.Group>
           <Form.Group controlId="formLocation">
-            <Form.Control
+            <AlgoliaPlaces
+              placeholder='Write an address here'
+
+              options={{
+                appId: 'plMOIODNLXZ6',
+                apiKey: 'b40b54304cdc5beb771d96ffc12c8cfe',
+                language: 'en',
+                countries: ['za'],
+                type: 'address',
+              }}
+
+              onChange={({ query, rawAnswer, suggestion, suggestionIndex }) =>
+                this.setState({ location: suggestion.value }) }
+
+              onSuggestions={({ rawAnswer, query, suggestions }) =>
+                console.log('Fired when dropdown receives suggestions. You will receive the array of suggestions that are displayed.')}
+
+              onCursorChanged={({ rawAnswer, query, suggestion, suggestonIndex }) =>
+                console.log('Fired when arrows keys are used to navigate suggestions.')}
+
+              onClear={() =>
+                console.log('Fired when the input is cleared.')}
+
+              onLimit={({ message }) =>
+                console.log('Fired when you reached your current rate limit.')}
+
+              onError={({ message }) =>
+                console.log('Fired when we could not make the request to Algolia Places servers for any reason but reaching your rate limit.')}
+            />
+            {/* <Form.Control
               name="location"
               value={location}
               onChange={this.onChange}
               type="text"
               placeholder="Your location"
-            />
+            /> */}
           </Form.Group>
           <Form.Group controlId="formPassOne">
             <Form.Control
