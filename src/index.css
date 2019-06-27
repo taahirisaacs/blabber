@@ -239,7 +239,6 @@ span.timestamp.delete a {
     margin: 0px 0px 20px;
 }
 .form-control {
-    font-weight: 600!important;
     color: #737d8c;
     display: block;
     width: 100%;
@@ -683,7 +682,7 @@ span.stars svg {
     color: #f1b809;
 }
 svg.icon_store {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
 .navItem p {
     font-size: 0.85rem;

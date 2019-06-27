@@ -62,15 +62,10 @@ class Search extends Component {
       }
 
       componentDidMount(){
-          const values = queryString.parse(this.props.location.search)
-          const query = values.query;
-          document.title = `${query} in your area | Tiny Trader`
           this.setState({ loading: true });
           this.getItems();
           this.fromDB();
           this.unauthenticated_search();
-
-
       }
 
       componentWillUnmount() {
@@ -274,7 +269,7 @@ class Search extends Component {
               ) : (
                 <Col className="mt-2">
 
-                <h4 className="catTitle"><span className="badSearchIcon">😟</span>Sorry Nothing found for "{query}"</h4>
+                <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry Nothing found for "{query}"</h4>
                 <h3 className="pageSubTitleCat">Choose a category</h3>
                 <Row className="px-2">
                   <Col xs={6} className="px-2">

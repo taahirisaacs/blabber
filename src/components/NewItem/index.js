@@ -52,7 +52,7 @@ onSubmit = event => {
   const user = firebase.auth().currentUser;
   const db = firebase.firestore();
   const itemUid = shortid.generate();
-  const timestamp = Date.now();
+  const timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
   db.collection("items").add({
           name: name || '',
@@ -193,9 +193,9 @@ render() {
           </Form.Control>
         </Form.Group>
         <Form.Group controlId="exampleForm.ControlSelect12">
-          <Form.Label>Select your item button</Form.Label>
+          <Form.Label>Select your contact button</Form.Label>
           <Form.Control as="select" name="cta" value={this.state.cta || ''} onChange={this.onChange}>
-            <option>Select item button</option>
+            <option>Select contact button</option>
             <option>Message Me</option>
             <option>Make an offer</option>
             <option>Order</option>
