@@ -44,3 +44,25 @@ exports.onItemsDelete = functions.firestore.document('items/{itemId}').onDelete(
   const index = client.initIndex(ALGOLIA_INDEX_NAME);
   return index.deleteObject(itemID);
 });
+
+exports.onUserAdd = functions.firestore.document('users/{userId}').onCreate((snap, context) => {
+  let collectionRef = admin.firestore().collection('stores');
+  const userData = snap.data();
+
+  const name = userData.store.name;
+  const category = userData.store.category;
+  const location = userData.store.location;
+  const whatsapp = userData.store.whatsapp;
+  const user = snap.id;
+  const imgUrl = userData.profileUrl;
+
+  return collectionRef.add({
+    name,
+    category,
+    location,
+    whatsapp,
+    user,
+    imgUrl
+  });
+
+});

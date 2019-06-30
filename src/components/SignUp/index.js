@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { LoginLink } from '../SignIn';
 import Uploader from './../Uploader';
+import {Image} from 'cloudinary-react';
 
 import AlgoliaPlaces from 'algolia-places-react';
 
@@ -31,6 +32,9 @@ const INITIAL_STATE = {
   profileUrl: '',
   passwordOne: '',
   passwordTwo: '',
+  storeWhatsapp: '',
+  storeName: '',
+  storeCategory: '',
   error: null,
 };
 
@@ -42,7 +46,7 @@ class SignUpFormBase extends Component {
   }
 
   onSubmit = event => {
-    const { username, email, location, profileUrl, passwordOne } = this.state;
+    const { username, email, storeWhatsapp, storeName, storeCategory, location, profileUrl, passwordOne } = this.state;
 
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -55,6 +59,13 @@ class SignUpFormBase extends Component {
             email,
             location,
             profileUrl,
+            store: {
+              name: storeName,
+              category: storeCategory,
+              whatsapp: storeWhatsapp,
+              location,
+              user: authUser.user.uid
+            },
           });
       })
       .then(authUser => {
@@ -72,7 +83,25 @@ class SignUpFormBase extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  showWidget = (widget) => {
+    widget = window.cloudinary.createUploadWidget({
+      cloudName: "djqr0a74c",
+      uploadPreset: "jsghwzwi" },
+    (error, result) => {
+
+    if (!error && result && result.event === "success") {
+      console.log('Done! Here is the image info: ', result.info);
+
+      const profileUrl = result.info.url;
+      this.setState({profileUrl});
+    }
+
+    })
+    widget.open();
+  };
+
   render() {
+
     const {
       username,
       email,
@@ -81,7 +110,17 @@ class SignUpFormBase extends Component {
       passwordOne,
       passwordTwo,
       error,
+      storeWhatsapp,
+      storeName,
+      storeCategory
     } = this.state;
+
+    const style = {
+      backgroundImage: `url(${profileUrl})`,
+      backgroundRepeat: `no-repeat`,
+      backgroundSize: `contain`,
+      backgroundPosition: `center`,
+    }
 
     const isInvalid =
       passwordOne !== passwordTwo ||
@@ -91,23 +130,17 @@ class SignUpFormBase extends Component {
 
     return (
       <div>
-        <Uploader
-          id='file'
-          name='file'
-          onChange={(file) => {
-            console.log('File changed: ', file)
+        <Button onClick={this.showWidget} className="ProfileImgBtn">
+          <span style={style} className="ProfileImg">
 
-            if (file) {
-              file.progress(info => console.log('File progress: ', info.progress))
-              file.done(info => console.log('File uploaded: ', info))
-            }
-          }}
-          onUploadComplete={info =>
-            this.setState ({
-              profileUrl: info.cdnUrl,
-            })
-          } />
+
+            <span className="ProfileText">
+              +
+            </span>
+          </span>
+        </Button>
         <Form onSubmit={this.onSubmit}>
+          <span className="formTitles">Your Personal Info</span>
           <Form.Control style={{display:`none`}} name="profileUrl" value={this.state.profileUrl || ''} onChange={this.onChange} type="text" placeholder="profileUrl" />
           <Form.Group controlId="formUsername">
             <Form.Control
@@ -127,16 +160,26 @@ class SignUpFormBase extends Component {
               placeholder="Email Address"
             />
           </Form.Group>
+          <span className="formTitles">Your Store Info</span>
+          <Form.Group controlId="formstoreName">
+            <Form.Control
+              name="storeName"
+              value={storeName}
+              onChange={this.onChange}
+              type="text"
+              placeholder="What's you store called?"
+            />
+          </Form.Group>
           <Form.Group controlId="formLocation">
             <AlgoliaPlaces
-              placeholder='Write an address here'
+              placeholder='Where is your store located?'
 
               options={{
                 appId: 'plMOIODNLXZ6',
                 apiKey: 'b40b54304cdc5beb771d96ffc12c8cfe',
                 language: 'en',
                 countries: ['za'],
-                type: 'address',
+                type: 'city',
               }}
 
               onChange={({ query, rawAnswer, suggestion, suggestionIndex }) =>
@@ -157,14 +200,33 @@ class SignUpFormBase extends Component {
               onError={({ message }) =>
                 console.log('Fired when we could not make the request to Algolia Places servers for any reason but reaching your rate limit.')}
             />
-            {/* <Form.Control
-              name="location"
-              value={location}
+          </Form.Group>
+          <Form.Group controlId="exampleForm.ControlSelect1">
+            <Form.Control as="select" name="storeCategory" value={storeCategory} onChange={this.onChange}>
+              <option>Which Product/Service category?</option>
+              <option>👕 Clothing</option>
+              <option>👟 Shoes</option>
+              <option>🍔 Food</option>
+              <option>💻 Electronics</option>
+              <option>🚗 Cars</option>
+              <option>⚙️ Services</option>
+              <option>🚚 Logistics</option>
+              <option>📦 2nd Hand Goods</option>
+              <option>💅🏼 Salon</option>
+              <option>💇🏼‍♂️ Barber</option>
+              <option>🧹 Cleaning</option>
+            </Form.Control>
+          </Form.Group>
+          <Form.Group controlId="formstoreWhatsapp">
+            <Form.Control
+              name="storeWhatsapp"
+              value={storeWhatsapp}
               onChange={this.onChange}
               type="text"
-              placeholder="Your location"
-            /> */}
+              placeholder="Whatsapp/Contact Number"
+            />
           </Form.Group>
+          <span className="formTitles">Security</span>
           <Form.Group controlId="formPassOne">
             <Form.Control
               name="passwordOne"
@@ -193,6 +255,8 @@ class SignUpFormBase extends Component {
     );
   }
 }
+
+
 
 const SignUpLink = () => (
   <p style={{textAlign:`center`, marginTop:`20px`}}>

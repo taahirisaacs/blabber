@@ -33,6 +33,7 @@ class Stores extends Component {
     this.state = { ...INITIAL_STATE };
     this.state = {
       stores: '',
+      userStore: '',
       imgUrl: [],
       show: false,
     };
@@ -67,12 +68,14 @@ class Stores extends Component {
     event.preventDefault();
   }
 
-  componentWillMount(){
+  componentDidMount(){
     this.setState({ loading: true });
     const user = firebase.auth().currentUser.uid;
     const db = firebase.firestore();
     const dbCol = db.collection("stores");
     const dbquery = dbCol.where("user", "==", user);
+    const dbUser = db.collection("users");
+    const dbUserquery = dbUser.where("store.user", "==", user);
 
     this.unsubscribe = dbquery.onSnapshot(snap => {
       const stores = {}
@@ -82,7 +85,15 @@ class Stores extends Component {
         this.setState({stores, loading: false})
       })
 
-        }
+      this.unsubscribe = dbUserquery.onSnapshot(snap => {
+        const userStore = {}
+        snap.forEach(store => {
+         userStore[store.id] =  store.data()
+        })
+          this.setState({userStore, loading: false})
+        })
+
+  }
 
   componentWillUnmount() {
     this.unsubscribe();
@@ -111,8 +122,10 @@ class Stores extends Component {
 
     const {
       stores,
+      userStore,
       loading
     } = this.state;
+    console.log(userStore);
 
     const userid = firebase.auth().currentUser;
 
@@ -132,6 +145,7 @@ class Stores extends Component {
         {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
 
         <ul>
+          
           {Object.keys(stores).map((key, index) => {
             return (
               <li className="messages" key={key} index={index} style={{marginBottom:`10px`,}}>

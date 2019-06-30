@@ -880,3 +880,34 @@ span.badSearchIcon {
     display: block;
     font-size: 40px;
 }
+span.formTitles {
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 15px;
+    color: #7e8b9c;
+}
+button.ProfileImgBtn.btn.btn-primary {
+    background: none;
+    display: block;
+    border: none;
+    padding: 0;
+    margin: 0 auto;
+    width: 70px;
+}
+span.ProfileImg {
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    background: #9ea8b7;
+    margin: 0 auto;
+    text-align: center;
+    border-radius: 100px;
+    border: 2px solid #9fa8b7;
+}
+span.ProfileText {
+  margin-top: -20px;
+  font-size: 40px;
+}
