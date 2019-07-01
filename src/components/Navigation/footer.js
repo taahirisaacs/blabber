@@ -67,7 +67,7 @@ const FooterNonAuth = () => (
     <Col className="px-0">
       <Link to={ROUTES.LANDING_CAT}>
         <span className="navItemLanding">
-          🏚
+          ⬅
         </span>
       </Link>
     </Col>

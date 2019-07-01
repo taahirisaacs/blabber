@@ -911,3 +911,10 @@ span.ProfileText {
   margin-top: -20px;
   font-size: 40px;
 }
+/* Icons for category */
+span.catIcon img {
+    display: block;
+    height: 50px;
+    width: auto;
+    margin: 0 auto -5px;
+}
