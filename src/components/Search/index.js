@@ -170,98 +170,98 @@ class Search extends Component {
         return (
             <Container fluid style={{paddingTop:`10px`}}>
               <Row>
-              {response.length ? (
-                <Col className="mt-2">
-                <h4 className="catTitle">"{query}" in your area</h4>
+                {response.length ? (
+                  <Col className="mt-2">
+                    <h4 className="catTitle">"{query}" in your area</h4>
 
-                <Row className="tabbar mx-0">
-                  <Col md>
-                    <Tabs TabIndicatorProps={{style: {backgroundColor:`#6a7b95`}}} value={index} variant="fullWidth"  onChange={this.handleChange} >
-                      <Tab label="Items" />
-                      <Tab label="Stores" />
-                    </Tabs>
-                  </Col>
-                </Row>
+                    <Row className="tabbar mx-0">
+                      <Col md>
+                        <Tabs TabIndicatorProps={{style: {backgroundColor:`#6a7b95`}}} value={index} variant="fullWidth"  onChange={this.handleChange} >
+                          <Tab label="Stores" />
+                          <Tab label="Items" />
+                        </Tabs>
+                      </Col>
+                    </Row>
 
-                <SwipeableViews index={index} onChangeIndex={this.handleChangeIndex}>
+                    <SwipeableViews index={index} onChangeIndex={this.handleChangeIndex}>
 
-                  <Row className="px-2">
-                  <Col md={{span:6, offset:3}}>
-                  {Object.keys(response).map((res, index) => {
-                    return (
-                      <li className="messages" key={res} index={res}>
-                        <div className="chat">
+                      <Row className="px-2">
+                        <Col md={{span:6, offset:3}}>
+                          {Object.keys(response).map((res, index) => {
+                            return (
+                              <li className="messages" key={res} index={res}>
+                                <div className="chat">
 
-                          <Row>
-                            <Col xs={4} sm={3} md={3}>
-                              <div className="itemImg">
-                                {response[res].imgUrl && <Image src={response[res].imgUrl + `/-/scale_crop/500x500/center/` || ''}/>}
+                                  <Row>
+                                    <Col xs={4} sm={3} md={3}>
+                                      <div className="itemImg storeList">
+                                        {response[res].imgUrl && <Image src={response[res].imgUrl + `/-/scale_crop/500x500/center/` || ''}/>}
 
-                              </div>
-                            </Col>
-                            <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0` }}>
-                              <Link to={`/items/${response[res].store.id}/${response[res].itemId}`}>
-                                <h2>{response[res].name}</h2>
-                                <span className="pricing">R{response[res].price}</span>
-                                <TextTruncate
-                                  className="timestamp"
-                                  line={1}
-                                  truncateText="…"
-                                  text={response[res].description}
-                                />
-                              </Link>
-                            </Col>
+                                      </div>
+                                    </Col>
+                                    <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0` }}>
+                                      <Link to={`/store/${response[res].user}/${response[res].store.id}`}>
+                                        <h2>{response[res].store.name}</h2>
+                                        <TextTruncate
+                                          className="timestamp"
+                                          line={1}
+                                          truncateText="…"
+                                          text="Milnerton, Cape Town"
+                                        />
+                                        <span className="stars">
+                                          <FontAwesomeIcon icon={faStar} />
+                                          <FontAwesomeIcon icon={faStar} />
+                                          <FontAwesomeIcon icon={faStar} />
+                                          <FontAwesomeIcon icon={faStar} />
+                                          <FontAwesomeIcon icon={faStar} />
+                                        </span>
+                                      </Link>
+                                    </Col>
 
-                          </Row>
+                                  </Row>
 
-                        </div>
-                      </li>
-                    );
-                  })}
-                  </Col>
-                  </Row>
+                                </div>
+                              </li>
+                            );
+                          })}
+                        </Col>
+                      </Row>
 
-                  <Row className="px-2">
-                  <Col md={{span:6, offset:3}}>
-                  {Object.keys(response).map((res, index) => {
-                    return (
-                      <li className="messages" key={res} index={res}>
-                        <div className="chat">
+                      <Row className="px-2">
+                        <Col md={{span:6, offset:3}}>
+                          {Object.keys(response).map((res, index) => {
+                            return (
+                              <li className="messages" key={res} index={res}>
+                                <div className="chat">
 
-                          <Row>
-                            <Col xs={4} sm={3} md={3}>
-                              <div className="itemImg storeList">
-                                {response[res].imgUrl && <Image src={response[res].imgUrl + `/-/scale_crop/500x500/center/` || ''}/>}
+                                  <Row>
+                                    <Col xs={4} sm={3} md={3}>
+                                      <div className="itemImg">
+                                        {response[res].imgUrl && <Image src={response[res].imgUrl + `/-/scale_crop/500x500/center/` || ''}/>}
 
-                              </div>
-                            </Col>
-                            <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0` }}>
-                              <Link to={`/store/${response[res].user}/${response[res].store.id}`}>
-                                <h2>{response[res].store.name}</h2>
-                                <TextTruncate
-                                  className="timestamp"
-                                  line={1}
-                                  truncateText="…"
-                                  text="Milnerton, Cape Town"
-                                />
-                                <span className="stars">
-                                  <FontAwesomeIcon icon={faStar} />
-                                  <FontAwesomeIcon icon={faStar} />
-                                  <FontAwesomeIcon icon={faStar} />
-                                  <FontAwesomeIcon icon={faStar} />
-                                  <FontAwesomeIcon icon={faStar} />
-                                </span>
-                              </Link>
-                            </Col>
+                                      </div>
+                                    </Col>
+                                    <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0` }}>
+                                      <Link to={`/items/${response[res].store.id}/${response[res].itemId}`}>
+                                        <h2>{response[res].name}</h2>
+                                        <span className="pricing">R{response[res].price}</span>
+                                        <TextTruncate
+                                          className="timestamp"
+                                          line={1}
+                                          truncateText="…"
+                                          text={response[res].description}
+                                        />
+                                      </Link>
+                                    </Col>
 
-                          </Row>
+                                  </Row>
 
-                        </div>
-                      </li>
-                    );
-                  })}
-                  </Col>
-                  </Row>
+                                </div>
+                              </li>
+                            );
+                          })}
+                        </Col>
+                      </Row>
 
                 </SwipeableViews>
 

@@ -102,9 +102,21 @@ class filterCategories extends Component {
       search = (event) => {
         const {where} = this.state;
         const query = where;
-        console.log(query);
+
         this.props.history.push(`/search?query=${query}`);
       }
+
+      onKeyPressSearch = (event) => {
+        const {where} = this.state;
+        const query = where;
+
+        if(event.charCode == 13){
+          event.preventDefault();
+          this.props.history.push(`/search?query=${query}`);
+        }
+      }
+
+
 
 
       onChange = event => {
@@ -121,9 +133,12 @@ class filterCategories extends Component {
             <Container fluid style={{paddingTop:`10px`}}>
 
 
-              <Form className="homeSearch" >
+              <Form className="homeSearch">
 
-                <InputGroup>
+                <InputGroup
+                  onKeyPress={this.onKeyPressSearch}
+                  returnKeyType="Go"
+                >
                   <Form.Control
                     name="where"
                     value={this.state.where || ''}
@@ -131,9 +146,10 @@ class filterCategories extends Component {
                     type="text"
                     className="formSearch"
                     placeholder="What are you looking for?"
+
                   />
                   <InputGroup.Append className="p-0">
-                    <Button className="searchBtn" onClick={this.search}>Go</Button>
+                    <Button className="searchBtn"  onClick={this.search}>Go</Button>
                   </InputGroup.Append>
                 </InputGroup>
               </Form>
@@ -188,7 +204,7 @@ class filterCategories extends Component {
                     <div className="catBlock">
                       <span className="catIcon">💻</span>
                       <span className="catName">Electronics</span>
-                      <span className="catCount"><span className="dot "></span>498 Online</span>
+                      <span className="catCount"><span className="dot "></span>Online</span>
                     </div>
                   </NavLink>
                 </Col>
@@ -197,7 +213,7 @@ class filterCategories extends Component {
                     <div className="catBlock">
                       <span className="catIcon">👕</span>
                       <span className="catName">Clothing</span>
-                      <span className="catCount"><span className="dot "></span>209 Online</span>
+                      <span className="catCount"><span className="dot "></span>Online</span>
                     </div>
                   </NavLink>
                 </Col>
@@ -213,7 +229,7 @@ class filterCategories extends Component {
                     <div className="catBlock">
                       <span className="catIcon">🚗</span>
                       <span className="catName">Cars</span>
-                      <span className="catCount"><span className="dot "></span>281 Online</span>
+                      <span className="catCount"><span className="dot "></span>Online</span>
                     </div>
                   </NavLink>
                 </Col>
@@ -222,7 +238,7 @@ class filterCategories extends Component {
                     <div className="catBlock">
                       <span className="catIcon">🍔</span>
                       <span className="catName">Food</span>
-                      <span className="catCount"><span className="dot "></span>373 Online</span>
+                      <span className="catCount"><span className="dot "></span>Online</span>
                     </div>
                   </NavLink>
                 </Col>
@@ -267,7 +283,7 @@ class filterCategories extends Component {
                     <div className="catBlock">
                       <span className="catIcon">⚙️</span>
                       <span className="catName">Other Services</span>
-                      <span className="catCount"><span className="dot "></span>124 Online</span>
+                      <span className="catCount"><span className="dot "></span>Online</span>
                     </div>
                   </NavLink>
                 </Col>

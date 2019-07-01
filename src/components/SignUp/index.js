@@ -92,7 +92,7 @@ class SignUpFormBase extends Component {
     if (!error && result && result.event === "success") {
       console.log('Done! Here is the image info: ', result.info);
 
-      const profileUrl = result.info.url;
+      const profileUrl = result.info.so;
       this.setState({profileUrl});
     }
 
