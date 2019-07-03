@@ -3,20 +3,13 @@ import { AuthUserContext, withAuthorization } from '../Session';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import TextareaAutosize from 'react-autosize-textarea';
 import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Image from 'react-bootstrap/Image';
 import Uploader from './../Uploader';
 import shortid from 'shortid';
 import FooterNavigation from '../Navigation/footer';
 
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-
 import * as ROUTES from '../../constants/routes';
 import firebase from 'firebase/app';
-import firestore from "firebase/firestore";
 
 const INITIAL_STATE = {
   name: [],

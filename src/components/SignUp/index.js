@@ -90,7 +90,6 @@ class SignUpFormBase extends Component {
     (error, result) => {
 
     if (!error && result && result.event === "success") {
-      console.log('Done! Here is the image info: ', result.info);
 
       const profileUrl = result.info.url;
       this.setState({profileUrl});
@@ -167,7 +166,7 @@ class SignUpFormBase extends Component {
               value={storeName}
               onChange={this.onChange}
               type="text"
-              placeholder="What's you store called?"
+              placeholder="What's the name of your store?"
             />
           </Form.Group>
           <Form.Group controlId="formLocation">
@@ -179,26 +178,13 @@ class SignUpFormBase extends Component {
                 apiKey: 'b40b54304cdc5beb771d96ffc12c8cfe',
                 language: 'en',
                 countries: ['za'],
-                type: 'city',
+                type: 'address',
+                useDeviceLocation: true,
               }}
 
               onChange={({ query, rawAnswer, suggestion, suggestionIndex }) =>
                 this.setState({ location: suggestion.value }) }
 
-              onSuggestions={({ rawAnswer, query, suggestions }) =>
-                console.log('Fired when dropdown receives suggestions. You will receive the array of suggestions that are displayed.')}
-
-              onCursorChanged={({ rawAnswer, query, suggestion, suggestonIndex }) =>
-                console.log('Fired when arrows keys are used to navigate suggestions.')}
-
-              onClear={() =>
-                console.log('Fired when the input is cleared.')}
-
-              onLimit={({ message }) =>
-                console.log('Fired when you reached your current rate limit.')}
-
-              onError={({ message }) =>
-                console.log('Fired when we could not make the request to Algolia Places servers for any reason but reaching your rate limit.')}
             />
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlSelect1">
@@ -234,6 +220,7 @@ class SignUpFormBase extends Component {
               onChange={this.onChange}
               type="password"
               placeholder="Password"
+              autoComplete="on"
             />
           </Form.Group>
           <Form.Group controlId="formPassTwo">
@@ -243,6 +230,7 @@ class SignUpFormBase extends Component {
               onChange={this.onChange}
               type="password"
               placeholder="Confirm Password"
+              autoComplete="on"
             />
           </Form.Group>
           <Button variant="primary" disabled={isInvalid} type="submit" block>

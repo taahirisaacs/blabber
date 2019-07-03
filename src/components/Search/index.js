@@ -1,36 +1,20 @@
 import React, { Component } from 'react';
-import { LinkContainer } from "react-router-bootstrap";
-import { NavLink, Link } from 'react-router-dom';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { Link } from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
 import queryString from 'query-string';
 import SwipeableViews from 'react-swipeable-views';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Uploader from './../Uploader';
-import FooterNavigation from '../Navigation/footer';
 import CategoryList from '../Category';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Button from 'react-bootstrap/Button';
-import TextareaAutosize from 'react-autosize-textarea';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
-import Modal from 'react-bootstrap/Modal';
 import Image from 'react-bootstrap/Image';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 import Spinner from 'react-bootstrap/Spinner';
 
 import firebase from 'firebase/app';
@@ -81,7 +65,7 @@ class Search extends Component {
 
         fromDB = () => {
         const db = firebase.firestore();
-        const itemDatas = db.collection("items").get()
+        db.collection("items").get()
         .then(function(querySnapshot) {
               const itemData = [];
                 querySnapshot.forEach(function(doc) {
@@ -144,8 +128,7 @@ class Search extends Component {
             client.search(queries, (err, { results } = {}) => {
             if (err) throw err;
 
-            this.setState({ responseItems: results[0].hits, responseStores: results[1].hits  })
-            console.log(results[1].hits);
+            this.setState({ responseItems: results[0].hits, responseStores: results[1].hits  });
           });
           // .then((responses) => this.setState({ response: responses.hits }));
         // [END search_index_unsecure]
@@ -183,8 +166,7 @@ class Search extends Component {
 
       render () {
 
-        const { items, loading, responseItems, responseStores, index } = this.state;
-        const itemUrl = window.location.href;
+        const { loading, responseItems, responseStores, index } = this.state;
         const values = queryString.parse(this.props.location.search)
         const query = values.query;
 
@@ -192,23 +174,25 @@ class Search extends Component {
             <Container fluid style={{paddingTop:`10px`}}>
               {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
               <Row>
-                {responseStores.length ? (
-                  <Col className="mt-2">
-                    <h4 className="catTitle">"{query}" in your area</h4>
 
-                    <Row className="tabbar mx-0">
-                      <Col md>
-                        <Tabs TabIndicatorProps={{style: {backgroundColor:`#6a7b95`}}} value={index} variant="fullWidth"  onChange={this.handleChange} >
-                          <Tab label="Stores" />
-                          <Tab label="Items" />
-                        </Tabs>
-                      </Col>
-                    </Row>
+                <Col className="mt-2">
+                  <h4 className="catTitle">"{query}" in your area</h4>
 
-                    <SwipeableViews index={index} onChangeIndex={this.handleChangeIndex}>
+                  <Row className="tabbar mx-0">
+                    <Col md>
+                      <Tabs TabIndicatorProps={{style: {backgroundColor:`#6a7b95`}}} value={index} variant="fullWidth"  onChange={this.handleChange} >
+                        <Tab label="Stores" />
+                        <Tab label="Items" />
+                      </Tabs>
+                    </Col>
+                  </Row>
 
-                      <Row className="px-2">
+                  <SwipeableViews index={index} onChangeIndex={this.handleChangeIndex}>
+
+                    <Row className="px-2">
+                      {responseStores.length ? (
                         <Col md={{span:6, offset:3}}>
+
                           {Object.keys(responseStores).map((res, index) => {
                             return (
                               <li className="messages" key={res} index={res}>
@@ -222,7 +206,7 @@ class Search extends Component {
                                       </div>
                                     </Col>
                                     <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0` }}>
-                                      <Link to={`/store/${responseStores[res].user}/${responseStores[res].id}`}>
+                                      <Link to={`/store/${responseStores[res].user}/${responseStores[res].objectID}`}>
                                         <h2>{responseStores[res].name}</h2>
                                         <TextTruncate
                                           className="timestamp"
@@ -246,11 +230,20 @@ class Search extends Component {
                               </li>
                             );
                           })}
-                        </Col>
-                      </Row>
 
-                      <Row className="px-2">
+                        </Col>
+                      ) : (
+                        <Col className="mt-2">
+                          <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry, no stores with the name "{query}" found</h4>
+
+                        </Col>
+                      )}
+                    </Row>
+
+                    <Row className="px-2">
+                      {responseItems.length ? (
                         <Col md={{span:6, offset:3}}>
+
                           {Object.keys(responseItems).map((res, index) => {
                             return (
                               <li className="messages" key={res} index={res}>
@@ -282,18 +275,24 @@ class Search extends Component {
                               </li>
                             );
                           })}
+
                         </Col>
-                      </Row>
+                      ) : (
+                        <Col className="mt-2">
+                          <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry no items found for "{query}"</h4>
+                        </Col>
+                      )}
+                    </Row>
 
-                    </SwipeableViews>
+                  </SwipeableViews>
 
-                  </Col>
-                ) : (
-                  <Col className="mt-2">
-                    <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry Nothing found for "{query}"</h4>
-                    <CategoryList />
-                  </Col>
-                )}
+                </Col>
+
+              </Row>
+              <Row>
+                <Col className="mt-2">
+                  <CategoryList />
+                </Col>
               </Row>
 
             </Container>

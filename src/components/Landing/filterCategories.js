@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
-import { LinkContainer } from "react-router-bootstrap";
-import { NavLink, Link } from 'react-router-dom';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { Link } from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
 
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Uploader from './../Uploader';
 import FooterNavigation from '../Navigation/footer';
@@ -63,14 +57,9 @@ class filterCategories extends Component {
 
       }
 
-      componentWillUnmount() {
-        if(this.unsubscribe)
-          this.unsubscribe();
-      }
-
         fromDB = () => {
         const db = firebase.firestore();
-        const itemDatas = db.collection("items").get()
+        db.collection("items").get()
         .then(function(querySnapshot) {
               const itemData = [];
                 querySnapshot.forEach(function(doc) {
@@ -89,7 +78,7 @@ class filterCategories extends Component {
       getItems = () => {
         const db = firebase.firestore();
 
-        this.subscribe = db.collection("items").orderBy("timestamp", "desc").limit(25).get()
+        db.collection("items").orderBy("timestamp", "desc").limit(25).get()
         .then(snap => {
           const items= {}
           snap.forEach(doc => {
