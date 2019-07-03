@@ -127,7 +127,7 @@ class Search extends Component {
 
             client.search(queries, (err, { results } = {}) => {
             if (err) throw err;
-
+            console.log(results);
             this.setState({ responseItems: results[0].hits, responseStores: results[1].hits  });
           });
           // .then((responses) => this.setState({ response: responses.hits }));
@@ -181,8 +181,9 @@ class Search extends Component {
                   <Row className="tabbar mx-0">
                     <Col md>
                       <Tabs TabIndicatorProps={{style: {backgroundColor:`#6a7b95`}}} value={index} variant="fullWidth"  onChange={this.handleChange} >
-                        <Tab label="Stores" />
-                        <Tab label="Items" />
+                        <Tab label={"Stores " + "(" + responseStores.length + ")"} />
+                        <Tab label={"Items " + "(" + responseItems.length + ")"} />
+
                       </Tabs>
                     </Col>
                   </Row>
@@ -234,10 +235,10 @@ class Search extends Component {
                         </Col>
                       ) : (
                         <Col className="mt-2">
-                          <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry, no stores with the name "{query}" found</h4>
+                          <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry, no stores found for "{query}"</h4>
 
-                        </Col>
-                      )}
+                                </Col>
+                              )}
                     </Row>
 
                     <Row className="px-2">
