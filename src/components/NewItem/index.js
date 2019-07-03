@@ -169,36 +169,37 @@ render() {
           <Form.Control name="price"  value={this.state.price || ''} onChange={this.onChange} type="number" pattern="[0-9]*" />
         </Form.Group>
         <Form.Group controlId="exampleForm.ControlSelect1">
-          <Form.Label>Select a category</Form.Label>
           <Form.Control as="select" name="category" value={this.state.category || ''} onChange={this.onChange}>
-            <option>Select a Category</option>
+            <option>Which Product/Service category?</option>
             <option>👕 Clothing</option>
-            <option>👟 Shoes</option>
+            <option>👟 Sneakers</option>
             <option>🍔 Food</option>
             <option>💻 Electronics</option>
             <option>🚗 Cars</option>
-            <option>⚙️ Services</option>
-            <option>🚚 Logistics</option>
-            <option>📦 2nd Hand Goods</option>
+            <option>🚚 Movers</option>
+            <option>♻️ Thrift</option>
             <option>💅🏼 Salon</option>
             <option>💇🏼‍♂️ Barber</option>
-            <option>🧹 Cleaning</option>
+            <option>🧹 Cleaner</option>
+            <option>🏪 Spaza Shop</option>
+            <option>🏭 Manufacturing</option>
+            <option>⚙️ Other Services</option>
           </Form.Control>
         </Form.Group>
         <Form.Group controlId="exampleForm.ControlSelect12">
-          <Form.Label>Select your contact button</Form.Label>
+          <Form.Label>Select a contact button</Form.Label>
           <Form.Control as="select" name="cta" value={this.state.cta || ''} onChange={this.onChange}>
-            <option>Select contact button</option>
+            <option>Select a contact button</option>
             <option>Message Me</option>
             <option>Make an offer</option>
             <option>Order</option>
             <option>Pre-Order</option>
             <option>Make a booking</option>
+            <option>Request a quote</option>
             <option>Book now</option>
             <option>Book a test drive</option>
             <option>Reserve</option>
             <option>RSVP</option>
-            <option>Request a quote</option>
           </Form.Control>
         </Form.Group>
         <Button variant="primary" onClick={this.handleClose} type="submit" block>

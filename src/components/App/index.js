@@ -5,6 +5,7 @@ import '../bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import ScrollToTop from '../ScrollToTop';
 
 import Navigation from '../Navigation';
 import LandingPage from '../Landing';
@@ -56,11 +57,12 @@ const App = () => (
           <Route path={ROUTES.ADMIN} component={AdminPage} />
           <Route path={ROUTES.NEWITEM} component={NewItem} />
           <Route path="/blob/:dataId" component={BlobPage} />
-          <Route path={"/search"} component={Search} />
+          <ScrollToTop path={"/search"} component={Search} />
           <Route exact path="/store/:userid/:uid" component={Profile} />
           <Route exact path="/items/:storeid/:itemid" component={Items} />
         </Container>
       </Router>
 );
+
 
 export default withAuthentication(App);

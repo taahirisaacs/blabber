@@ -90,7 +90,7 @@ class filterCategories extends Component {
 
 
       search = (event) => {
-        const {where} = this.state;
+        const { where } = this.state;
         const query = where;
 
         this.props.history.push(`/search?query=${query}`);

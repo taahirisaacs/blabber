@@ -191,16 +191,18 @@ class SignUpFormBase extends Component {
             <Form.Control as="select" name="storeCategory" value={storeCategory} onChange={this.onChange}>
               <option>Which Product/Service category?</option>
               <option>👕 Clothing</option>
-              <option>👟 Shoes</option>
+              <option>👟 Sneakers</option>
               <option>🍔 Food</option>
               <option>💻 Electronics</option>
               <option>🚗 Cars</option>
-              <option>⚙️ Services</option>
-              <option>🚚 Logistics</option>
-              <option>📦 2nd Hand Goods</option>
+              <option>🚚 Movers</option>
+              <option>♻️ Thrift</option>
               <option>💅🏼 Salon</option>
               <option>💇🏼‍♂️ Barber</option>
-              <option>🧹 Cleaning</option>
+              <option>🧹 Cleaner</option>
+              <option>🏪 Spaza Shop</option>
+              <option>🏭 Manufacturing</option>
+              <option>⚙️ Other Services</option>
             </Form.Control>
           </Form.Group>
           <Form.Group controlId="formstoreWhatsapp">

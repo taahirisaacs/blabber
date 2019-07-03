@@ -217,15 +217,21 @@ class Stores extends Component {
                 <Form.Control name="whatsapp"  value={this.state.whatsapp || ''} onChange={this.onChange} type="text" />
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlSelect1">
-                <Form.Label>Select a category</Form.Label>
                 <Form.Control as="select" name="category" value={this.state.category || ''} onChange={this.onChange}>
-                  <option>Select a Category</option>
+                  <option>Which Product/Service category?</option>
                   <option>👕 Clothing</option>
-                  <option>👟 Shoes</option>
+                  <option>👟 Sneakers</option>
                   <option>🍔 Food</option>
                   <option>💻 Electronics</option>
                   <option>🚗 Cars</option>
-                  <option>⚙️ Services</option>
+                  <option>🚚 Movers</option>
+                  <option>♻️ Thrift</option>
+                  <option>💅🏼 Salon</option>
+                  <option>💇🏼‍♂️ Barber</option>
+                  <option>🧹 Cleaner</option>
+                  <option>🏪 Spaza Shop</option>
+                  <option>🏭 Manufacturing</option>
+                  <option>⚙️ Other Services</option>
                 </Form.Control>
               </Form.Group>
               <Modal.Footer >

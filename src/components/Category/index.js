@@ -60,15 +60,7 @@ class CategoryList extends Component {
             <Col className="mx-0 px-0">
               <h3 className="pageSubTitleCat">Choose a category</h3>
               <Row className="px-2">
-                <Col xs={6} className="px-2">
-                  <NavLink to={ROUTES.FILT_FOOD}>
-                    <div className="catBlock">
-                      <span className="catIcon">🍔</span>
-                      <span className="catName">Food</span>
-                      <span className="catCount"><span className="dot "></span>Online</span>
-                    </div>
-                  </NavLink>
-                </Col>
+
                 <Col xs={6} className="px-2">
                   <NavLink to={ROUTES.FILT_ELEC}>
                     <div className="catBlock">
@@ -97,60 +89,95 @@ class CategoryList extends Component {
                   </NavLink>
                 </Col>
                 <Col xs={6} className="px-2">
-                  <div className="catBlock disB">
-                    <span className="catIcon">👟</span>
-                    <span className="catName">Sneakers</span>
-                    <span className="catCount">Coming soon</span>
-                  </div>
-                </Col>
-                <Col xs={6} className="px-2 disB">
-                  <div className="catBlock disB">
-                    <span className="catIcon">🚚</span>
-                    <span className="catName">Movers</span>
-                    <span className="catCount">Coming soon</span>
-                  </div>
+                  <NavLink to={ROUTES.FILT_SNEAKERS}>
+                    <div className="catBlock">
+                      <span className="catIcon">👟</span>
+                      <span className="catName">Sneakers</span>
+                      <span className="catCount"><span className="dot "></span>Online</span>
+                    </div>
+                  </NavLink>
                 </Col>
                 <Col xs={6} className="px-2">
-                  <div className="catBlock disB">
-                    <span className="catIcon">💇🏼‍♂️</span>
-                    <span className="catName">Barber/Salon</span>
-                    <span className="catCount">Coming soon</span>
-                  </div>
-                </Col>
-                <Col xs={6} className="px-2 disB">
-                  <div className="catBlock disB">
-                    <span className="catIcon">🏭</span>
-                  <span className="catName">Manufacturing</span>
-                    <span className="catCount">Coming soon</span>
-                  </div>
-                </Col>
-                <Col xs={6} className="px-2 disB">
-                  <div className="catBlock disB">
-                    <span className="catIcon">♻️</span>
-                    <span className="catName">Thrift</span>
-                    <span className="catCount">Coming soon</span>
-                  </div>
-                </Col>
-                <Col xs={6} className="px-2 disB">
-                  <div className="catBlock disB">
-                    <span className="catIcon">🧹</span>
-                    <span className="catName">Cleaners</span>
-                    <span className="catCount">Coming soon</span>
-                  </div>
+                  <NavLink to={ROUTES.FILT_FOOD}>
+                    <div className="catBlock">
+                      <span className="catIcon">🍔</span>
+                      <span className="catName">Food</span>
+                      <span className="catCount"><span className="dot "></span>Online</span>
+                    </div>
+                  </NavLink>
                 </Col>
                 <Col xs={6} className="px-2">
-                  <div className="catBlock disB">
-                    <span className="catIcon">🏪</span>
-                    <span className="catName">Spaza Shop</span>
-                    <span className="catCount">Coming soon</span>
-                  </div>
+                  <NavLink to={ROUTES.FILT_MOVERS}>
+                    <div className="catBlock">
+                      <span className="catIcon">🚚</span>
+                      <span className="catName">Movers</span>
+                      <span className="catCount"><span className="dot "></span>Online</span>
+                    </div>
+                  </NavLink>
                 </Col>
                 <Col xs={6} className="px-2">
-                  <div className="catBlock disB">
-                    <span className="catIcon">🧵</span>
-                    <span className="catName">Arts & Crafts</span>
-                    <span className="catCount">Coming soon</span>
-                  </div>
+                  <NavLink to={ROUTES.FILT_CLEANERS}>
+                    <div className="catBlock">
+                      <span className="catIcon">🧹</span>
+                      <span className="catName">Cleaners</span>
+                      <span className="catCount"><span className="dot "></span>Online</span>
+                    </div>
+                  </NavLink>
+                </Col>
+                <Col xs={6} className="px-2">
+                  <NavLink to={ROUTES.FILT_SALON}>
+                    <div className="catBlock">
+                      <span className="catIcon">💅🏼</span>
+                      <span className="catName">Salon</span>
+                      <span className="catCount"><span className="dot "></span>Online</span>
+                    </div>
+                  </NavLink>
+                </Col>
+                <Col xs={6} className="px-2">
+                  <NavLink to={ROUTES.FILT_BARBER}>
+                    <div className="catBlock">
+                      <span className="catIcon">💇🏼‍♂️</span>
+                      <span className="catName">Barber</span>
+                      <span className="catCount"><span className="dot "></span>Online</span>
+                    </div>
+                  </NavLink>
+                </Col>
+                <Col xs={6} className="px-2 ">
+                  <NavLink to={ROUTES.FILT_MANU}>
+                    <div className="catBlock ">
+                      <span className="catIcon">🏭</span>
+                      <span className="catName">Manufacturing</span>
+                      <span className="catCount"><span className="dot "></span>Online</span>
+                    </div>
+                  </NavLink>
+                </Col>
+                <Col xs={6} className="px-2 ">
+                  <NavLink to={ROUTES.FILT_THRIFT}>
+                    <div className="catBlock ">
+                      <span className="catIcon">♻️</span>
+                      <span className="catName">Thrift</span>
+                      <span className="catCount"><span className="dot "></span>Online</span>
+                    </div>
+                  </NavLink>
+                </Col>
+
+                <Col xs={6} className="px-2">
+                  <NavLink to={ROUTES.FILT_SPAZA}>
+                    <div className="catBlock">
+                      <span className="catIcon">🏪</span>
+                      <span className="catName">Spaza Shops</span>
+                      <span className="catCount"><span className="dot "></span>Online</span>
+                    </div>
+                  </NavLink>
+                </Col>
+                <Col xs={6} className="px-2">
+                  <NavLink to={ROUTES.FILT_ARTS}>
+                    <div className="catBlock">
+                      <span className="catIcon">🧵</span>
+                      <span className="catName">Arts & Crafts</span>
+                      <span className="catCount"><span className="dot "></span>Online</span>
+                    </div>
+                  </NavLink>
                 </Col>
                 <Col xs={6} className="px-2">
                   <NavLink to={ROUTES.FILT_SERVICES}>

@@ -151,7 +151,7 @@ class StoresPageNonAuth extends Component {
           })}
         </ul>
         <Link to={ROUTES.SIGN_UP}>
-          <span className="poweredby">Open Your Own Store</span>
+          <span className="poweredby">Create Your Free TinyTrader Store →</span>
         </Link>
       </Col>
     );

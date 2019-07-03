@@ -5,6 +5,7 @@ import queryString from 'query-string';
 import SwipeableViews from 'react-swipeable-views';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import { reverse } from 'named-urls';
 
 import CategoryList from '../Category';
 
@@ -96,7 +97,7 @@ class Search extends Component {
 
       unauthenticated_search = () => {
 
-        const values = queryString.parse(this.props.location.search)
+        const values = queryString.parse(this.props.location.search);
         const query = values.query;
         // [START search_index_unsecure]
         const client = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_SEARCH_KEY);
@@ -130,8 +131,6 @@ class Search extends Component {
             console.log(results);
             this.setState({ responseItems: results[0].hits, responseStores: results[1].hits  });
           });
-          // .then((responses) => this.setState({ response: responses.hits }));
-        // [END search_index_unsecure]
       }
 
       search = (event) => {
@@ -176,12 +175,12 @@ class Search extends Component {
               <Row>
 
                 <Col className="mt-2">
-                  <h4 className="catTitle">"{query}" in your area</h4>
+                  <h4 className="catTitle">"{query}" near you</h4>
 
                   <Row className="tabbar mx-0">
                     <Col md>
                       <Tabs TabIndicatorProps={{style: {backgroundColor:`#6a7b95`}}} value={index} variant="fullWidth"  onChange={this.handleChange} >
-                        <Tab label={"Stores " + "(" + responseStores.length + ")"} />
+                        <Tab label={"Traders " + "(" + responseStores.length + ")"} />
                         <Tab label={"Items " + "(" + responseItems.length + ")"} />
 
                       </Tabs>
@@ -235,10 +234,10 @@ class Search extends Component {
                         </Col>
                       ) : (
                         <Col className="mt-2">
-                          <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry, no stores found for "{query}"</h4>
+                          <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry, no "{query}" traders found near you</h4>
 
-                                </Col>
-                              )}
+                        </Col>
+                      )}
                     </Row>
 
                     <Row className="px-2">
@@ -280,7 +279,7 @@ class Search extends Component {
                         </Col>
                       ) : (
                         <Col className="mt-2">
-                          <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry no items found for "{query}"</h4>
+                          <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry, no items found for "{query}"</h4>
                         </Col>
                       )}
                     </Row>
@@ -292,7 +291,9 @@ class Search extends Component {
               </Row>
               <Row>
                 <Col className="mt-2">
-                  <CategoryList />
+                  <Link to={ROUTES.SIGN_UP}>
+                    <span className="poweredby">Create Your Free TinyTrader Store →</span>
+                  </Link>
                 </Col>
               </Row>
 
