@@ -34,7 +34,7 @@ class Stores extends Component {
     this.state = {
       stores: '',
       userStore: '',
-      imgUrl: [],
+      imgUrl: '',
       show: false,
     };
     this.handleShow = this.handleShow.bind(this);
@@ -54,7 +54,7 @@ class Stores extends Component {
           description: description || '',
           whatsapp: whatsapp || '',
           category: category || '',
-          imgUrl: imgUrl || '',
+          imgUrl: imgUrl || 'https://via.placeholder.com/150/c9d2df/000000?text=TINYTRADER.CO.ZA',
           user: user || ''
         })
       .then(authUser => {
@@ -125,7 +125,6 @@ class Stores extends Component {
       userStore,
       loading
     } = this.state;
-    console.log(userStore);
 
     const userid = firebase.auth().currentUser;
 
@@ -145,7 +144,7 @@ class Stores extends Component {
         {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
 
         <ul>
-          
+
           {Object.keys(stores).map((key, index) => {
             return (
               <li className="messages" key={key} index={index} style={{marginBottom:`10px`,}}>
@@ -153,7 +152,7 @@ class Stores extends Component {
                   <Row>
                     <Col xs={4} sm={4} md={2}>
                       <div className="itemImg storeList">
-                        <Image src={stores[key].imgUrl + `/-/scale_crop/250x250/center/`}/>
+                        <Image src={stores[key].imgUrl}/>
                       </div>
                     </Col>
                     <Col xs={8} sm={8} md={10} style={{ paddingLeft: `0`}}>
@@ -204,7 +203,6 @@ class Stores extends Component {
                 })
               } />
             <Form className="FormInput" onSubmit={this.onSubmit}>
-              <Form.Control style={{display:`none`}} name="imgurl" value={this.state.imgUrl || ''} onChange={this.onChange} type="text" placeholder="imgUrl" />
 
               <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>Store Name</Form.Label>

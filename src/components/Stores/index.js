@@ -157,7 +157,7 @@ class StoresPageAuth extends Component {
               <Col xs sm md className="storeHeader">
                 <div className="chat">
                   <div className="storeImg">
-                    <Image src={stores.imgUrl + `/-/scale_crop/500x500/center/`}/>
+                    <Image src={stores.imgUrl}/>
                   </div>
                   <h2>{stores.name}</h2>
                   <span className="timestamp">{stores.description || ''}</span>

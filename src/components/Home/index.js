@@ -122,12 +122,10 @@ class MessageForm extends Component {
     // const db = firebase.database().ref(`users/${user.uid}/`);
     const db = firebase.firestore();
     const dbCol = db.collection("users").doc(user.uid);
-    console.log(dbCol);
 
     dbCol.onSnapshot(snap => {
       const key = snap.id;
       const users = snap.data();
-      console.log(users);
 
       this.setState({users});
 
@@ -221,19 +219,19 @@ class MessageForm extends Component {
         <Row className="tabbar mx-0">
           <Col md>
             <Tabs TabIndicatorProps={{style: {backgroundColor:`#6a7b95`}}} value={index} variant="fullWidth"  onChange={this.handleChange} >
-              <Tab label="Your Items" />
               <Tab label="Your Stores" />
+              <Tab label="Your Items" />
             </Tabs>
           </Col>
         </Row>
         <SwipeableViews index={index} onChangeIndex={this.handleChangeIndex}>
 
           <Row className="px-2">
-            <Items />
+            <Stores />
           </Row>
 
           <Row className="px-2">
-            <Stores />
+            <Items />
           </Row>
 
         </SwipeableViews>

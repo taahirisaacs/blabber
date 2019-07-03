@@ -26,21 +26,21 @@ exports.onItemsCreated = functions.firestore.document('items/{itemId}').onCreate
 
 exports.onItemsUpdated = functions.firestore.document('items/{itemId}').onUpdate((change, context) => {
   // Get the note document
-  const item = change.after.data().objectID;
+  const item = change.after.data();
+
+  item.objectID = context.params.itemId;
 
   // Write to the algolia index
   const index = client.initIndex(ALGOLIA_INDEX_NAME);
-  return index.saveObject(item);
+  return index.partialUpdateObject(item);
 });
 
 exports.onItemsDelete = functions.firestore.document('items/{itemId}').onDelete((snap, context) => {
-  // Get the note document
-  const item = snap.data();
 
-  const itemID = item.objectID;
-  // Write to the algolia index
+  const objectID = context.params.itemId;
+
   const index = client.initIndex(ALGOLIA_INDEX_NAME);
-  return index.deleteObject(itemID);
+  return index.deleteObject(objectID);
 });
 
 exports.onstoresCreated = functions.firestore.document('stores/{storeId}').onCreate((snap, context) => {
@@ -57,21 +57,20 @@ exports.onstoresCreated = functions.firestore.document('stores/{storeId}').onCre
 
 exports.onstoresUpdated = functions.firestore.document('stores/{storeId}').onUpdate((change, context) => {
   // Get the note document
-  const storeID = change.after.data().objectID;
+  const store = change.after.data();
+
+  store.objectID = context.params.storeId;
 
   // Write to the algolia index
   const index = client.initIndex(ALGOLIA_INDEX_NAME_STORES);
-  return index.saveObject(storeID);
+  return index.partialUpdateObject(store);
 });
 
 exports.onstoresDelete = functions.firestore.document('stores/{storeId}').onDelete((snap, context) => {
-  // Get the note document
-  const store = snap.data();
+  const objectID = context.params.storeId;
 
-  const storeID = store.objectID;
-  // Write to the algolia index
   const index = client.initIndex(ALGOLIA_INDEX_NAME_STORES);
-  return index.deleteObject(storeID);
+  return index.deleteObject(objectID);
 });
 
 exports.onUserAdd = functions.firestore.document('users/{userId}').onCreate((snap, context) => {

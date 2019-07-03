@@ -59,7 +59,8 @@ class Search extends Component {
           cta: '',
           where: [],
           query: '',
-          response: [],
+          responseItems: [],
+          responseStores: [],
           index: 0,
         };
 
@@ -115,22 +116,38 @@ class Search extends Component {
         const query = values.query;
         // [START search_index_unsecure]
         const client = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_SEARCH_KEY);
-        const index = client.initIndex('items');
 
-        // Perform an Algolia search:
-        // https://www.algolia.com/doc/api-reference/api-methods/search/
-        index
-          .search({
-            query: query,
-            attributesToRetrieve: ['*'],
-            attributesToHighlight: ['*'],
-            facets: ['*'],
-            hitsPerPage: 50,
-            minWordSizefor1Typo: 4,
-            typoTolerance: true
+        const queries = [{
+              indexName: 'items',
+              query: query,
+              params: {
+                attributesToRetrieve: ['*'],
+                attributesToHighlight: ['*'],
+                facets: ['*'],
+                hitsPerPage: 10,
+                minWordSizefor1Typo: 4,
+                typoTolerance: true
+              }
+            }, {
+              indexName: 'stores',
+              query: query,
+              params: {
+                attributesToRetrieve: ['*'],
+                attributesToHighlight: ['*'],
+                facets: ['*'],
+                hitsPerPage: 10,
+                minWordSizefor1Typo: 4,
+                typoTolerance: true
+              }
+            }];
 
-          })
-          .then((responses) => this.setState({ response: responses.hits }));
+            client.search(queries, (err, { results } = {}) => {
+            if (err) throw err;
+
+            this.setState({ responseItems: results[0].hits, responseStores: results[1].hits  })
+            console.log(results[1].hits);
+          });
+          // .then((responses) => this.setState({ response: responses.hits }));
         // [END search_index_unsecure]
       }
 
@@ -166,7 +183,7 @@ class Search extends Component {
 
       render () {
 
-        const { items, loading, response, index } = this.state;
+        const { items, loading, responseItems, responseStores, index } = this.state;
         const itemUrl = window.location.href;
         const values = queryString.parse(this.props.location.search)
         const query = values.query;
@@ -175,7 +192,7 @@ class Search extends Component {
             <Container fluid style={{paddingTop:`10px`}}>
               {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
               <Row>
-                {response.length ? (
+                {responseStores.length ? (
                   <Col className="mt-2">
                     <h4 className="catTitle">"{query}" in your area</h4>
 
@@ -192,7 +209,7 @@ class Search extends Component {
 
                       <Row className="px-2">
                         <Col md={{span:6, offset:3}}>
-                          {Object.keys(response).map((res, index) => {
+                          {Object.keys(responseStores).map((res, index) => {
                             return (
                               <li className="messages" key={res} index={res}>
                                 <div className="chat">
@@ -200,18 +217,18 @@ class Search extends Component {
                                   <Row>
                                     <Col xs={4} sm={3} md={3}>
                                       <div className="itemImg storeList">
-                                        {response[res].imgUrl && <Image src={response[res].imgUrl + `/-/scale_crop/500x500/center/` || ''}/>}
+                                        {responseStores[res].imgUrl && <Image src={responseStores[res].imgUrl}/>}
 
                                       </div>
                                     </Col>
                                     <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0` }}>
-                                      <Link to={`/store/${response[res].user}/${response[res].store.id}`}>
-                                        <h2>{response[res].store.name}</h2>
+                                      <Link to={`/store/${responseStores[res].user}/${responseStores[res].id}`}>
+                                        <h2>{responseStores[res].name}</h2>
                                         <TextTruncate
                                           className="timestamp"
                                           line={1}
                                           truncateText="…"
-                                          text="Milnerton, Cape Town"
+                                          text={responseStores[res].description}
                                         />
                                         <span className="stars">
                                           <FontAwesomeIcon icon={faStar} />
@@ -234,7 +251,7 @@ class Search extends Component {
 
                       <Row className="px-2">
                         <Col md={{span:6, offset:3}}>
-                          {Object.keys(response).map((res, index) => {
+                          {Object.keys(responseItems).map((res, index) => {
                             return (
                               <li className="messages" key={res} index={res}>
                                 <div className="chat">
@@ -242,19 +259,19 @@ class Search extends Component {
                                   <Row>
                                     <Col xs={4} sm={3} md={3}>
                                       <div className="itemImg">
-                                        {response[res].imgUrl && <Image src={response[res].imgUrl + `/-/scale_crop/500x500/center/` || ''}/>}
+                                        {responseItems[res].imgUrl && <Image src={responseItems[res].imgUrl + `/-/scale_crop/500x500/center/` || ''}/>}
 
                                       </div>
                                     </Col>
                                     <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0` }}>
-                                      <Link to={`/items/${response[res].store.id}/${response[res].itemId}`}>
-                                        <h2>{response[res].name}</h2>
-                                        <span className="pricing">R{response[res].price}</span>
+                                      <Link to={`/items/${responseItems[res].store.id}/${responseItems[res].itemId}`}>
+                                        <h2>{responseItems[res].name}</h2>
+                                        <span className="pricing">R{responseItems[res].price}</span>
                                         <TextTruncate
                                           className="timestamp"
                                           line={1}
                                           truncateText="…"
-                                          text={response[res].description}
+                                          text={responseItems[res].description}
                                         />
                                       </Link>
                                     </Col>
