@@ -121,53 +121,6 @@ render() {
   console.log(storeName);
 
   return (
-    <Col md={{span:6, offset:3}} className="newitemform">
-      <span className="uploadImg">
-        <img src={uploadedImg}></img>
-      </span>
-      <Uploader
-        id='file'
-        name='file'
-        onChange={(file) => {
-          console.log('File changed: ', file)
-
-          if (file) {
-            file.progress(info => console.log('File progress: ', info.progress))
-            file.done(info => console.log('File uploaded: ', info))
-          }
-        }}
-        onUploadComplete={info =>
-          this.setState ({
-              imgUrl: info.cdnUrl,
-          })
-        } />
-      <Form className="FormInput" onSubmit={this.onSubmit}>
-        <Form.Control style={{display:`none`}} name="imgurl" value={this.state.imgUrl || ''} onChange={this.onChange} type="text" placeholder="imgUrl" />
-
-        <Form.Group controlId="exampleForm.ControlInput1">
-          <Form.Label>Name</Form.Label>
-          <Form.Control name="name" value={this.state.name || ''} onChange={this.onChange} type="text" placeholder="Item name" />
-        </Form.Group>
-        <Form.Group controlId="exampleForm.ControlInput2">
-          <Form.Control name="description" as="textarea" rows="3"  value={this.state.description || ''} onChange={this.onChange} type="text" placeholder="Description" />
-        </Form.Group>
-        <Form.Group controlId="exampleForm.ControlSelect2">
-          <Form.Label>Select a Store</Form.Label>
-          <Form.Control as="select" name="storeId" value={this.state.storeId || ''} store="storeName" storename={this.state.storeName || ''} onChange={this.onChangeOptions}>
-            <option>Select a Store</option>
-            {Object.keys(stores).map((store, index) => {
-              return (
-                <option key={store} index={index} value={store} storename={stores[store].name}>{stores[store].name}</option>
-              );
-            }
-            )}
-          </Form.Control>
-        </Form.Group>
-
-        <Form.Group controlId="exampleForm.ControlInput3">
-          <Form.Label>Price</Form.Label>
-          <Form.Control name="price"  value={this.state.price || ''} onChange={this.onChange} type="number" pattern="[0-9]*" />
-        </Form.Group>
         <Form.Group controlId="exampleForm.ControlSelect1">
           <Form.Control as="select" name="category" value={this.state.category || ''} onChange={this.onChange}>
             <option>Which Product/Service category?</option>
@@ -185,7 +138,7 @@ render() {
             <option>🏪 Spaza Shop</option>
             <option>🏭 Manufacturing</option>
             <option>👔 Pro Services</option>
-            <option>🛠 Skilled Trades</option>
+            <option>🛠 Skilled Tradesmen</option>
           </Form.Control>
         </Form.Group>
         <Form.Group controlId="exampleForm.ControlSelect12">
@@ -204,12 +157,6 @@ render() {
             <option>RSVP</option>
           </Form.Control>
         </Form.Group>
-        <Button variant="primary" onClick={this.handleClose} type="submit" block>
-          Add Item
-        </Button>
-      </Form>
-      <FooterNavigation />
-    </Col>
   );
 }
 }

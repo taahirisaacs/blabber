@@ -224,7 +224,7 @@ class MessageForm extends Component {
             </Tabs>
           </Col>
         </Row>
-        <SwipeableViews index={index} onChangeIndex={this.handleChangeIndex}>
+        <SwipeableViews animateHeight index={index} onChangeIndex={this.handleChangeIndex}>
 
           <Row className="px-2">
             <Stores />

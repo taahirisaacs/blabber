@@ -188,7 +188,7 @@ class SignUpFormBase extends Component {
             />
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlSelect1">
-            <Form.Control as="select" name="storeCategory" value={storeCategory} onChange={this.onChange}>
+            <Form.Control as="select" name="category" value={this.state.category || ''} onChange={this.onChange}>
               <option>Which Product/Service category?</option>
               <option>👕 Clothing</option>
               <option>👟 Sneakers</option>
@@ -196,13 +196,15 @@ class SignUpFormBase extends Component {
               <option>💻 Electronics</option>
               <option>🚗 Cars</option>
               <option>🚚 Movers</option>
+              <option>🚕 Transport</option>
               <option>♻️ Thrift</option>
               <option>💅🏼 Salon</option>
               <option>💇🏼‍♂️ Barber</option>
               <option>🧹 Cleaner</option>
               <option>🏪 Spaza Shop</option>
               <option>🏭 Manufacturing</option>
-              <option>⚙️ Other Services</option>
+              <option>👔 Pro Services</option>
+              <option>🛠 Skilled Trades</option>
             </Form.Control>
           </Form.Group>
           <Form.Group controlId="formstoreWhatsapp">

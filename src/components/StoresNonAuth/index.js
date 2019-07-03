@@ -150,8 +150,8 @@ class StoresPageNonAuth extends Component {
             );
           })}
         </ul>
-        <Link to={ROUTES.SIGN_UP}>
-          <span className="poweredby">Create Your Free TinyTrader Store →</span>
+        <Link to={ROUTES.BETA}>
+          <span className="poweredby">Join +250 traders ready for business →</span>
         </Link>
       </Col>
     );

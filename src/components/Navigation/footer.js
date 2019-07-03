@@ -63,51 +63,7 @@ const FooterNavigationAuth = () => (
 );
 
 const FooterNonAuth = () => (
-  <Row className="bottomNavPublic">
-    <Col className="px-0">
-      <Link to={ROUTES.LANDING_CAT}>
-        <span className="navItemLanding">
-          ⬅
-        </span>
-      </Link>
-    </Col>
-    <Col className="px-0">
-      <NavLink to={ROUTES.FILT_FOOD}>
-        <span className="navItemLanding">
-          🍔
-        </span>
-      </NavLink>
-    </Col>
-    <Col className="px-0">
-      <NavLink to={ROUTES.FILT_CLOTHING}>
-        <span className="navItemLanding">
-          👕
-        </span>
-      </NavLink>
-    </Col>
-    <Col className="px-0">
-      <NavLink to={ROUTES.FILT_ELEC}>
-        <span className="navItemLanding">
-          💻
-        </span>
-      </NavLink>
-    </Col>
-    <Col className="px-0">
-      <NavLink to={ROUTES.FILT_CAR}>
-        <span className="navItemLanding">
-          🚗
-        </span>
-      </NavLink>
-    </Col>
-    <Col className="px-0">
-      <NavLink to={ROUTES.FILT_SERVICES}>
-        <span className="navItemLanding">
-          ⚙️
-        </span>
-      </NavLink>
-    </Col>
-
-  </Row>
+  <div></div>
 );
 
 export default FooterNavigation;

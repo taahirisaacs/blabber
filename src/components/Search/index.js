@@ -59,6 +59,7 @@ class Search extends Component {
           this.unauthenticated_search();
       }
 
+
       componentWillUnmount() {
         if(this.unsubscribe)
           this.unsubscribe();
@@ -187,7 +188,7 @@ class Search extends Component {
                     </Col>
                   </Row>
 
-                  <SwipeableViews index={index} onChangeIndex={this.handleChangeIndex}>
+                  <SwipeableViews animateHeight index={index} onChangeIndex={this.handleChangeIndex}>
 
                     <Row className="px-2">
                       {responseStores.length ? (
@@ -201,7 +202,7 @@ class Search extends Component {
                                   <Row>
                                     <Col xs={4} sm={3} md={3}>
                                       <div className="itemImg storeList">
-                                        {responseStores[res].imgUrl && <Image src={responseStores[res].imgUrl}/>}
+                                        {responseStores[res].imgUrl && <Image src={responseStores[res].imgUrl} fluid/>}
 
                                       </div>
                                     </Col>
@@ -252,7 +253,7 @@ class Search extends Component {
                                   <Row>
                                     <Col xs={4} sm={3} md={3}>
                                       <div className="itemImg">
-                                        {responseItems[res].imgUrl && <Image src={responseItems[res].imgUrl + `/-/scale_crop/500x500/center/` || ''}/>}
+                                        {responseItems[res].imgUrl && <Image src={responseItems[res].imgUrl + `/-/scale_crop/500x500/center/` || ''} fluid />}
 
                                       </div>
                                     </Col>
@@ -291,8 +292,8 @@ class Search extends Component {
               </Row>
               <Row>
                 <Col className="mt-2">
-                  <Link to={ROUTES.SIGN_UP}>
-                    <span className="poweredby">Create Your Free TinyTrader Store →</span>
+                  <Link to={ROUTES.BETA}>
+                    <span className="poweredby">Join +250 traders ready for business →</span>
                   </Link>
                 </Col>
               </Row>

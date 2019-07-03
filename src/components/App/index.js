@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/Col';
 import ScrollToTop from '../ScrollToTop';
 
 import Navigation from '../Navigation';
+import Footer from '../Navigation/footer';
 import LandingPage from '../Landing';
 import LandingCat from '../Landing/filterCategories';
 import FilterFood from '../Landing/filterFood';
@@ -31,6 +32,7 @@ import NewItem from '../NewItem';
 import Profile from '../Profile';
 import Items from '../Items';
 import Search from '../Search';
+import BetaListPage from '../Beta';
 
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
@@ -47,9 +49,10 @@ const App = () => (
           <Route exact path={ROUTES.FILT_CAR} component={FilterCars} />
           <Route exact path={ROUTES.FILT_SERVICES} component={FilterServices} />
           <Route path={ROUTES.ORDERS} component={Orders} />
-          <Route path={ROUTES.EXPLORE} component={Explore} />
+          <Route path={ROUTES.EXPLORE} component={LandingCat} />
           <Route path={ROUTES.SETTINGS} component={Settings} />
           <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+          <Route path={ROUTES.BETA} component={BetaListPage} />
           <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
           <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
           <Route path={ROUTES.HOME} component={HomePage}/>
@@ -61,6 +64,7 @@ const App = () => (
           <Route exact path="/store/:userid/:uid" component={Profile} />
           <Route exact path="/items/:storeid/:itemid" component={Items} />
         </Container>
+        <Footer />
       </Router>
 );
 

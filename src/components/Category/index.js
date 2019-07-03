@@ -66,7 +66,7 @@ class CategoryList extends Component {
                     <div className="catBlock">
                       <span className="catIcon">💻</span>
                       <span className="catName">Electronics</span>
-                      <span className="catCount"><span className="dot "></span>Online</span>
+
                     </div>
                   </NavLink>
                 </Col>
@@ -75,7 +75,7 @@ class CategoryList extends Component {
                     <div className="catBlock">
                       <span className="catIcon">👕</span>
                       <span className="catName">Clothing</span>
-                      <span className="catCount"><span className="dot "></span>Online</span>
+
                     </div>
                   </NavLink>
                 </Col>
@@ -84,7 +84,7 @@ class CategoryList extends Component {
                     <div className="catBlock">
                       <span className="catIcon">🚗</span>
                       <span className="catName">Cars</span>
-                      <span className="catCount"><span className="dot "></span>Online</span>
+
                     </div>
                   </NavLink>
                 </Col>
@@ -93,7 +93,7 @@ class CategoryList extends Component {
                     <div className="catBlock">
                       <span className="catIcon">👟</span>
                       <span className="catName">Sneakers</span>
-                      <span className="catCount"><span className="dot "></span>Online</span>
+
                     </div>
                   </NavLink>
                 </Col>
@@ -102,7 +102,7 @@ class CategoryList extends Component {
                     <div className="catBlock">
                       <span className="catIcon">🍔</span>
                       <span className="catName">Food</span>
-                      <span className="catCount"><span className="dot "></span>Online</span>
+
                     </div>
                   </NavLink>
                 </Col>
@@ -111,7 +111,16 @@ class CategoryList extends Component {
                     <div className="catBlock">
                       <span className="catIcon">🚚</span>
                       <span className="catName">Movers</span>
-                      <span className="catCount"><span className="dot "></span>Online</span>
+
+                    </div>
+                  </NavLink>
+                </Col>
+                <Col xs={6} className="px-2 ">
+                  <NavLink to={ROUTES.FILT_TRANS}>
+                    <div className="catBlock ">
+                      <span className="catIcon">🚕</span>
+                      <span className="catName">Transport</span>
+
                     </div>
                   </NavLink>
                 </Col>
@@ -120,7 +129,7 @@ class CategoryList extends Component {
                     <div className="catBlock">
                       <span className="catIcon">🧹</span>
                       <span className="catName">Cleaners</span>
-                      <span className="catCount"><span className="dot "></span>Online</span>
+
                     </div>
                   </NavLink>
                 </Col>
@@ -129,7 +138,7 @@ class CategoryList extends Component {
                     <div className="catBlock">
                       <span className="catIcon">💅🏼</span>
                       <span className="catName">Salon</span>
-                      <span className="catCount"><span className="dot "></span>Online</span>
+
                     </div>
                   </NavLink>
                 </Col>
@@ -138,7 +147,7 @@ class CategoryList extends Component {
                     <div className="catBlock">
                       <span className="catIcon">💇🏼‍♂️</span>
                       <span className="catName">Barber</span>
-                      <span className="catCount"><span className="dot "></span>Online</span>
+
                     </div>
                   </NavLink>
                 </Col>
@@ -147,7 +156,7 @@ class CategoryList extends Component {
                     <div className="catBlock ">
                       <span className="catIcon">🏭</span>
                       <span className="catName">Manufacturing</span>
-                      <span className="catCount"><span className="dot "></span>Online</span>
+
                     </div>
                   </NavLink>
                 </Col>
@@ -156,7 +165,7 @@ class CategoryList extends Component {
                     <div className="catBlock ">
                       <span className="catIcon">♻️</span>
                       <span className="catName">Thrift</span>
-                      <span className="catCount"><span className="dot "></span>Online</span>
+
                     </div>
                   </NavLink>
                 </Col>
@@ -166,7 +175,25 @@ class CategoryList extends Component {
                     <div className="catBlock">
                       <span className="catIcon">🏪</span>
                       <span className="catName">Spaza Shops</span>
-                      <span className="catCount"><span className="dot "></span>Online</span>
+
+                    </div>
+                  </NavLink>
+                </Col>
+
+                <Col xs={6} className="px-2">
+                  <NavLink to={ROUTES.FILT_PROSERV}>
+                    <div className="catBlock">
+                      <span className="catIcon">👔</span>
+                      <span className="catName">Pro Services</span>
+                    </div>
+                  </NavLink>
+                </Col>
+                <Col xs={6} className="px-2">
+                  <NavLink to={ROUTES.FILT_SKILLED}>
+                    <div className="catBlock">
+                      <span className="catIcon">🛠</span>
+                      <span className="catName">Skilled Trades</span>
+
                     </div>
                   </NavLink>
                 </Col>
@@ -175,16 +202,7 @@ class CategoryList extends Component {
                     <div className="catBlock">
                       <span className="catIcon">🧵</span>
                       <span className="catName">Arts & Crafts</span>
-                      <span className="catCount"><span className="dot "></span>Online</span>
-                    </div>
-                  </NavLink>
-                </Col>
-                <Col xs={6} className="px-2">
-                  <NavLink to={ROUTES.FILT_SERVICES}>
-                    <div className="catBlock">
-                      <span className="catIcon">⚙️</span>
-                      <span className="catName">Other Services</span>
-                      <span className="catCount"><span className="dot "></span>Online</span>
+
                     </div>
                   </NavLink>
                 </Col>

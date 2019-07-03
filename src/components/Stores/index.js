@@ -157,7 +157,7 @@ class StoresPageAuth extends Component {
               <Col xs sm md className="storeHeader">
                 <div className="chat">
                   <div className="storeImg">
-                    <Image src={stores.imgUrl}/>
+                    <Image src={stores.imgUrl} fluid/>
                   </div>
                   <h2>{stores.name}</h2>
                   <span className="timestamp">{stores.description || ''}</span>
@@ -252,13 +252,15 @@ class StoresPageAuth extends Component {
                   <option>💻 Electronics</option>
                   <option>🚗 Cars</option>
                   <option>🚚 Movers</option>
+                  <option>🚕 Transport</option>
                   <option>♻️ Thrift</option>
                   <option>💅🏼 Salon</option>
                   <option>💇🏼‍♂️ Barber</option>
                   <option>🧹 Cleaner</option>
                   <option>🏪 Spaza Shop</option>
                   <option>🏭 Manufacturing</option>
-                  <option>⚙️ Other Services</option>
+                  <option>👔 Pro Services</option>
+                  <option>🛠 Skilled Trades</option>
                 </Form.Control>
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlSelect12">

@@ -32,7 +32,7 @@ const NavigationNonAuth = () => (
       <Navbar.Brand className="mx-0">🏪TinyTrader</Navbar.Brand>
     </LinkContainer>
     <Nav>
-      <LinkContainer as="button" className="signup" to={ROUTES.SIGN_UP}>
+      <LinkContainer as="button" className="signup" to={ROUTES.BETA}>
         <Nav.Item>Start Trading</Nav.Item>
       </LinkContainer>
     </Nav>

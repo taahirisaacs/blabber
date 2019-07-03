@@ -152,7 +152,7 @@ class Stores extends Component {
                   <Row>
                     <Col xs={4} sm={4} md={2}>
                       <div className="itemImg storeList">
-                        <Image src={stores[key].imgUrl}/>
+                        <Image src={stores[key].imgUrl} fluid />
                       </div>
                     </Col>
                     <Col xs={8} sm={8} md={10} style={{ paddingLeft: `0`}}>
@@ -225,13 +225,15 @@ class Stores extends Component {
                   <option>💻 Electronics</option>
                   <option>🚗 Cars</option>
                   <option>🚚 Movers</option>
+                  <option>🚕 Transport</option>
                   <option>♻️ Thrift</option>
                   <option>💅🏼 Salon</option>
                   <option>💇🏼‍♂️ Barber</option>
                   <option>🧹 Cleaner</option>
                   <option>🏪 Spaza Shop</option>
                   <option>🏭 Manufacturing</option>
-                  <option>⚙️ Other Services</option>
+                  <option>👔 Pro Services</option>
+                  <option>🛠 Skilled Tradesmen</option>
                 </Form.Control>
               </Form.Group>
               <Modal.Footer >
