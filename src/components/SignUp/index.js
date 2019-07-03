@@ -58,7 +58,7 @@ class SignUpFormBase extends Component {
             username,
             email,
             location,
-            profileUrl,
+            profileUrl: profileUrl || 'https://via.placeholder.com/150/000000/FFFFFF?Text=TinyTrader.co.za',
             store: {
               name: storeName,
               category: storeCategory,
@@ -92,7 +92,7 @@ class SignUpFormBase extends Component {
     if (!error && result && result.event === "success") {
       console.log('Done! Here is the image info: ', result.info);
 
-      const profileUrl = result.info.so;
+      const profileUrl = result.info.url;
       this.setState({profileUrl});
     }
 
