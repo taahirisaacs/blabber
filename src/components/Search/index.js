@@ -265,7 +265,7 @@ class Search extends Component {
                         </Col>
                       ) : (
                         <Col className="mt-2">
-                          <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry, no "{query}" traders found near you. <Link to={ROUTES.SIGN_UP}>Start your free store today.</Link></h4>
+                          <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry, no "{query}" traders found near you. <Link to={ROUTES.SIGN_UP}>Join TinyTrader®.</Link></h4>
 
                         </Col>
                       )}
@@ -310,7 +310,7 @@ class Search extends Component {
                         </Col>
                       ) : (
                         <Col className="mt-2">
-                          <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry, no items found for "{query}". <Link to={ROUTES.SIGN_UP}>Add an item to this category.</Link></h4>
+                          <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry, no items found for "{query}". <Link to={ROUTES.SIGN_UP}>Join TinyTrader®.</Link></h4>
                         </Col>
                       )}
                     </Row>

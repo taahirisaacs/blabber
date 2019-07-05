@@ -108,7 +108,12 @@ class StoresPageNonAuth extends Component {
                     <Image src={storeImg} fluid/>
                   </div>
                   <h2>{storeName}</h2>
-                  <span className="city">{storeLoc}</span>
+                  <TextTruncate
+                    className="city"
+                    line={1}
+                    truncateText="…"
+                    text={storeLoc}
+                  />
                   <span className="timestamp">{storeDesc}</span>
                   <span className="cat">{storeCat}</span>
                   <CopyToClipboard block className="storebtn copy_link" text={`${itemUrl}`} onCopy={() => this.setState({copied: true})}>
@@ -121,7 +126,7 @@ class StoresPageNonAuth extends Component {
         </ul>
 
         <ul style={{marginBottom:`40px`,}}>
-
+          <span className="smallHeadSection">Our Items</span>
           {Object.keys(items).map((key, index) => {
             return (
               <li className="messages" key={key} index={index}>

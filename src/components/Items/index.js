@@ -338,12 +338,14 @@ class ItemsNonAuth extends Component {
                           <span className="storenameInner">{items[key].store.name}</span>
                           <h2 className="titleInner">{items[key].name}</h2>
                           <span className="pricing">R{items[key].price}</span>
-                          <span className="itemdesc">{items[key].description}</span>
-                          <span className="cat">{items[key].category}</span>
-                          <Button block className="storebtn" href={`https://wa.me/27${stores.whatsapp}/?text=New%20TinyTrader%C2%AE%20Request%0A%0AItem%3A%20${items[key].name}%0APrice%3A%20R${items[key].price}`}>{items[key].cta}</Button>
+
+                          <Button block className="storebtn" href={`https://wa.me/27${stores.whatsapp}/?text=New%20TinyTrader%C2%AE%20Request%0A%0AItem%3A%20${items[key].name}%0APrice%3A%20R${items[key].price}%0AMy%20Name%3A%20`}>{items[key].cta}</Button>
                           <CopyToClipboard block className="storebtn copy_link" text={`${itemUrl}`} onCopy={() => this.setState({copied: true})}>
                             <Button>{this.state.copied ? <span>Copied.</span> : <span>Copy Item URL</span>}</Button>
                           </CopyToClipboard>
+                          <span className="smallHead">Description</span>
+                          <span className="itemdescInner">{items[key].description}</span>
+                          <span className="cat">{items[key].category}</span>
                         </Col>
                       </Row>
                     </div>
@@ -352,7 +354,7 @@ class ItemsNonAuth extends Component {
               })}
 
               <li className="messages" key={stores.id} index={stores.id} style={{marginBottom:`10px`,}}>
-
+                <span className="smallHeadSection">About The Trader</span>
                 <div className="chat">
                   <Row>
                     <Col xs={4} sm={4} md={2}>

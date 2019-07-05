@@ -207,6 +207,36 @@ span.city, p.profileSub {
   color: #8a97aa;
   margin-bottom: 15px;
 }
+.itemdescInner {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #8a97aa;
+  margin-bottom: 15px;
+}
+span.smallHead {
+    display: inline-block;
+    width: 100%;
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+    color: #808ca1;
+}
+span.smallHeadSection {
+    display: inline-block;
+    width: 100%;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+    color: #808ca1;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
 span.timestamp.delete, .link {
     color: #eaecff!important;
     padding: 5px 10px!important;
