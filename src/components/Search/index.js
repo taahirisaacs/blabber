@@ -115,7 +115,9 @@ class Search extends Component {
                 facets: ['*'],
                 hitsPerPage: 10,
                 minWordSizefor1Typo: 4,
-                typoTolerance: true
+                typoTolerance: true,
+                aroundLatLngViaIP: true,
+                aroundRadius: 100000
               }
             }, {
               indexName: 'stores',
@@ -126,7 +128,9 @@ class Search extends Component {
                 facets: ['*'],
                 hitsPerPage: 10,
                 minWordSizefor1Typo: 4,
-                typoTolerance: true
+                typoTolerance: true,
+                aroundLatLngViaIP: true,
+                aroundRadius: 100000
               }
             }];
 
@@ -197,7 +201,7 @@ class Search extends Component {
                   </InputGroup.Append>
                 </InputGroup>
               </Form>
-              {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
+
               <Row>
 
                 <Col className="mt-2">
@@ -218,7 +222,7 @@ class Search extends Component {
                     <Row className="px-2">
                       {responseStores.length ? (
                         <Col md={{span:6, offset:3}}>
-
+                          {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
                           {Object.keys(responseStores).map((res, index) => {
                             return (
                               <li className="messages" key={res} index={res}>
@@ -259,7 +263,7 @@ class Search extends Component {
                         </Col>
                       ) : (
                         <Col className="mt-2">
-                          <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry, no "{query}" traders found near you</h4>
+                          <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry, no "{query}" traders found near you. <Link to={ROUTES.SIGN_UP}>Start your free store today.</Link></h4>
 
                         </Col>
                       )}
@@ -268,7 +272,7 @@ class Search extends Component {
                     <Row className="px-2">
                       {responseItems.length ? (
                         <Col md={{span:6, offset:3}}>
-
+                          {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
                           {Object.keys(responseItems).map((res, index) => {
                             return (
                               <li className="messages" key={res} index={res}>
@@ -304,7 +308,7 @@ class Search extends Component {
                         </Col>
                       ) : (
                         <Col className="mt-2">
-                          <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry, no items found for "{query}"</h4>
+                          <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry, no items found for "{query}". <Link to={ROUTES.SIGN_UP}>Add an item to this category.</Link></h4>
                         </Col>
                       )}
                     </Row>

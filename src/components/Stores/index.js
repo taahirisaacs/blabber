@@ -106,6 +106,8 @@ class StoresPageAuth extends Component {
         stores: snap.data(),
         storeId: snap.id,
         storeName: snap.data().name,
+        locationCoLat: snap.data()._geoloc.lat,
+        locationCoLng: snap.data()._geoloc.lng,
         loading: false,
       });
 
