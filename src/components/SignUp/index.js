@@ -29,6 +29,8 @@ const INITIAL_STATE = {
   username: '',
   email: '',
   location: '',
+  locationCoLat: '',
+  locationCoLng: '',
   profileUrl: '',
   passwordOne: '',
   passwordTwo: '',
@@ -46,7 +48,7 @@ class SignUpFormBase extends Component {
   }
 
   onSubmit = event => {
-    const { username, email, storeWhatsapp, storeName, storeCategory, location, profileUrl, passwordOne } = this.state;
+    const { username, email, storeWhatsapp, storeName, storeCategory, location, locationCoLat, locationCoLng, profileUrl, passwordOne } = this.state;
 
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -64,7 +66,12 @@ class SignUpFormBase extends Component {
               category: storeCategory,
               whatsapp: storeWhatsapp,
               location,
-              user: authUser.user.uid
+              _geoloc: {
+                lat: locationCoLat,
+                lng: locationCoLng
+              },
+              user: authUser.user.uid,
+              imgUrl: profileUrl || 'https://via.placeholder.com/150/000000/FFFFFF?Text=TinyTrader.co.za',
             },
           });
       })
@@ -129,15 +136,7 @@ class SignUpFormBase extends Component {
 
     return (
       <div>
-        <Button onClick={this.showWidget} className="ProfileImgBtn">
-          <span style={style} className="ProfileImg">
 
-
-            <span className="ProfileText">
-              +
-            </span>
-          </span>
-        </Button>
         <Form onSubmit={this.onSubmit}>
           <span className="formTitles">Your Personal Info</span>
           <Form.Control style={{display:`none`}} name="profileUrl" value={this.state.profileUrl || ''} onChange={this.onChange} type="text" placeholder="profileUrl" />
@@ -160,6 +159,16 @@ class SignUpFormBase extends Component {
             />
           </Form.Group>
           <span className="formTitles">Your Store Info</span>
+          <Button onClick={this.showWidget} className="ProfileImgBtn">
+            <span style={style} className="ProfileImg">
+
+
+              <span className="ProfileText">
+                +
+              </span>
+            </span>
+          </Button>
+          <span className="formTitles">Store Profile Image</span>
           <Form.Group controlId="formstoreName">
             <Form.Control
               name="storeName"
@@ -182,13 +191,14 @@ class SignUpFormBase extends Component {
                 useDeviceLocation: true,
               }}
 
-              onChange={({ query, rawAnswer, suggestion, suggestionIndex }) =>
-                this.setState({ location: suggestion.value }) }
+              onChange = {({ query, rawAnswer, suggestion, suggestionIndex }) =>
+                this.setState({location: suggestion.value, locationCoLat:suggestion.latlng.lat,locationCoLng: suggestion.latlng.lng})
+              }
 
             />
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlSelect1">
-            <Form.Control as="select" name="category" value={this.state.category || ''} onChange={this.onChange}>
+            <Form.Control as="select" name="storeCategory" value={this.state.storeCategory || ''} onChange={this.onChange}>
               <option>Which Product/Service category?</option>
               <option>👕 Clothing</option>
               <option>👟 Sneakers</option>

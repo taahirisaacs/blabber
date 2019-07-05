@@ -4,6 +4,7 @@ import { compose } from 'recompose';
 import Uploader from './../Uploader';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import TextTruncate from 'react-text-truncate';
+import AlgoliaPlaces from 'algolia-places-react';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -49,6 +50,9 @@ class StoresPageAuth extends Component {
       storeId: [],
       storeName: [],
       show: false,
+      location: '',
+      locationCoLat: '',
+      locationCoLng: '',
       storeUrl: window.location.href,
     };
     this.handleShow = this.handleShow.bind(this);
@@ -56,7 +60,7 @@ class StoresPageAuth extends Component {
   }
 
   onSubmit = event => {
-    const { name, description, price, category, storeId, storeName, imgUrl, cta } = this.state;
+    const { name, description, price, location, locationCoLat, locationCoLng, category, storeId, storeName, imgUrl, cta } = this.state;
     const user = firebase.auth().currentUser.uid;
     const db = firebase.firestore();
     const itemUid = shortid.generate();
@@ -72,7 +76,12 @@ class StoresPageAuth extends Component {
             store: { id: storeId || '', name: storeName || ''},
             user: user || '',
             itemId: itemUid || '',
-            timestamp: timestamp
+            timestamp: timestamp,
+            location: location || '',
+            _geoloc: {
+              lat: locationCoLat,
+              lng: locationCoLng,
+            }
         })
       .then(authUser => {
         this.setState({ ...INITIAL_STATE });
@@ -160,6 +169,7 @@ class StoresPageAuth extends Component {
                     <Image src={stores.imgUrl} fluid/>
                   </div>
                   <h2>{stores.name}</h2>
+                  <p className="profileSub">{stores.location}</p>
                   <span className="timestamp">{stores.description || ''}</span>
                   <span className="cat">{stores.category || ''}</span>
                   <Row >

@@ -10,6 +10,7 @@ import Image from 'react-bootstrap/Image';
 import Uploader from './../Uploader';
 import { Link } from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
+import AlgoliaPlaces from 'algolia-places-react';
 
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -36,6 +37,9 @@ class Stores extends Component {
       userStore: '',
       imgUrl: '',
       show: false,
+      location: '',
+      locationCoLat: '',
+      locationCoLng: '',
     };
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -44,7 +48,7 @@ class Stores extends Component {
   };
 
   onSubmit = event => {
-    const { name, description, whatsapp, category, imgUrl } = this.state;
+    const { name, description, location, locationCoLat, locationCoLng, whatsapp, category, imgUrl } = this.state;
     const user = firebase.auth().currentUser.uid;
     const db = firebase.firestore();
     const dbCol = db.collection("stores");
@@ -55,7 +59,12 @@ class Stores extends Component {
           whatsapp: whatsapp || '',
           category: category || '',
           imgUrl: imgUrl || 'https://via.placeholder.com/150/c9d2df/000000?text=TINYTRADER.CO.ZA',
-          user: user || ''
+          user: user || '',
+          location: location || '',
+          _geoloc: {
+            lat: locationCoLat,
+            lng: locationCoLng,
+          }
         })
       .then(authUser => {
         this.setState({ ...INITIAL_STATE });
@@ -211,6 +220,25 @@ class Stores extends Component {
               <Form.Group controlId="exampleForm.ControlInput2">
                 <Form.Label>Description</Form.Label>
                 <Form.Control name="description" as="textarea" rows="3"  value={this.state.description || ''} onChange={this.onChange} type="text" placeholder="eg. Widget123" />
+              </Form.Group>
+              <Form.Group controlId="formLocation">
+                <AlgoliaPlaces
+                  placeholder='Location'
+
+                  options={{
+                    appId: 'plMOIODNLXZ6',
+                    apiKey: 'b40b54304cdc5beb771d96ffc12c8cfe',
+                    language: 'en',
+                    countries: ['za'],
+                    type: 'address',
+                    useDeviceLocation: true,
+                  }}
+
+                  onChange = {({ query, rawAnswer, suggestion, suggestionIndex }) =>
+                    this.setState({location: suggestion.value, locationCoLat:suggestion.latlng.lat,locationCoLng: suggestion.latlng.lng})
+                  }
+
+                />
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlInput2">
                 <Form.Label>WhatsApp Number</Form.Label>

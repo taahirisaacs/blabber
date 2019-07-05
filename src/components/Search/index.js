@@ -12,6 +12,9 @@ import CategoryList from '../Category';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
@@ -129,23 +132,8 @@ class Search extends Component {
 
             client.search(queries, (err, { results } = {}) => {
             if (err) throw err;
-            console.log(results);
             this.setState({ responseItems: results[0].hits, responseStores: results[1].hits  });
           });
-      }
-
-      search = (event) => {
-        const {where} = this.state;
-        const query = where;
-        console.log(query);
-        if (!PROJECT_ID) {
-          console.warn('Please set PROJECT_ID in /index.js!');
-        } else if (!ALGOLIA_APP_ID) {
-          console.warn('Please set ALGOLIA_APP_ID in /index.js!');
-        } else if (ALGOLIA_SEARCH_KEY) {
-          console.log('Performing unauthenticated search...');
-          return this.unauthenticated_search(query);
-        }
       }
 
       handleChange = (event, value) => {
@@ -164,6 +152,25 @@ class Search extends Component {
         this.setState({ [event.target.name]: event.target.value});
       };
 
+      search = (event) => {
+        const { where } = this.state;
+        const query = where;
+
+        this.props.history.push(`/search?query=${query}`);
+        window.location.reload();
+      }
+
+      onKeyPressSearch = (event) => {
+        const {where} = this.state;
+        const query = where;
+
+        if(event.charCode == 13){
+          event.preventDefault();
+          this.props.history.push(`/search?query=${query}`);
+          window.location.reload();
+        }
+      }
+
       render () {
 
         const { loading, responseItems, responseStores, index } = this.state;
@@ -172,6 +179,24 @@ class Search extends Component {
 
         return (
             <Container fluid style={{paddingTop:`10px`}}>
+              <Form className="homeSearch">
+
+                <InputGroup
+                  onKeyPress={this.onKeyPressSearch}
+                >
+                  <Form.Control
+                    name="where"
+                    value={this.state.where || ''}
+                    onChange={this.onChange}
+                    type="text"
+                    className="formSearch"
+                    placeholder="What are you looking for?"
+                  />
+                  <InputGroup.Append className="p-0">
+                    <Button className="searchBtn"  onClick={this.search}>Go</Button>
+                  </InputGroup.Append>
+                </InputGroup>
+              </Form>
               {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
               <Row>
 
@@ -215,13 +240,12 @@ class Search extends Component {
                                           truncateText="…"
                                           text={responseStores[res].description}
                                         />
-                                        <span className="stars">
-                                          <FontAwesomeIcon icon={faStar} />
-                                          <FontAwesomeIcon icon={faStar} />
-                                          <FontAwesomeIcon icon={faStar} />
-                                          <FontAwesomeIcon icon={faStar} />
-                                          <FontAwesomeIcon icon={faStar} />
-                                        </span>
+                                        <TextTruncate
+                                          className="timestamp"
+                                          line={1}
+                                          truncateText="…"
+                                          text={responseStores[res].location}
+                                        />
                                       </Link>
                                     </Col>
 

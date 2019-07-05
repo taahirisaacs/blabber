@@ -60,6 +60,7 @@ class StoresPageNonAuth extends Component {
           storeName: snap.data().name,
           storeDesc: snap.data().description,
           storeCat: snap.data().category,
+          storeLoc: snap.data().location,
           storeId: snap.id,
           loading: false
         })
@@ -89,7 +90,7 @@ class StoresPageNonAuth extends Component {
     }
 
   render() {
-    const { items, storeImg, storeName, storeDesc, storeCat, storeId, userLocation, userWhatsapp, loading} = this.state;
+    const { items, storeImg, storeName, storeLoc, storeDesc, storeCat, storeId, userLocation, userWhatsapp, loading} = this.state;
     const user = this.props.match.params.userid;
     const pretext = "Hello! I want to";
     const itemUrl = window.location.href;
@@ -107,7 +108,7 @@ class StoresPageNonAuth extends Component {
                     <Image src={storeImg + `/-/scale_crop/500x500/center/`}/>
                   </div>
                   <h2>{storeName}</h2>
-                  <span className="city">{userLocation}</span>
+                  <span className="city">{storeLoc}</span>
                   <span className="timestamp">{storeDesc}</span>
                   <span className="cat">{storeCat}</span>
                   <CopyToClipboard block className="storebtn copy_link" text={`${itemUrl}`} onCopy={() => this.setState({copied: true})}>

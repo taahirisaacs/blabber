@@ -118,8 +118,6 @@ class MessageForm extends Component {
     this.setState({ loading: true });
 
     const user = firebase.auth().currentUser;
-
-    // const db = firebase.database().ref(`users/${user.uid}/`);
     const db = firebase.firestore();
     const dbCol = db.collection("users").doc(user.uid);
 
@@ -210,7 +208,7 @@ class MessageForm extends Component {
                 <Button className="navItem mt-3 mb-2 settings" size="xs" variant="secondary" block>
                   Edit my profile
                 </Button>
-                <SignOutButton to={ROUTES.LANDING} />
+                <SignOutButton to={ROUTES.LANDING_CAT} />
               </NavLink>
             </div>
           </Col>
@@ -224,7 +222,7 @@ class MessageForm extends Component {
             </Tabs>
           </Col>
         </Row>
-        <SwipeableViews animateHeight index={index} onChangeIndex={this.handleChangeIndex}>
+        <SwipeableViews index={index} onChangeIndex={this.handleChangeIndex}>
 
           <Row className="px-2">
             <Stores />

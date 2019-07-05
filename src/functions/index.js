@@ -80,6 +80,8 @@ exports.onUserAdd = functions.firestore.document('users/{userId}').onCreate((sna
   const name = userData.store.name;
   const category = userData.store.category;
   const location = userData.store.location;
+  const locateLat = userData.store._geoloc.lat;
+  const locateLng = userData.store._geoloc.lng;
   const whatsapp = userData.store.whatsapp;
   const user = snap.id;
   const imgUrl = userData.profileUrl;
@@ -88,6 +90,10 @@ exports.onUserAdd = functions.firestore.document('users/{userId}').onCreate((sna
     name,
     category,
     location,
+    _geoloc: {
+      lat: locateLat,
+      lng: locateLng,
+    },
     whatsapp,
     user,
     imgUrl

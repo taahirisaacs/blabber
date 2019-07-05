@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import Uploader from './../Uploader';
 import shortid from 'shortid';
 import FooterNavigation from '../Navigation/footer';
+import AlgoliaPlaces from 'algolia-places-react';
 
 import * as ROUTES from '../../constants/routes';
 import firebase from 'firebase/app';
@@ -33,6 +34,9 @@ constructor(props, context) {
     loading: false,
     items: '',
     stores: '',
+    location: '',
+    locationCoLat: '',
+    locationCoLng: '',
     imgUrl: '',
     show: false,
   };
@@ -41,7 +45,7 @@ constructor(props, context) {
 
 
 onSubmit = event => {
-  const { name, description, price, category, imgUrl, storeId, storeName, cta } = this.state;
+  const { name, description,location, locationCoLat, locationCoLng, price, category, imgUrl, storeId, storeName, cta } = this.state;
   const user = firebase.auth().currentUser;
   const db = firebase.firestore();
   const itemUid = shortid.generate();
@@ -57,7 +61,12 @@ onSubmit = event => {
           store: { id: storeId || '', name: storeName || ''},
           user: user.uid,
           itemId: itemUid,
-          timestamp: timestamp
+          timestamp: timestamp,
+          location: location || '',
+          _geoloc: {
+            lat: locationCoLat,
+            lng: locationCoLng,
+          }
       })
       .then(authUser => {
           console.log("Document written with ID: ", authUser.id);
@@ -163,7 +172,25 @@ render() {
             )}
           </Form.Control>
         </Form.Group>
+        <Form.Group controlId="formLocation">
+          <AlgoliaPlaces
+            placeholder='Location'
 
+            options={{
+              appId: 'plMOIODNLXZ6',
+              apiKey: 'b40b54304cdc5beb771d96ffc12c8cfe',
+              language: 'en',
+              countries: ['za'],
+              type: 'address',
+              useDeviceLocation: true,
+            }}
+
+            onChange = {({ query, rawAnswer, suggestion, suggestionIndex }) =>
+              this.setState({location: suggestion.value, locationCoLat:suggestion.latlng.lat,locationCoLng: suggestion.latlng.lng})
+            }
+
+          />
+        </Form.Group>
         <Form.Group controlId="exampleForm.ControlInput3">
           <Form.Label>Price</Form.Label>
           <Form.Control name="price"  value={this.state.price || ''} onChange={this.onChange} type="number" pattern="[0-9]*" />

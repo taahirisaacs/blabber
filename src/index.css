@@ -19,6 +19,9 @@ code {
 .tabbar.row {
     margin-bottom: 20px;
 }
+.react-swipeable-view-container {
+    min-height: 350px;
+}
 .laneTitle {
     margin-bottom: 10px;
 }
@@ -770,7 +773,7 @@ select#formDrop option {
     margin: 10px auto -30px;
 }
 form.homeSearch {
-    margin: 20px 0px 5px;
+    margin: 5px 0px;
 }
 form.homeSelect {
     margin: 5px 0px;
