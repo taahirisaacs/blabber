@@ -105,7 +105,7 @@ class StoresPageNonAuth extends Component {
               <Col xs sm md className="storeHeader">
                 <div className="chat">
                   <div className="storeImg">
-                    <Image src={storeImg + `/-/scale_crop/500x500/center/`}/>
+                    <Image src={storeImg} fluid/>
                   </div>
                   <h2>{storeName}</h2>
                   <span className="city">{storeLoc}</span>

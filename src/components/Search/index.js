@@ -117,7 +117,8 @@ class Search extends Component {
                 minWordSizefor1Typo: 4,
                 typoTolerance: true,
                 aroundLatLngViaIP: true,
-                aroundRadius: 100000
+                aroundRadius: 100000,
+                getRankingInfo: true
               }
             }, {
               indexName: 'stores',
@@ -130,13 +131,14 @@ class Search extends Component {
                 minWordSizefor1Typo: 4,
                 typoTolerance: true,
                 aroundLatLngViaIP: true,
-                aroundRadius: 100000
+                aroundRadius: 100000,
+                getRankingInfo: true
               }
             }];
 
             client.search(queries, (err, { results } = {}) => {
             if (err) throw err;
-            this.setState({ responseItems: results[0].hits, responseStores: results[1].hits  });
+            this.setState({ responseItems: results[0].hits, responseStores: results[1].hits });
           });
       }
 
@@ -242,13 +244,13 @@ class Search extends Component {
                                           className="timestamp"
                                           line={1}
                                           truncateText="…"
-                                          text={responseStores[res].description}
+                                          text={responseStores[res].location}
                                         />
                                         <TextTruncate
                                           className="timestamp"
                                           line={1}
                                           truncateText="…"
-                                          text={responseStores[res].location}
+                                          text={Math.trunc(responseStores[res]._rankingInfo.geoDistance / 1000) + 'km away from you'}
                                         />
                                       </Link>
                                     </Col>
@@ -293,7 +295,7 @@ class Search extends Component {
                                           className="timestamp"
                                           line={1}
                                           truncateText="…"
-                                          text={responseItems[res].description}
+                                          text={Math.trunc(responseItems[res]._rankingInfo.geoDistance / 1000) + 'km away from you'}
                                         />
                                       </Link>
                                     </Col>

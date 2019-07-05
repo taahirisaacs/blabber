@@ -340,7 +340,7 @@ class ItemsNonAuth extends Component {
                           <span className="pricing">R{items[key].price}</span>
                           <span className="itemdesc">{items[key].description}</span>
                           <span className="cat">{items[key].category}</span>
-                          <Button block className="storebtn" href={`https://wa.me/27${stores.whatsapp}/?text=(${items[key].cta})%20:%20${items[key].name}%20|%20R${items[key].price}`}>{items[key].cta}</Button>
+                          <Button block className="storebtn" href={`https://wa.me/27${stores.whatsapp}/?text=New%20TinyTrader%C2%AE%20Request%0A%0AItem%3A%20${items[key].name}%0APrice%3A%20R${items[key].price}`}>{items[key].cta}</Button>
                           <CopyToClipboard block className="storebtn copy_link" text={`${itemUrl}`} onCopy={() => this.setState({copied: true})}>
                             <Button>{this.state.copied ? <span>Copied.</span> : <span>Copy Item URL</span>}</Button>
                           </CopyToClipboard>
@@ -357,7 +357,7 @@ class ItemsNonAuth extends Component {
                   <Row>
                     <Col xs={4} sm={4} md={2}>
                       <div className="itemImg storeList">
-                        <Image src={stores.imgUrl + `/-/scale_crop/250x250/center/`}/>
+                        <Image src={stores.imgUrl}/>
                       </div>
                     </Col>
                     <Col xs={8} sm={8} md={10} style={{ paddingLeft: `0`, paddingRight: `45px` }}>
