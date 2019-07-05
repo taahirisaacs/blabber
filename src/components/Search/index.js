@@ -265,7 +265,7 @@ class Search extends Component {
                         </Col>
                       ) : (
                         <Col className="mt-2">
-                          <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry, no "{query}" traders found near you. <Link to={ROUTES.SIGN_UP}>Join TinyTrader®.</Link></h4>
+                          <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry, no "{query}" traders found near you. <Link to={ROUTES.SIGN_UP}>Start Trading →</Link></h4>
 
                         </Col>
                       )}
@@ -283,13 +283,18 @@ class Search extends Component {
                                   <Row>
                                     <Col xs={4} sm={3} md={3}>
                                       <div className="itemImg">
-                                        {responseItems[res].imgUrl && <Image src={responseItems[res].imgUrl + `/-/scale_crop/500x500/center/` || ''} fluid />}
-
+                                        {responseItems[res].imgUrl && <Image src={responseItems[res].imgUrl} />}
                                       </div>
                                     </Col>
                                     <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0` }}>
                                       <Link to={`/items/${responseItems[res].store.id}/${responseItems[res].itemId}`}>
                                         <h2>{responseItems[res].name}</h2>
+                                        <TextTruncate
+                                          className="timestamp"
+                                          line={1}
+                                          truncateText="…"
+                                          text={responseItems[res].store.name}
+                                        />
                                         <span className="pricing">R{responseItems[res].price}</span>
                                         <TextTruncate
                                           className="timestamp"
@@ -310,7 +315,7 @@ class Search extends Component {
                         </Col>
                       ) : (
                         <Col className="mt-2">
-                          <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry, no items found for "{query}". <Link to={ROUTES.SIGN_UP}>Join TinyTrader®.</Link></h4>
+                          <h4 className="badSearchTitle"><span className="badSearchIcon">😟</span>Sorry, no items found for "{query}". <Link to={ROUTES.SIGN_UP}>Start Trading →</Link></h4>
                         </Col>
                       )}
                     </Row>
