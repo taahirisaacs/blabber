@@ -362,9 +362,15 @@ class ItemsNonAuth extends Component {
                         <Image src={stores.imgUrl}/>
                       </div>
                     </Col>
-                    <Col xs={8} sm={8} md={10} style={{ paddingLeft: `0`, paddingRight: `45px` }}>
+                    <Col xs={8} sm={8} md={10} style={{ paddingLeft: `0` }}>
                       <Link to={{ pathname:`/store/${stores.user}/${storesId}`, state:{userkey: `${storesId}`} }}>
                         <h2>{stores.name}</h2>
+                        <TextTruncate
+                          className="timestamp"
+                          line={1}
+                          truncateText="…"
+                          text={stores.location}
+                        />
                         <TextTruncate
                           className="timestamp"
                           line={1}
