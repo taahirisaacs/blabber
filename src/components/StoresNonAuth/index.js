@@ -18,6 +18,10 @@ import * as ROUTES from '../../constants/routes';
 
 import firebase from 'firebase/app';
 import HomePage from '../Home';
+import Rating from 'react-rating';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 const INITIAL_STATE = {
   loading: false,
@@ -113,6 +117,13 @@ class StoresPageNonAuth extends Component {
                     line={1}
                     truncateText="…"
                     text={storeLoc}
+                  />
+                  <Rating
+                    initialRating={4.5}
+                    readonly
+                    emptySymbol={<FontAwesomeIcon icon={faStar} className="icon_star_empty"/>}
+                    fullSymbol={<FontAwesomeIcon icon={faStar} className="icon_star"/>}
+                    className="mb-1"
                   />
                   <span className="timestamp">{storeDesc}</span>
                   <span className="cat">{storeCat}</span>

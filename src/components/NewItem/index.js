@@ -182,7 +182,6 @@ render() {
               language: 'en',
               countries: ['za'],
               type: 'address',
-              useDeviceLocation: true,
             }}
 
             onChange = {({ query, rawAnswer, suggestion, suggestionIndex }) =>

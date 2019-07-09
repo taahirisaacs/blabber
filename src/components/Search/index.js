@@ -21,6 +21,8 @@ import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
 import Spinner from 'react-bootstrap/Spinner';
 
+import Rating from 'react-rating';
+
 import firebase from 'firebase/app';
 
 import * as ROUTES from '../../constants/routes';
@@ -219,7 +221,7 @@ class Search extends Component {
                     </Col>
                   </Row>
 
-                  <SwipeableViews animateHeight index={index} onChangeIndex={this.handleChangeIndex}>
+                  <SwipeableViews index={index} onChangeIndex={this.handleChangeIndex}>
 
                     <Row className="px-2">
                       {responseStores.length ? (
@@ -245,6 +247,13 @@ class Search extends Component {
                                           line={1}
                                           truncateText="…"
                                           text={responseStores[res].location}
+                                        />
+                                        <Rating
+                                          initialRating={4.5}
+                                          readonly
+                                          emptySymbol={<FontAwesomeIcon icon={faStar} className="icon_star_empty_list"/>}
+                                          fullSymbol={<FontAwesomeIcon icon={faStar} className="icon_star_list"/>}
+                                          className="mb-1"
                                         />
                                         <TextTruncate
                                           className="timestamp"

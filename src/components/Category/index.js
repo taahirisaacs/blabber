@@ -88,6 +88,15 @@ class CategoryList extends Component {
                     </div>
                   </NavLink>
                 </Col>
+                <Col xs={6} className="px-2 ">
+                  <NavLink to={ROUTES.FILT_THRIFT}>
+                    <div className="catBlock ">
+                      <span className="catIcon">♻️</span>
+                      <span className="catName">Thrift</span>
+
+                    </div>
+                  </NavLink>
+                </Col>
                 <Col xs={6} className="px-2">
                   <NavLink to={ROUTES.FILT_SNEAKERS}>
                     <div className="catBlock">
@@ -207,20 +216,23 @@ class CategoryList extends Component {
                   </NavLink>
                 </Col>
                 <Container fluid className="mx-0 Footer">
-                  <h3 className="pageSubTitleFooter">Change your location</h3>
-                  <Form onSubmit={this.onSubmit} className="homeSelect">
+                  {/* <h3 className="pageSubTitleFooter">Change your location</h3>
+                    <Form onSubmit={this.onSubmit} className="homeSelect">
                     <Form.Group controlId="formDrop"  className="mx-0 px-0">
                       <Form.Control as="select" name="cta" multiple={false} value={this.state.cta || ''} onChange={this.onChange}>
-                        <option>Cape Town, South Africa 🇿🇦</option>
-                        <option>Joburg, South Africa 🇿🇦</option>
-                        <option>Durban, South Africa 🇿🇦</option>
-                        <option>Pretoria, South Africa 🇿🇦</option>
-                        <option>Other</option>
+                    <option>Cape Town, South Africa 🇿🇦</option>
+                    <option>Joburg, South Africa 🇿🇦</option>
+                    <option>Durban, South Africa 🇿🇦</option>
+                    <option>Pretoria, South Africa 🇿🇦</option>
+                    <option>Other</option>
                       </Form.Control>
                     </Form.Group>
-                  </Form>
+                  </Form> */}
+                  <h3 className="pageSubTitleFooter">Need help getting started?</h3>
+                  <Button block className="storebtn mt-0 mb-2" href={`https://wa.me/27628303606/?text=New%20TinyTrader%C2%AE%20Request%0A%0AYour%20Request:`}>Chat to us</Button>
                   <Navbar.Brand className="mx-0 footer"><span className="catIcon foIcon">🏪</span>TinyTrader</Navbar.Brand>
                   <h1 className="pageTitleCat">An online marketplace for micro, small and home-based businesses.</h1>
+
                 </Container>
               </Row>
             </Col>

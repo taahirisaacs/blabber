@@ -19,9 +19,6 @@ code {
 .tabbar.row {
     margin-bottom: 20px;
 }
-.react-swipeable-view-container {
-    min-height: 350px;
-}
 .laneTitle {
     margin-bottom: 10px;
 }
@@ -722,6 +719,22 @@ span.stars svg {
 }
 svg.icon_store {
     font-size: 1.1rem;
+}
+svg.icon_star {
+    font-size: 0.9rem;
+    color: #f3c613;
+}
+svg.icon_star_empty {
+    font-size: 0.9rem;
+    color: #ced3da;
+}
+svg.icon_star_list {
+    font-size: 0.7rem;
+    color: #f3c613;
+}
+svg.icon_star_empty_list{
+    font-size: 0.7rem;
+    color: #ced3da;
 }
 .navItem p {
     font-size: 0.85rem;

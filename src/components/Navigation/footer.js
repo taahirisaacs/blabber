@@ -24,23 +24,23 @@ const FooterNavigation = () => (
 
 const FooterNavigationAuth = () => (
   <Row className="bottomNav">
-    <Col className="px-0">
+    {/* <Col className="px-0">
       <NavLink to={ROUTES.EXPLORE}>
         <span className="navItem">
-          <FontAwesomeIcon icon={faSearch} className="icon_store"/>
-        <p>Explore</p>
+      <FontAwesomeIcon icon={faSearch} className="icon_store"/>
+      <p>Explore</p>
         </span>
       </NavLink>
-    </Col>
+      </Col>
 
-    <Col className="px-0">
+      <Col className="px-0">
       <NavLink to={ROUTES.ORDERS}>
         <span className="navItem">
-          <FontAwesomeIcon icon={faReceipt} className="icon_store"/>
-        <p>Orders</p>
+      <FontAwesomeIcon icon={faReceipt} className="icon_store"/>
+      <p>Orders</p>
         </span>
       </NavLink>
-    </Col>
+    </Col> */}
 
     <Col className="px-0">
       <NavLink to={ROUTES.NEWITEM}>

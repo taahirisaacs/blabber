@@ -33,6 +33,8 @@ import Profile from '../Profile';
 import Items from '../Items';
 import Search from '../Search';
 import BetaListPage from '../Beta';
+import CarlsSignUpForm from '../Carlsberg'
+import VideoPage from '../VideoUploader'
 
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
@@ -52,6 +54,7 @@ const App = () => (
           <Route path={ROUTES.EXPLORE} component={LandingCat} />
           <Route path={ROUTES.SETTINGS} component={Settings} />
           <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+          <Route path="/carlsberg" component={VideoPage} />
           <Route path={ROUTES.BETA} component={BetaListPage} />
           <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
           <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
