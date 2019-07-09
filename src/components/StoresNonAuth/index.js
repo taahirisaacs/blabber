@@ -101,7 +101,7 @@ class StoresPageNonAuth extends Component {
 
     return (
 
-      <Col md={{span:6, offset:3}}>
+      <Col >
         {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
         <ul>
           <li key={storeId} index={storeId} className="messages" >
@@ -118,6 +118,7 @@ class StoresPageNonAuth extends Component {
                     truncateText="…"
                     text={storeLoc}
                   />
+                <span className="ratingText">4.5</span>
                   <Rating
                     initialRating={4.5}
                     readonly
@@ -125,6 +126,7 @@ class StoresPageNonAuth extends Component {
                     fullSymbol={<FontAwesomeIcon icon={faStar} className="icon_star"/>}
                     className="mb-1"
                   />
+                <span className="ratingText">(23 reviews)</span>
                   <span className="timestamp">{storeDesc}</span>
                   <span className="cat">{storeCat}</span>
                   <CopyToClipboard block className="storebtn copy_link" text={`${itemUrl}`} onCopy={() => this.setState({copied: true})}>

@@ -133,7 +133,7 @@ class filterCategories extends Component {
                     onChange={this.onChange}
                     type="text"
                     className="formSearch"
-                    placeholder="What are you looking for?"
+                    placeholder="Try Food, Cars, Movers, etc"
                   />
                   <InputGroup.Append className="p-0">
                     <Button className="searchBtn"  onClick={this.search}>Go</Button>

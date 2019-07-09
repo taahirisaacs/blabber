@@ -321,7 +321,7 @@ class ItemsNonAuth extends Component {
         const itemUrl = window.location.href;
 
         return (
-          <Col xs={12} md={{span:'4', offset:'4'}}>
+          <Col xs={12}>
             {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
             <ul style={{marginTop:`20px`}}>
               {Object.keys(items).map((key, index) => {

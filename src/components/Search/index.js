@@ -225,7 +225,7 @@ class Search extends Component {
 
                     <Row className="px-2">
                       {responseStores.length ? (
-                        <Col md={{span:6, offset:3}}>
+                        <Col>
                           {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
                           {Object.keys(responseStores).map((res, index) => {
                             return (
@@ -255,6 +255,7 @@ class Search extends Component {
                                           fullSymbol={<FontAwesomeIcon icon={faStar} className="icon_star_list"/>}
                                           className="mb-1"
                                         />
+                                      <span className="ratingText">4.5</span>
                                         <TextTruncate
                                           className="timestamp"
                                           line={1}
@@ -282,7 +283,7 @@ class Search extends Component {
 
                     <Row className="px-2">
                       {responseItems.length ? (
-                        <Col md={{span:6, offset:3}}>
+                        <Col >
                           {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
                           {Object.keys(responseItems).map((res, index) => {
                             return (

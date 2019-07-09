@@ -962,3 +962,10 @@ span.catIcon img {
     width: auto;
     margin: 0 auto -5px;
 }
+span.ratingText {
+    display: inline-block;
+    position: relative;
+    top: -2px;
+    margin: 0 8px;
+    color: #8a97aa;
+}
