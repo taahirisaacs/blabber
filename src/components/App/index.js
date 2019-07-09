@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 
 import '../bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
@@ -40,13 +41,19 @@ import VideoPage from '../VideoUploader'
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
 
-function initializeReactGA() {
-    ReactGA.initialize('UA-139799805-2');
-    ReactGA.pageview('/');
-}
+const trackingId = "UA-139799805-2"; // Replace with your Google Analytics tracking ID
+
+const history = createBrowserHistory();
+
+// Initialize google analytics page view tracking
+history.listen(location => {
+  ReactGA.initialize(trackingId);
+  ReactGA.set({ page: location.pathname }); // Update the user's current page
+  ReactGA.pageview(location.pathname); // Record a pageview for the given page
+});
 
 const App = () => (
-      <Router>
+      <Router history={history}>
         <Navigation />
         <Container fluid className="px-0 pb-5 mb-2">
           <Row className="mx-0 px-0">

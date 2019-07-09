@@ -33,6 +33,8 @@ const PROJECT_ID = 'blabber-2fef9';          // Required - your Firebase project
 const ALGOLIA_APP_ID = 'WQJ5Z7N2SV';     // Required - your Algolia app ID
 const ALGOLIA_SEARCH_KEY = '8172cbec423eced5e7ac8eda3cb4bf02'; // Optional - Only used for unauthenticated search
 
+
+
 class filterCategories extends Component {
   constructor(props) {
     super(props);
