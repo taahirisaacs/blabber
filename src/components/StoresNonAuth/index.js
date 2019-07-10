@@ -15,6 +15,9 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Image from 'react-bootstrap/Image';
 import * as ROUTES from '../../constants/routes';
+import SwipeableViews from 'react-swipeable-views';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 import firebase from 'firebase/app';
 import HomePage from '../Home';
@@ -34,6 +37,7 @@ const INITIAL_STATE = {
   price: [],
   error: null,
   copied: false,
+
 };
 
 class StoresPageNonAuth extends Component {
@@ -43,6 +47,7 @@ class StoresPageNonAuth extends Component {
     this.state = {
       storeImg: [],
       items: '',
+      index: 0,
     };
 
   }
@@ -94,8 +99,20 @@ class StoresPageNonAuth extends Component {
       this.unsubscribe();
     }
 
+    handleChange = (event, value) => {
+      this.setState({
+        index: value,
+      });
+    };
+
+    handleChangeIndex = index => {
+      this.setState({
+        index,
+      });
+    };
+
   render() {
-    const { items, storeImg, storeName, storeLoc, storeDesc, storeCat, storeId, userLocation, userWhatsapp, loading} = this.state;
+    const { items, storeImg, index, storeName, storeLoc, storeDesc, storeCat, storeId, userLocation, userWhatsapp, loading} = this.state;
     const user = this.props.match.params.userid;
     const pretext = "Hello! I want to";
     const itemUrl = window.location.href;
@@ -140,37 +157,58 @@ class StoresPageNonAuth extends Component {
             </Row>
           </li>
         </ul>
-        <span className="smallHeadSection">Our Items</span>
-        <ul style={{marginBottom:`40px`,}}>
-          {Object.keys(items).map((key, index) => {
-            return (
-              <li className="messages" key={key} index={index}>
-                <div className="chat">
-                  <Link to={`/items/${items[key].store.id}/${items[key].itemId}`}>
-                    <Row>
-                      <Col xs={4} sm={3} md={3}>
-                        <div className="itemImg">
-                          <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/` || "https://via.placeholder.com/150"}/>
-                        </div>
-                      </Col>
-                      <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0` }}>
 
-                        <h2>{items[key].name}</h2>
-                        <span className="pricing">R{items[key].price}</span>
-                        <TextTruncate
-                          className="timestamp"
-                          line={1}
-                          truncateText="…"
-                          text={items[key].description}
-                        />
-                      </Col>
-                    </Row>
-                  </Link>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+        <Row className="tabbar mx-0">
+          <Col md>
+            <Tabs TabIndicatorProps={{style: {backgroundColor:`#6a7b95`}}} value={index} variant="fullWidth"  onChange={this.handleChange} >
+              <Tab label={"Items"} />
+              <Tab label={"Reviews"} />
+
+            </Tabs>
+          </Col>
+        </Row>
+
+        <SwipeableViews index={index} onChangeIndex={this.handleChangeIndex}>
+
+          <Row  className="px-2">
+            <ul style={{marginBottom:`40px`,}}>
+              {Object.keys(items).map((key, index) => {
+                return (
+                  <li className="messages" key={key} index={index}>
+                    <div className="chat">
+                      <Link to={`/items/${items[key].store.id}/${items[key].itemId}`}>
+                        <Row>
+                          <Col xs={4} sm={3} md={3}>
+                            <div className="itemImg">
+                              <Image src={items[key].imgUrl + `/-/scale_crop/500x500/center/` || "https://via.placeholder.com/150"}/>
+                            </div>
+                          </Col>
+                          <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0` }}>
+
+                            <h2>{items[key].name}</h2>
+                            <span className="pricing">R{items[key].price}</span>
+                            <TextTruncate
+                              className="timestamp"
+                              line={1}
+                              truncateText="…"
+                              text={items[key].description}
+                            />
+                          </Col>
+                        </Row>
+                      </Link>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </Row>
+
+          <Row className="px-2">
+            <span></span>
+          </Row>
+
+        </SwipeableViews>
+
         <Link to={ROUTES.BETA}>
           <span className="poweredby">Join +250 traders ready for business →</span>
         </Link>
