@@ -132,6 +132,7 @@ class SignUpFormBase extends Component {
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
       email === '' ||
+      location === '' ||
       username === '';
 
     return (

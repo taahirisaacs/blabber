@@ -169,15 +169,6 @@ class CategoryList extends Component {
                     </div>
                   </NavLink>
                 </Col>
-                <Col xs={6} className="px-2 ">
-                  <NavLink to={ROUTES.FILT_THRIFT}>
-                    <div className="catBlock ">
-                      <span className="catIcon">♻️</span>
-                      <span className="catName">Thrift</span>
-
-                    </div>
-                  </NavLink>
-                </Col>
 
                 <Col xs={6} className="px-2">
                   <NavLink to={ROUTES.FILT_SPAZA}>

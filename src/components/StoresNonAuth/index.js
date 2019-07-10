@@ -19,6 +19,7 @@ import * as ROUTES from '../../constants/routes';
 import firebase from 'firebase/app';
 import HomePage from '../Home';
 import Rating from 'react-rating';
+import Linkify from 'react-linkify';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
@@ -127,7 +128,9 @@ class StoresPageNonAuth extends Component {
                     className="mb-1"
                   />
                 <span className="ratingText">(23 reviews)</span>
-                  <span className="timestamp">{storeDesc}</span>
+                  <Linkify>
+                    <span className="timestamp">{storeDesc}</span>
+                  </Linkify>
                   <span className="cat">{storeCat}</span>
                   <CopyToClipboard block className="storebtn copy_link" text={`${itemUrl}`} onCopy={() => this.setState({copied: true})}>
                     <Button>{this.state.copied ? <span>Copied.</span> : <span>Copy Store URL</span>}</Button>

@@ -214,7 +214,7 @@ class ItemsAuth extends Component {
                         <Form.Control name="price"  value={this.state.price || ''}  onChange={this.onChange} type="number" pattern="[0-9]*" placeholder="100.00" />
                       </Form.Group>
                       <Form.Group controlId="exampleForm.ControlSelect1">
-                        <Form.Control as="select" name="category" value={this.state.category || ''}  onChange={this.onChange}>
+                        <Form.Control as="select" name="storeCategory" value={this.state.storeCategory || ''} onChange={this.onChange}>
                           <option>Which Product/Service category?</option>
                           <option>👕 Clothing</option>
                           <option>👟 Sneakers</option>
@@ -222,13 +222,15 @@ class ItemsAuth extends Component {
                           <option>💻 Electronics</option>
                           <option>🚗 Cars</option>
                           <option>🚚 Movers</option>
+                          <option>🚕 Transport</option>
                           <option>♻️ Thrift</option>
                           <option>💅🏼 Salon</option>
                           <option>💇🏼‍♂️ Barber</option>
                           <option>🧹 Cleaner</option>
                           <option>🏪 Spaza Shop</option>
                           <option>🏭 Manufacturing</option>
-                          <option>⚙️ Other Services</option>
+                          <option>👔 Pro Services</option>
+                          <option>🛠 Skilled Trades</option>
                         </Form.Control>
                       </Form.Group>
                       <Form.Group controlId="exampleForm.ControlSelect12">

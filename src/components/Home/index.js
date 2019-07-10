@@ -199,9 +199,6 @@ class MessageForm extends Component {
         <Row className="mx-0">
           <Col xs sm md className="storeHeader">
             <div className="chat">
-              <span className="storeImg">
-                <img src={users.profileUrl} />
-              </span>
               <h2>{users.username}</h2>
               <p className="profileSub">{users.location}</p>
               <NavLink to={ROUTES.SETTINGS}>
