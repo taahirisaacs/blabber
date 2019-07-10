@@ -140,13 +140,8 @@ class StoresPageNonAuth extends Component {
             </Row>
           </li>
         </ul>
-
+        <span className="smallHeadSection">Our Items</span>
         <ul style={{marginBottom:`40px`,}}>
-          {items.length ? (
-          <span className="smallHeadSection">Our Items</span>
-          ) : (
-          <span className="smallHeadSection">No Items at the moment...</span>
-            )}
           {Object.keys(items).map((key, index) => {
             return (
               <li className="messages" key={key} index={index}>
