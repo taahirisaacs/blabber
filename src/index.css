@@ -977,3 +977,10 @@ span.ratingText {
     color: #586475;
     line-height: 1.3;
 }
+h1.landingTitle {
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-align: center;
+    color: #2d3540;
+    margin: 15px auto 20px;
+}

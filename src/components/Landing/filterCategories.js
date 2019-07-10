@@ -123,7 +123,7 @@ class filterCategories extends Component {
         return (
             <Container fluid style={{paddingTop:`10px`}}>
 
-
+              <h1 className="landingTitle">Find micro & home-based businesses near you.</h1>
               <Form className="homeSearch">
 
                 <InputGroup
@@ -174,7 +174,7 @@ class filterCategories extends Component {
                       </li>
                     );
                   })}
-                </ul>           
+                </ul>
               <CategoryList />
             </Container>
         );
