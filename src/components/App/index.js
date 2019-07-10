@@ -57,7 +57,7 @@ const App = () => (
         <Navigation />
         <Container fluid className="px-0 pb-5 mb-2">
           <Row className="mx-0 px-0">
-            <Col md={{span:'6', offset:'3'}} className="mx-0 px-0">
+            <Col md={{span:'6', offset:'3'}} className="mx-auto px-0">
             <Route exact path={ROUTES.LANDING} component={LandingPage} />
             <Route exact path={ROUTES.LANDING_CAT} component={LandingCat} />
             <Route exact path={ROUTES.FILT_FOOD} component={FilterFood} />

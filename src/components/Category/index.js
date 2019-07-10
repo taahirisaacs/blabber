@@ -220,7 +220,7 @@ class CategoryList extends Component {
                     </Form.Group>
                   </Form> */}
                   <h3 className="pageSubTitleFooter">Need help getting started?</h3>
-                  <Button block className="storebtn mt-0 mb-2" href={`https://wa.me/27628303606/?text=New%20TinyTrader%C2%AE%20Request%0A%0AYour%20Request:`}>Chat to us</Button>
+                  <Button block className="storebtn mt-0 mb-2" href={`https://wa.me/27628303606/?text=New%20TinyTrader%C2%AE%20Request%0A%0AYour%20Request:`}>Chat to us on WhatsApp</Button>
                   <Navbar.Brand className="mx-0 footer"><span className="catIcon foIcon">🏪</span>TinyTrader</Navbar.Brand>
                   <h1 className="pageTitleCat">An online marketplace for micro, small and home-based businesses.</h1>
 

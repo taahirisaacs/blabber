@@ -969,3 +969,11 @@ span.ratingText {
     margin: 0 8px;
     color: #8a97aa;
 }
+.storeHeader .timestamp a {
+    color: #3e77ca;
+}
+.storeHeader .timestamp {
+    font-size: 0.8rem;
+    color: #586475;
+    line-height: 1.3;
+}

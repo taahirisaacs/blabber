@@ -208,7 +208,7 @@ class Search extends Component {
 
               <Row>
 
-                <Col className="mt-2">
+                <Col className="mt-0">
                   <h4 className="catTitle">"{query}" near you</h4>
 
                   <Row className="tabbar mx-0">
@@ -249,13 +249,13 @@ class Search extends Component {
                                           text={responseStores[res].location}
                                         />
                                         <Rating
-                                          initialRating={4.5}
+                                          initialRating={0.0}
                                           readonly
                                           emptySymbol={<FontAwesomeIcon icon={faStar} className="icon_star_empty_list"/>}
                                           fullSymbol={<FontAwesomeIcon icon={faStar} className="icon_star_list"/>}
                                           className="mb-1"
                                         />
-                                      <span className="ratingText">4.5</span>
+                                      <span className="ratingText">0.0</span>
                                         <TextTruncate
                                           className="timestamp"
                                           line={1}

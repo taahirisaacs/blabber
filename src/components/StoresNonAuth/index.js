@@ -119,15 +119,15 @@ class StoresPageNonAuth extends Component {
                     truncateText="…"
                     text={storeLoc}
                   />
-                <span className="ratingText">4.5</span>
+                <span className="ratingText">0.0</span>
                   <Rating
-                    initialRating={4.5}
+                    initialRating={0.0}
                     readonly
                     emptySymbol={<FontAwesomeIcon icon={faStar} className="icon_star_empty"/>}
                     fullSymbol={<FontAwesomeIcon icon={faStar} className="icon_star"/>}
                     className="mb-1"
                   />
-                <span className="ratingText">(23 reviews)</span>
+                <span className="ratingText">(0 reviews)</span>
                   <Linkify>
                     <span className="timestamp">{storeDesc}</span>
                   </Linkify>
@@ -142,7 +142,11 @@ class StoresPageNonAuth extends Component {
         </ul>
 
         <ul style={{marginBottom:`40px`,}}>
+          {items.length ? (
           <span className="smallHeadSection">Our Items</span>
+          ) : (
+          <span className="smallHeadSection">No Items at the moment...</span>
+            )}
           {Object.keys(items).map((key, index) => {
             return (
               <li className="messages" key={key} index={index}>

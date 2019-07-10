@@ -142,9 +142,7 @@ class filterCategories extends Component {
                   </InputGroup.Append>
                 </InputGroup>
               </Form>
-
-              <Row>
-                <Col className="mt-2">
+                <ul>
                   {Object.keys(response).map((res, index) => {
                     return (
                       <li className="messages" key={res} index={res}>
@@ -176,9 +174,7 @@ class filterCategories extends Component {
                       </li>
                     );
                   })}
-                </Col>
-              </Row>
-
+                </ul>           
               <CategoryList />
             </Container>
         );
