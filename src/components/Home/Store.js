@@ -142,14 +142,6 @@ class Stores extends Component {
 
     return (
       <Col md={{span:6, offset:3}}>
-        <Row className="laneTitle">
-          <Col>
-            <Button variant="primary" onClick={this.handleShow}>
-              + Add new store
-            </Button>
-          </Col>
-        </Row>
-
         {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
 
         <ul>
@@ -187,6 +179,13 @@ class Stores extends Component {
               </li>
             );
           })}
+          <Row className="laneTitle">
+            <Col>
+              <Button variant="primary" className="mt-2" onClick={this.handleShow} block>
+                + Add new store
+              </Button>
+            </Col>
+          </Row>
         </ul>
 
         <Modal show={this.state.show} onHide={this.handleClose}>

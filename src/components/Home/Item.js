@@ -102,13 +102,7 @@ class Items extends Component {
 
     return (
       <Col md={{span:6, offset:3}}>
-        <Row className="laneTitle">
-          <Col>
-            <NavLink as="button" to={ROUTES.NEWITEM}>
-              <Button>+ Add new item</Button>
-            </NavLink>
-          </Col>
-        </Row>
+
         <ul>
           {Object.keys(items).map((item, index) => {
             return (
@@ -146,6 +140,13 @@ class Items extends Component {
               </li>
             );
           })}
+          <Row className="laneTitle">
+            <Col>
+              <NavLink as="button"  to={ROUTES.NEWITEM}>
+                <Button className="mt-2" block>+ Add new item</Button>
+              </NavLink>
+            </Col>
+          </Row>
         </ul>
       </Col >
     );
