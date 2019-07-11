@@ -918,6 +918,7 @@ h4.badSearchTitle {
     margin-bottom: 20px;
     background: #fff;
     padding: 20px;
+    line-height: 1.4;
     border-radius: 8px;
 }
 span.badSearchIcon {
