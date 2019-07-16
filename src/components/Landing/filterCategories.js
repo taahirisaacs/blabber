@@ -101,7 +101,7 @@ class filterCategories extends Component {
         const lng = locationCoLng;
         const query = where;
 
-        this.props.history.push(`/search?query=${query}&location=${loc}&lat=${lat}&lng=${lng}`);
+        this.props.history.push(`/search?query=${query}`);
       }
 
       onKeyPressSearch = (event) => {
@@ -113,7 +113,7 @@ class filterCategories extends Component {
 
         if(event.charCode == 13){
           event.preventDefault();
-          this.props.history.push(`/search?query=${query}&location=${loc}&lng=${lat}&lng=${lng}`);
+          this.props.history.push(`/search?query=${query}`);
         }
       }
 
@@ -133,7 +133,7 @@ class filterCategories extends Component {
             <Container fluid style={{paddingTop:`10px`}}>
 
               <h3 className="landingPitch">A free online marketplace connecting home-based businesses with consumers who want them to prosper.</h3>
-              <h1 className="landingTitle">Find a home-based business near you:</h1>
+              <h1 className="landingTitle">Find home-based businesses near you:</h1>
               <Form className="homeSearch">
 
                 <Form.Group
@@ -147,25 +147,7 @@ class filterCategories extends Component {
                     className="formSearch"
                     placeholder="Try Food, iPhone, Cleaners..."
                   />
-                  <AlgoliaPlaces
-                    className="formSearch"
-                    placeholder='Enter a location'
-
-                    options={{
-                      appId: 'plMOIODNLXZ6',
-                      apiKey: 'b40b54304cdc5beb771d96ffc12c8cfe',
-                      language: 'en',
-                      countries: ['za'],
-                      type: 'city',
-                      useDeviceLocation: true,
-
-                    }}
-
-                    onChange = {({ query, rawAnswer, suggestion, suggestionIndex }) =>
-                      this.setState({location: suggestion.value, locationCoLat:suggestion.latlng.lat,locationCoLng: suggestion.latlng.lng})
-                    }
-
-                  />
+                  
                 <Button block className="searchBtn"  onClick={this.search}>Search</Button>
                 </Form.Group>
               </Form>

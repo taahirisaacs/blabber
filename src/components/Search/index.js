@@ -121,7 +121,7 @@ class Search extends Component {
                 hitsPerPage: 10,
                 minWordSizefor1Typo: 4,
                 typoTolerance: true,
-                aroundLatLng: qlat + `,` + qlng,
+                aroundLatLngViaIP: true,
                 aroundRadius: 100000,
                 getRankingInfo: true
               }
@@ -135,7 +135,7 @@ class Search extends Component {
                 hitsPerPage: 10,
                 minWordSizefor1Typo: 4,
                 typoTolerance: true,
-                aroundLatLng: qlat + `,` + qlng,
+                aroundLatLngViaIP: true,
                 aroundRadius: 100000,
                 getRankingInfo: true
               }
@@ -170,7 +170,7 @@ class Search extends Component {
         const lng = locationCoLng;
         const query = where;
 
-        this.props.history.push(`/search?query=${query}&location=${loc}&lat=${lat}&lng=${lng}`);
+        this.props.history.push(`/search?query=${query}`);
         window.location.reload();
       }
 
@@ -183,7 +183,7 @@ class Search extends Component {
 
         if(event.charCode == 13){
           event.preventDefault();
-          this.props.history.push(`/search?query=${query}&location=${loc}&lng=${lat}&lng=${lng}`);
+          this.props.history.push(`/search?query=${query}`);
           window.location.reload();
         }
       }
@@ -196,7 +196,23 @@ class Search extends Component {
 
         return (
             <Container fluid style={{paddingTop:`10px`}}>
+              <Form className="homeSearch">
 
+                <Form.Group
+                  onKeyPress={this.onKeyPressSearch}
+                >
+                  <Form.Control
+                    name="where"
+                    value={this.state.where || ''}
+                    onChange={this.onChange}
+                    type="text"
+                    className="formSearch"
+                    placeholder="What are you looking for?"
+                  />
+
+                <Button block className="searchBtn"  onClick={this.search}>Search</Button>
+                </Form.Group>
+              </Form>
 
               <Row>
 
@@ -327,42 +343,8 @@ class Search extends Component {
                 </Col>
 
               </Row>
-              
-              <Form className="homeSearch">
 
-                <Form.Group
-                  onKeyPress={this.onKeyPressSearch}
-                >
-                  <Form.Control
-                    name="where"
-                    value={this.state.where || ''}
-                    onChange={this.onChange}
-                    type="text"
-                    className="formSearch"
-                    placeholder="Try Food, iPhone, Cleaners..."
-                  />
-                  <AlgoliaPlaces
-                    className="formSearch"
-                    placeholder='Enter a location'
 
-                    options={{
-                      appId: 'plMOIODNLXZ6',
-                      apiKey: 'b40b54304cdc5beb771d96ffc12c8cfe',
-                      language: 'en',
-                      countries: ['za'],
-                      type: 'city',
-                      useDeviceLocation: true,
-
-                    }}
-
-                    onChange = {({ query, rawAnswer, suggestion, suggestionIndex }) =>
-                      this.setState({location: suggestion.value, locationCoLat:suggestion.latlng.lat,locationCoLng: suggestion.latlng.lng})
-                    }
-
-                  />
-                <Button block className="searchBtn"  onClick={this.search}>Search</Button>
-                </Form.Group>
-              </Form>
               <Row>
                 <Col className="mt-2">
                   <Link to={ROUTES.BETA}>
