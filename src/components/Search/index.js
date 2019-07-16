@@ -6,6 +6,7 @@ import SwipeableViews from 'react-swipeable-views';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { reverse } from 'named-urls';
+import AlgoliaPlaces from 'algolia-places-react';
 
 import CategoryList from '../Category';
 
@@ -105,6 +106,8 @@ class Search extends Component {
 
         const values = queryString.parse(this.props.location.search);
         const query = values.query;
+        const qlat = values.lat;
+        const qlng = values.lng;
         // [START search_index_unsecure]
         const client = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_SEARCH_KEY);
 
@@ -118,7 +121,7 @@ class Search extends Component {
                 hitsPerPage: 10,
                 minWordSizefor1Typo: 4,
                 typoTolerance: true,
-                aroundLatLngViaIP: true,
+                aroundLatLng: qlat + `,` + qlng,
                 aroundRadius: 100000,
                 getRankingInfo: true
               }
@@ -132,7 +135,7 @@ class Search extends Component {
                 hitsPerPage: 10,
                 minWordSizefor1Typo: 4,
                 typoTolerance: true,
-                aroundLatLngViaIP: true,
+                aroundLatLng: qlat + `,` + qlng,
                 aroundRadius: 100000,
                 getRankingInfo: true
               }
@@ -161,20 +164,26 @@ class Search extends Component {
       };
 
       search = (event) => {
-        const { where } = this.state;
+        const {where, location, locationCoLat, locationCoLng} = this.state;
+        const loc = location;
+        const lat = locationCoLat;
+        const lng = locationCoLng;
         const query = where;
 
-        this.props.history.push(`/search?query=${query}`);
+        this.props.history.push(`/search?query=${query}&location=${loc}&lat=${lat}&lng=${lng}`);
         window.location.reload();
       }
 
       onKeyPressSearch = (event) => {
-        const {where} = this.state;
+        const {where, location, locationCoLat, locationCoLng} = this.state;
+        const loc = location;
+        const lat = locationCoLat;
+        const lng = locationCoLng;
         const query = where;
 
         if(event.charCode == 13){
           event.preventDefault();
-          this.props.history.push(`/search?query=${query}`);
+          this.props.history.push(`/search?query=${query}&location=${loc}&lng=${lat}&lng=${lng}`);
           window.location.reload();
         }
       }
@@ -187,24 +196,7 @@ class Search extends Component {
 
         return (
             <Container fluid style={{paddingTop:`10px`}}>
-              <Form className="homeSearch">
 
-                <InputGroup
-                  onKeyPress={this.onKeyPressSearch}
-                >
-                  <Form.Control
-                    name="where"
-                    value={this.state.where || ''}
-                    onChange={this.onChange}
-                    type="text"
-                    className="formSearch"
-                    placeholder="What are you looking for?"
-                  />
-                  <InputGroup.Append className="p-0">
-                    <Button className="searchBtn"  onClick={this.search}>Go</Button>
-                  </InputGroup.Append>
-                </InputGroup>
-              </Form>
 
               <Row>
 
@@ -335,6 +327,42 @@ class Search extends Component {
                 </Col>
 
               </Row>
+              
+              <Form className="homeSearch">
+
+                <Form.Group
+                  onKeyPress={this.onKeyPressSearch}
+                >
+                  <Form.Control
+                    name="where"
+                    value={this.state.where || ''}
+                    onChange={this.onChange}
+                    type="text"
+                    className="formSearch"
+                    placeholder="Try Food, iPhone, Cleaners..."
+                  />
+                  <AlgoliaPlaces
+                    className="formSearch"
+                    placeholder='Enter a location'
+
+                    options={{
+                      appId: 'plMOIODNLXZ6',
+                      apiKey: 'b40b54304cdc5beb771d96ffc12c8cfe',
+                      language: 'en',
+                      countries: ['za'],
+                      type: 'city',
+                      useDeviceLocation: true,
+
+                    }}
+
+                    onChange = {({ query, rawAnswer, suggestion, suggestionIndex }) =>
+                      this.setState({location: suggestion.value, locationCoLat:suggestion.latlng.lat,locationCoLng: suggestion.latlng.lng})
+                    }
+
+                  />
+                <Button block className="searchBtn"  onClick={this.search}>Search</Button>
+                </Form.Group>
+              </Form>
               <Row>
                 <Col className="mt-2">
                   <Link to={ROUTES.BETA}>

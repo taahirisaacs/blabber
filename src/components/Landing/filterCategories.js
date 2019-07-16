@@ -5,6 +5,7 @@ import TextTruncate from 'react-text-truncate';
 import Typography from '@material-ui/core/Typography';
 import Uploader from './../Uploader';
 import FooterNavigation from '../Navigation/footer';
+import AlgoliaPlaces from 'algolia-places-react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
@@ -48,6 +49,8 @@ class filterCategories extends Component {
           where: [],
           query: '',
           response: [],
+          locationCoLat: '',
+          locationCoLng: '',
         };
       }
 
@@ -92,19 +95,25 @@ class filterCategories extends Component {
 
 
       search = (event) => {
-        const { where } = this.state;
+        const {where, location, locationCoLat, locationCoLng} = this.state;
+        const loc = location;
+        const lat = locationCoLat;
+        const lng = locationCoLng;
         const query = where;
 
-        this.props.history.push(`/search?query=${query}`);
+        this.props.history.push(`/search?query=${query}&location=${loc}&lat=${lat}&lng=${lng}`);
       }
 
       onKeyPressSearch = (event) => {
-        const {where} = this.state;
+        const {where, location, locationCoLat, locationCoLng} = this.state;
+        const loc = location;
+        const lat = locationCoLat;
+        const lng = locationCoLng;
         const query = where;
 
         if(event.charCode == 13){
           event.preventDefault();
-          this.props.history.push(`/search?query=${query}`);
+          this.props.history.push(`/search?query=${query}&location=${loc}&lng=${lat}&lng=${lng}`);
         }
       }
 
@@ -123,10 +132,11 @@ class filterCategories extends Component {
         return (
             <Container fluid style={{paddingTop:`10px`}}>
 
-              <h1 className="landingTitle">Find micro & home-based businesses near you.</h1>
+              <h3 className="landingPitch">A free online marketplace connecting home-based businesses with consumers who want them to prosper.</h3>
+              <h1 className="landingTitle">Find a home-based business near you:</h1>
               <Form className="homeSearch">
 
-                <InputGroup
+                <Form.Group
                   onKeyPress={this.onKeyPressSearch}
                 >
                   <Form.Control
@@ -137,10 +147,27 @@ class filterCategories extends Component {
                     className="formSearch"
                     placeholder="Try Food, iPhone, Cleaners..."
                   />
-                  <InputGroup.Append className="p-0">
-                    <Button className="searchBtn"  onClick={this.search}>Go</Button>
-                  </InputGroup.Append>
-                </InputGroup>
+                  <AlgoliaPlaces
+                    className="formSearch"
+                    placeholder='Enter a location'
+
+                    options={{
+                      appId: 'plMOIODNLXZ6',
+                      apiKey: 'b40b54304cdc5beb771d96ffc12c8cfe',
+                      language: 'en',
+                      countries: ['za'],
+                      type: 'city',
+                      useDeviceLocation: true,
+
+                    }}
+
+                    onChange = {({ query, rawAnswer, suggestion, suggestionIndex }) =>
+                      this.setState({location: suggestion.value, locationCoLat:suggestion.latlng.lat,locationCoLng: suggestion.latlng.lng})
+                    }
+
+                  />
+                <Button block className="searchBtn"  onClick={this.search}>Search</Button>
+                </Form.Group>
               </Form>
                 <ul>
                   {Object.keys(response).map((res, index) => {
