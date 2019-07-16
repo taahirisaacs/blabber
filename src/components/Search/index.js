@@ -347,7 +347,7 @@ class Search extends Component {
 
               <Row>
                 <Col className="mt-2">
-                  <Link to={ROUTES.BETA}>
+                  <Link to={ROUTES.SIGN_UP}>
                     <span className="poweredby">Join +250 traders ready for business →</span>
                   </Link>
                 </Col>

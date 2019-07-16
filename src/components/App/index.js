@@ -35,8 +35,8 @@ import Profile from '../Profile';
 import Items from '../Items';
 import Search from '../Search';
 import BetaListPage from '../Beta';
-import CarlsSignUpForm from '../Carlsberg'
-import VideoPage from '../VideoUploader'
+import CarlsSignUpForm from '../Carlsberg';
+import VideoPage from '../VideoUploader';
 
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';

@@ -12,15 +12,19 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+import firebaseui from 'firebaseui';
+import app from 'firebase/app';
+import firebase from 'firebase/app';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+
+
 
 const SignUpPage = () => (
   <Row className="mx-0">
     <Col xs={{span:'10', offset:'1'}}>
-      <h1 className="pageTitle">Sign up to start trading</h1>
+      <h1 className="pageTitle">Login or Sign Up using your WhatsApp number</h1>
       <SignUpForm />
-      <LoginLink />
     </Col>
   </Row>
 );
@@ -43,7 +47,6 @@ const INITIAL_STATE = {
 class SignUpFormBase extends Component {
   constructor(props) {
     super(props);
-
     this.state = { ...INITIAL_STATE };
   }
 
@@ -86,6 +89,46 @@ class SignUpFormBase extends Component {
     event.preventDefault();
   }
 
+
+
+  componentDidMount () {
+    const uiConfig = {
+                  callbacks: {
+                    signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+                      // User successfully signed in.
+                      // Return type determines whether we continue the redirect automatically
+                      // or whether we leave that to developer to handle.
+                      return true;
+                    },
+                    uiShown: function() {
+                      // The widget is rendered.
+                      // Hide the loader.
+                      document.getElementById('loader').style.display = 'none';
+                    }
+                  },
+                  // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+                  signInFlow: 'popup',
+                  signInSuccessUrl: [ROUTES.HOME],
+                  signInOptions: [
+                    {
+      provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+      recaptchaParameters: {
+        size: 'invisible', // 'invisible' or 'compact'
+      },
+      defaultCountry: 'ZA',
+    }
+                  ],
+                  // Terms of service url.
+                  tosUrl: '<your-tos-url>',
+                  // Privacy policy url.
+                  privacyPolicyUrl: '<your-privacy-policy-url>'
+                };
+    const ui = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(firebase.auth());
+    ui.start('#firebaseui-auth-container', uiConfig);
+}
+
+
+
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
@@ -121,138 +164,10 @@ class SignUpFormBase extends Component {
       storeCategory
     } = this.state;
 
-    const style = {
-      backgroundImage: `url(${profileUrl})`,
-      backgroundRepeat: `no-repeat`,
-      backgroundSize: `contain`,
-      backgroundPosition: `center`,
-    }
-
-    const isInvalid =
-      passwordOne !== passwordTwo ||
-      passwordOne === '' ||
-      email === '' ||
-      location === '' ||
-      username === '';
-
     return (
       <div>
-
-        <Form onSubmit={this.onSubmit}>
-          <span className="formTitles">Your Personal Info</span>
-          <Form.Control style={{display:`none`}} name="profileUrl" value={this.state.profileUrl || ''} onChange={this.onChange} type="text" placeholder="profileUrl" />
-          <Form.Group controlId="formUsername">
-            <Form.Control
-              name="username"
-              value={username}
-              onChange={this.onChange}
-              type="text"
-              placeholder="Full Name"
-            />
-          </Form.Group>
-          <Form.Group controlId="formEmail">
-            <Form.Control
-              name="email"
-              value={email}
-              onChange={this.onChange}
-              type="text"
-              placeholder="Email Address"
-            />
-          </Form.Group>
-          <span className="formTitles">Your Store Info</span>
-          <Button onClick={this.showWidget} className="ProfileImgBtn">
-            <span style={style} className="ProfileImg">
-
-
-              <span className="ProfileText">
-                +
-              </span>
-            </span>
-          </Button>
-          <span className="formTitles">Store Profile Image</span>
-          <Form.Group controlId="formstoreName">
-            <Form.Control
-              name="storeName"
-              value={storeName}
-              onChange={this.onChange}
-              type="text"
-              placeholder="What's the name of your store?"
-            />
-          </Form.Group>
-          <Form.Group controlId="formLocation">
-            <AlgoliaPlaces
-              placeholder='Where is your store located?'
-
-              options={{
-                appId: 'plMOIODNLXZ6',
-                apiKey: 'b40b54304cdc5beb771d96ffc12c8cfe',
-                language: 'en',
-                countries: ['za'],
-                type: 'address',
-              }}
-
-              onChange = {({ query, rawAnswer, suggestion, suggestionIndex }) =>
-                this.setState({location: suggestion.value, locationCoLat:suggestion.latlng.lat,locationCoLng: suggestion.latlng.lng})
-              }
-
-            />
-          </Form.Group>
-          <Form.Group controlId="exampleForm.ControlSelect1">
-            <Form.Control as="select" name="storeCategory" value={this.state.storeCategory || ''} onChange={this.onChange}>
-              <option>Which Product/Service category?</option>
-              <option>👕 Clothing</option>
-              <option>👟 Sneakers</option>
-              <option>🍔 Food</option>
-              <option>💻 Electronics</option>
-              <option>🚗 Cars</option>
-              <option>🚚 Movers</option>
-              <option>🚕 Transport</option>
-              <option>♻️ Thrift</option>
-              <option>💅🏼 Salon</option>
-              <option>💇🏼‍♂️ Barber</option>
-              <option>🧹 Cleaner</option>
-              <option>🏪 Spaza Shop</option>
-              <option>🏭 Manufacturing</option>
-              <option>👔 Pro Services</option>
-              <option>🛠 Skilled Trades</option>
-            </Form.Control>
-          </Form.Group>
-          <Form.Group controlId="formstoreWhatsapp">
-            <Form.Control
-              name="storeWhatsapp"
-              value={storeWhatsapp}
-              onChange={this.onChange}
-              type="text"
-              placeholder="Whatsapp/Contact Number"
-            />
-          </Form.Group>
-          <span className="formTitles">Security</span>
-          <Form.Group controlId="formPassOne">
-            <Form.Control
-              name="passwordOne"
-              value={passwordOne}
-              onChange={this.onChange}
-              type="password"
-              placeholder="Password"
-              autoComplete="on"
-            />
-          </Form.Group>
-          <Form.Group controlId="formPassTwo">
-            <Form.Control
-              name="passwordTwo"
-              value={passwordTwo}
-              onChange={this.onChange}
-              type="password"
-              placeholder="Confirm Password"
-              autoComplete="on"
-            />
-          </Form.Group>
-          <Button variant="primary" disabled={isInvalid} type="submit" block>
-            Sign Up
-          </Button>
-
-          {error && <p>{error.message}</p>}
-        </Form>
+        <div id="firebaseui-auth-container"></div>
+        <div id="loader">Loading...</div>
       </div>
     );
   }

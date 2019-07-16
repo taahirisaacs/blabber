@@ -386,7 +386,7 @@ class ItemsNonAuth extends Component {
                 </div>
               </li>
             </ul>
-            <Link to={ROUTES.BETA}>
+            <Link to={ROUTES.SIGN_UP}>
               <span className="poweredby">Join +250 traders ready for business →</span>
             </Link>
           </Col>

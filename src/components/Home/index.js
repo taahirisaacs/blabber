@@ -199,14 +199,7 @@ class MessageForm extends Component {
         <Row className="mx-0">
           <Col xs sm md className="storeHeader">
             <div className="chat">
-              <h2>{users.username}</h2>
-              <p className="profileSub">{users.location}</p>
-              <NavLink to={ROUTES.SETTINGS}>
-                <Button className="navItem mt-3 mb-2 settings" size="xs" variant="secondary" block>
-                  Edit my profile
-                </Button>
-                <SignOutButton to={ROUTES.LANDING_CAT} />
-              </NavLink>
+                <SignOutButton to={ROUTES.SIGN_UP} />
             </div>
           </Col>
         </Row>

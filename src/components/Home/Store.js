@@ -141,7 +141,7 @@ class Stores extends Component {
       stores === '';
 
     return (
-      <Col md={{span:6, offset:3}}>
+      <Col md>
         {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
 
         <ul>
@@ -151,12 +151,12 @@ class Stores extends Component {
               <li className="messages" key={key} index={index} style={{marginBottom:`10px`,}}>
                 <div className="chat">
                   <Row>
-                    <Col xs={4} sm={4} md={2}>
+                    <Col xs={4} sm={4} md={4}>
                       <div className="itemImg storeList">
                         <Image src={stores[key].imgUrl} fluid />
                       </div>
                     </Col>
-                    <Col xs={8} sm={8} md={10} style={{ paddingLeft: `0`}}>
+                    <Col xs={8} sm={8} md={8} style={{ paddingLeft: `0`}}>
                       <Link to={{ pathname:`store/${userid.uid}/${[key]}`, state:{userkey: `${stores[key].user}`} }}>
                         <h2>{stores[key].name}</h2>
                         <TextTruncate

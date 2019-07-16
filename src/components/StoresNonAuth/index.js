@@ -76,14 +76,6 @@ class StoresPageNonAuth extends Component {
         })
       })
 
-    this.unsubscribe = dbUser.onSnapshot(snap => {
-          this.setState({
-            userLocation: snap.data().location,
-            userWhatsapp: snap.data().whatsapp,
-            loading: false
-          })
-        })
-
     this.unsubscribe = dbItemsquery.onSnapshot(snap => {
           const items = {}
 
@@ -209,7 +201,7 @@ class StoresPageNonAuth extends Component {
 
         </SwipeableViews>
 
-        <Link to={ROUTES.BETA}>
+        <Link to={ROUTES.SIGN_UP}>
           <span className="poweredby">Join +250 traders ready for business →</span>
         </Link>
       </Col>

@@ -101,7 +101,7 @@ class Items extends Component {
     const user = firebase.auth().currentUser;
 
     return (
-      <Col md={{span:6, offset:3}}>
+      <Col md>
 
         <ul>
           {Object.keys(items).map((item, index) => {
@@ -110,12 +110,12 @@ class Items extends Component {
                 <div className="chat">
 
                   <Row>
-                    <Col xs={4} sm={3} md={3}>
+                    <Col xs={4} sm={4} md={4}>
                       <div className="itemImg">
                         {items[item].imgUrl && <Image src={items[item].imgUrl + `/-/scale_crop/500x500/center/` || ''}/>}
                       </div>
                     </Col>
-                    <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0` }}>
+                    <Col xs={8} sm={8} md={8} style={{ paddingLeft: `0` }}>
                       <Link to={`/items/${items[item].store.id}/${items[item].itemId}`}>
                         <h2>{items[item].name}</h2>
                         <span className="pricing">R{items[item].price}</span>
