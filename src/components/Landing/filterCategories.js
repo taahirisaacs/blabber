@@ -132,7 +132,7 @@ class filterCategories extends Component {
         return (
             <Container fluid style={{paddingTop:`10px`}}>
 
-              <h3 className="landingPitch">A free online marketplace connecting home-based businesses with consumers who want them to prosper.</h3>
+              <h3 className="landingPitch">A free online marketplace connecting home-based businesses with consumers via WhatsApp.</h3>
               <h1 className="landingTitle">Find home-based businesses near you:</h1>
               <Form className="homeSearch">
 
@@ -147,7 +147,7 @@ class filterCategories extends Component {
                     className="formSearch"
                     placeholder="Try Food, iPhone, Cleaners..."
                   />
-                  
+
                 <Button block className="searchBtn"  onClick={this.search}>Search</Button>
                 </Form.Group>
               </Form>
