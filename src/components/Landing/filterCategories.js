@@ -132,8 +132,8 @@ class filterCategories extends Component {
         return (
             <Container fluid style={{paddingTop:`10px`}}>
 
-              <h3 className="landingPitch">A free online marketplace connecting home-based businesses with consumers via WhatsApp.</h3>
-              <h1 className="landingTitle">Find home-based businesses near you:</h1>
+              <h3 className="landingPitch">A free online marketplace connecting consumers with micro & home-based businesses via WhatsApp.</h3>
+              <h1 className="landingTitle">Find micro & home-based businesses near you:</h1>
               <Form className="homeSearch">
 
                 <Form.Group
@@ -145,7 +145,7 @@ class filterCategories extends Component {
                     onChange={this.onChange}
                     type="text"
                     className="formSearch"
-                    placeholder="Try Food, iPhone, Cleaners..."
+                    placeholder="What are you looking for?"
                   />
 
                 <Button block className="searchBtn"  onClick={this.search}>Search</Button>
