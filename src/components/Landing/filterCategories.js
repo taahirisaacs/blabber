@@ -83,7 +83,7 @@ class filterCategories extends Component {
       getItems = () => {
         const db = firebase.firestore();
 
-        db.collection("items").orderBy("timestamp", "desc").limit(25).get()
+        db.collection("items").orderBy("itemId", "asc").limit(6).get()
         .then(snap => {
           const items= {}
           snap.forEach(doc => {
@@ -126,7 +126,7 @@ class filterCategories extends Component {
 
       render () {
 
-        const { items, loading, response } = this.state;
+        const { items, itemData, loading, response } = this.state;
         const itemUrl = window.location.href;
 
         return (
@@ -152,7 +152,9 @@ class filterCategories extends Component {
                 </Form.Group>
               </Form>
                 <ul>
-                  {Object.keys(response).map((res, index) => {
+                  <h3 className="pageSubTitleCat">Latest items near you</h3>
+                  {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
+                  {Object.keys(items).map((res, index) => {
                     return (
                       <li className="messages" key={res} index={res}>
                         <div className="chat">
@@ -160,20 +162,21 @@ class filterCategories extends Component {
                           <Row>
                             <Col xs={4} sm={3} md={3}>
                               <div className="itemImg">
-                                {response[res].imgUrl && <Image src={response[res].imgUrl + `/-/scale_crop/500x500/center/` || ''}/>}
+                                {items[res].imgUrl && <Image src={items[res].imgUrl + `/-/scale_crop/500x500/center/` || ''}/>}
 
                               </div>
                             </Col>
                             <Col xs={8} sm={9} md={9} style={{ paddingLeft: `0` }}>
-                              <Link to={`/items/${response[res].store.id}/${response[res].itemId}`}>
-                                <h2>{response[res].name}</h2>
-                                <span className="pricing">R{response[res].price}</span>
-                                <TextTruncate
-                                  className="timestamp"
-                                  line={1}
-                                  truncateText="…"
-                                  text={response[res].description}
-                                />
+                              <Link to={`/items/${items[res].store.id}/${items[res].itemId}`}>
+                                <h2>{items[res].name}</h2>
+                                  <TextTruncate
+                                    className="timestamp"
+                                    line={1}
+                                    truncateText="…"
+                                    text={items[res].store.name}
+                                  />
+                                <span className="pricing">R{items[res].price}</span>
+
                               </Link>
                             </Col>
 
