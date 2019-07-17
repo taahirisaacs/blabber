@@ -18,6 +18,10 @@ import Image from 'react-bootstrap/Image';
 import shortid from 'shortid';
 import FooterNavigation from '../Navigation/footer';
 
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
+import flags from 'react-phone-number-input/flags';
+
 import firebase from 'firebase/app';
 import HomePage from '../Home';
 
@@ -50,13 +54,51 @@ class StoresPageAuth extends Component {
       storeId: [],
       storeName: [],
       show: false,
+      storeshow: false,
       location: '',
       locationCoLat: '',
       locationCoLng: '',
+      storeName: '',
+      storeDescription: '',
+      storeLocation: '',
+      storeWhatsapp: '',
+      storeCategory: '',
+      storeImgUrl: '',
       storeUrl: window.location.href,
     };
     this.handleShow = this.handleShow.bind(this);
+    this.handleStoreShow = this.handleStoreShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
+  }
+
+  onUpdate = event => {
+    const { storeName, storeDescription, storeLocation, locationCoLat, locationCoLng, storeWhatsapp, storeCategory, storeImgUrl } = this.state;
+    const user = firebase.auth().currentUser.uid;
+    const db = firebase.firestore();
+    const storekey = this.props.match.params.uid;
+    const dbCol = db.collection("stores").doc(storekey);
+
+      dbCol.update({
+          name: storeName,
+          description: storeDescription,
+          whatsapp: storeWhatsapp,
+          category: storeCategory,
+          imgUrl: storeImgUrl,
+          location: storeLocation,
+          _geoloc: {
+            lat: locationCoLat,
+            lng: locationCoLng,
+          }
+        })
+      .then(authUser => {
+        this.setState({ ...INITIAL_STATE });
+
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+
+    event.preventDefault();
   }
 
   onSubmit = event => {
@@ -94,7 +136,7 @@ class StoresPageAuth extends Component {
     event.preventDefault();
   }
 
-  componentWillMount(){
+  componentDidMount(){
     this.setState({ loading: true })
     const user = firebase.auth().currentUser.uid;
     const docId = this.props.match.params.uid;
@@ -106,6 +148,11 @@ class StoresPageAuth extends Component {
         stores: snap.data(),
         storeId: snap.id,
         storeName: snap.data().name,
+        storeLocation: snap.data().location,
+        storeImgUrl: snap.data().imgUrl,
+        storeWhatsapp: snap.data().whatsapp,
+        storeCategory: snap.data().category,
+        storeDescription: snap.data().description,
         locationCoLat: snap.data()._geoloc.lat,
         locationCoLng: snap.data()._geoloc.lng,
         loading: false,
@@ -130,12 +177,15 @@ class StoresPageAuth extends Component {
   }
 
   handleClose() {
-    this.setState({ show: false });
-  }
+    this.setState({ show: false, storeshow: false });
+  };
 
   handleShow() {
     this.setState({ show: true });
-  }
+  };
+  handleStoreShow() {
+    this.setState({ storeshow: true });
+  };
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -146,6 +196,24 @@ class StoresPageAuth extends Component {
     this.setState({ storeName: event.target.options[event.target.selectedIndex].text});
   };
 
+  showWidget = (widget) => {
+      widget = window.cloudinary.createUploadWidget({
+        cloudName: "djqr0a74c",
+        sources: [ 'local'],
+        multiple: false,
+        cropping: true,
+        croppingAspectRatio: 1,
+        croppingDefaultSelectionRatio: 1,
+        uploadPreset: "jsghwzwi" },
+      (error, result) => {
+        if (!error && result && result.event === "success") {
+          const storeImgUrl = result.info.secure_url;
+          this.setState({storeImgUrl});
+        }
+      });
+      widget.open();
+    }
+
   render() {
 
     const {
@@ -153,11 +221,27 @@ class StoresPageAuth extends Component {
       items,
       storeId,
       storeName,
+      storeImgUrl,
+      storeshow,
       loading
      } = this.state;
      const itemUrl = window.location.href;
      const user = firebase.auth().currentUser;
-     console.log(storeId);
+     const placeOptions = {
+       appId: 'plMOIODNLXZ6',
+       apiKey: 'b40b54304cdc5beb771d96ffc12c8cfe',
+       language: 'en',
+       countries: ['za'],
+       type: 'city',
+       useDeviceLocation: true,
+     };
+     const style = {
+       backgroundImage: `url(${storeImgUrl})`,
+       backgroundRepeat: `no-repeat`,
+       backgroundSize: `contain`,
+       backgroundPosition: `center`,
+       marginBottom: `20px`
+     }
 
     return (
       <Col md={{span:6, offset:3}}>
@@ -182,12 +266,16 @@ class StoresPageAuth extends Component {
                       <CopyToClipboard block className="storebtn copy_link" text={`${itemUrl}`} onCopy={() => this.setState({copied: true})}>
                         <Button>{this.state.copied ? <span>Copied.</span> : <span>Copy Link URL</span>}</Button>
                       </CopyToClipboard>
+                      <Button className="storebtn copy_link" onClick={this.handleStoreShow} block>
+                        Edit
+                      </Button>
                     </Col>
                   </Row>
                 </div>
               </Col>
             </Row>
           </li>
+
         </ul>
         <ul style={{marginBottom:`100px`,}}>
           {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
@@ -219,7 +307,82 @@ class StoresPageAuth extends Component {
             );
           })}
         </ul>
+        <Modal show={this.state.storeshow} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Edit your store</Modal.Title>
+          </Modal.Header>
 
+          <Modal.Body>
+
+              <Button onClick={this.showWidget} className="ProfileImgBtn">
+                    <span style={style} className="ProfileImg">
+                  <span className="ProfileText">
+                    +
+                  </span>
+                </span>
+              </Button>
+            <Form className="FormInput" onSubmit={this.onUpdate}>
+
+              <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>Your store name</Form.Label>
+                <Form.Control name="storeName" value={this.state.storeName || ''} onChange={this.onChange} type="text" placeholder="Required" />
+              </Form.Group>
+              <Form.Group controlId="formLocation">
+                <Form.Label>Location</Form.Label>
+                <AlgoliaPlaces
+                  placeholder={this.state.storeLocation}
+
+                  options={placeOptions}
+                  onChange = {({ query, rawAnswer, suggestion, suggestionIndex }) =>
+                    this.setState({storeLocation: suggestion.value, locationCoLat:suggestion.latlng.lat,locationCoLng: suggestion.latlng.lng})
+                  }
+                />
+              </Form.Group>
+              <Form.Group controlId="exampleForm.ControlSelect1">
+                <Form.Label>Category</Form.Label>
+                <Form.Control as="select" name="storeCategory" value={this.state.storeCategory || ''} onChange={this.onChange}>
+                  <option>Select a category</option>
+                  <option>👕 Clothing</option>
+                  <option>👟 Sneakers</option>
+                  <option>🍔 Food</option>
+                  <option>💻 Electronics</option>
+                  <option>🚗 Cars</option>
+                  <option>🚚 Movers</option>
+                  <option>🚕 Transport</option>
+                  <option>♻️ Thrift</option>
+                  <option>💅🏼 Salon</option>
+                  <option>💇🏼‍♂️ Barber</option>
+                  <option>🧹 Cleaner</option>
+                  <option>🏪 Spaza Shop</option>
+                  <option>🏭 Manufacturing</option>
+                  <option>👔 Pro Services</option>
+                  <option>🛠 Skilled Tradesmen</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group controlId="exampleForm.ControlInput2">
+                <Form.Label>WhatsApp Number</Form.Label>
+                  <PhoneInput
+                    name="storeWhatsapp"
+                    flags={flags}
+                    placeholder="Enter WhatsApp number"
+                    country= "ZA"
+                    value={ this.state.storeWhatsapp || '' }
+                    onChange={ storeWhatsapp => this.setState({ storeWhatsapp }) }
+                    />
+              </Form.Group>
+              <Form.Group controlId="exampleForm.ControlInput2">
+                <Form.Label>Description</Form.Label>
+                <Form.Control name="storeDescription" as="textarea" rows="3"  value={this.state.storeDescription || ''} onChange={this.onChange} type="text" placeholder="Let people know what your store is about" />
+              </Form.Group>
+              <Button block variant="primary" className="btnCreate" onClick={this.handleClose} type="submit">
+                Save
+              </Button>
+              <Button block variant="secondary" className="btnCancel" onClick={this.handleClose}>
+                Cancel
+              </Button>
+              </Form>
+          </Modal.Body>
+        </Modal>
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Add an item</Modal.Title>

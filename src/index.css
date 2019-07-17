@@ -418,6 +418,26 @@ button.timestamp.delete.btn.btn-primary {
     margin-top: 15px;
     float: right;
 }
+button.btnCreate {
+    border: 1px solid #1ba65d;
+    background: #1da65d;
+    padding: 9px 15px;
+    border-radius: 100px;
+    line-height: 1;
+    font-size: .95rem;
+    font-weight: 700;
+    color: #fff;
+}
+button.btnCancel {
+  border: 1px solid #dfe6ef;
+  background: #dfe6ef;
+  padding: 9px 15px;
+  border-radius: 100px;
+  line-height: 1;
+  font-size: .85rem;
+  font-weight: 700;
+  color: #434c58;
+}
 .navbar-light .navbar-toggler-icon {
     background-image: url("./images/menu-icon.svg")!important;
 }
@@ -996,4 +1016,18 @@ h3.landingPitch {
     background: #fff7cc;
     padding: 15px;
     border-radius: 8px;
+}
+.react-phone-number-input__icon {
+    width: 30px!important;
+    height: auto!important;
+    padding: 0!important;
+    border: none!important;
+    box-sizing: content-box;
+}
+.modal-title.h4 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+.btn-primary.focus, .btn-primary:focus {
+  box-shadow: none!important;
 }

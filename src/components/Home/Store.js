@@ -8,9 +8,14 @@ import Row from 'react-bootstrap/Row';
 import Modal from 'react-bootstrap/Modal';
 import Image from 'react-bootstrap/Image';
 import Uploader from './../Uploader';
+
 import { Link } from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
 import AlgoliaPlaces from 'algolia-places-react';
+
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
+import flags from 'react-phone-number-input/flags'
 
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -126,16 +131,50 @@ class Stores extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  showWidget = (widget) => {
+      widget = window.cloudinary.createUploadWidget({
+        cloudName: "djqr0a74c",
+        sources: [ 'local'],
+        multiple: false,
+        cropping: true,
+        croppingAspectRatio: 1,
+        croppingDefaultSelectionRatio: 1,
+        uploadPreset: "jsghwzwi" },
+      (error, result) => {
+        if (!error && result && result.event === "success") {
+          const imgUrl = result.info.secure_url;
+          this.setState({imgUrl});
+        }
+      });
+      widget.open();
+    }
 
   render() {
 
     const {
       stores,
       userStore,
-      loading
+      loading,
+      imgUrl
     } = this.state;
 
+    const placeOptions = {
+      appId: 'plMOIODNLXZ6',
+      apiKey: 'b40b54304cdc5beb771d96ffc12c8cfe',
+      language: 'en',
+      countries: ['za'],
+      type: 'city',
+      useDeviceLocation: true,
+    };
+
     const userid = firebase.auth().currentUser;
+    const style = {
+      backgroundImage: `url(${imgUrl})`,
+      backgroundRepeat: `no-repeat`,
+      backgroundSize: `contain`,
+      backgroundPosition: `center`,
+      marginBottom: `20px`
+    }
 
     const isInvalid =
       stores === '';
@@ -190,62 +229,39 @@ class Stores extends Component {
 
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Create a new store</Modal.Title>
+            <Modal.Title>Create your store</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
-            <Uploader
-              id='file'
-              name='file'
-              onChange={(file) => {
-                console.log('File changed: ', file)
 
-                if (file) {
-                  file.progress(info => console.log('File progress: ', info.progress))
-                  file.done(info => console.log('File uploaded: ', info))
-                }
-              }}
-              onUploadComplete={info =>
-                this.setState ({
-                  imgUrl: info.cdnUrl,
-                })
-              } />
+              <Button onClick={this.showWidget} className="ProfileImgBtn">
+                    <span style={style} className="ProfileImg">
+                  <span className="ProfileText">
+                    +
+                  </span>
+                </span>
+              </Button>
             <Form className="FormInput" onSubmit={this.onSubmit}>
 
               <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>Store Name</Form.Label>
-                <Form.Control name="name" value={this.state.name || ''} onChange={this.onChange} type="text" placeholder="eg. Widget123" />
-              </Form.Group>
-              <Form.Group controlId="exampleForm.ControlInput2">
-                <Form.Label>Description</Form.Label>
-                <Form.Control name="description" as="textarea" rows="3"  value={this.state.description || ''} onChange={this.onChange} type="text" placeholder="eg. Widget123" />
+                <Form.Label>Your store name</Form.Label>
+                <Form.Control name="name" value={this.state.name || ''} onChange={this.onChange} type="text" placeholder="Required" />
               </Form.Group>
               <Form.Group controlId="formLocation">
+                <Form.Label>Location</Form.Label>
                 <AlgoliaPlaces
-                  placeholder='Location'
+                  placeholder='Required'
 
-                  options={{
-                    appId: 'plMOIODNLXZ6',
-                    apiKey: 'b40b54304cdc5beb771d96ffc12c8cfe',
-                    language: 'en',
-                    countries: ['za'],
-                    type: 'address',
-                    useDeviceLocation: true,
-                  }}
-
+                  options={placeOptions}
                   onChange = {({ query, rawAnswer, suggestion, suggestionIndex }) =>
                     this.setState({location: suggestion.value, locationCoLat:suggestion.latlng.lat,locationCoLng: suggestion.latlng.lng})
                   }
-
                 />
               </Form.Group>
-              <Form.Group controlId="exampleForm.ControlInput2">
-                <Form.Label>WhatsApp Number</Form.Label>
-                <Form.Control name="whatsapp"  value={this.state.whatsapp || ''} onChange={this.onChange} type="text" />
-              </Form.Group>
               <Form.Group controlId="exampleForm.ControlSelect1">
+                <Form.Label>Category</Form.Label>
                 <Form.Control as="select" name="category" value={this.state.category || ''} onChange={this.onChange}>
-                  <option>Which Product/Service category?</option>
+                  <option>Select a category</option>
                   <option>👕 Clothing</option>
                   <option>👟 Sneakers</option>
                   <option>🍔 Food</option>
@@ -263,14 +279,27 @@ class Stores extends Component {
                   <option>🛠 Skilled Tradesmen</option>
                 </Form.Control>
               </Form.Group>
-              <Modal.Footer >
-                <Button variant="secondary" onClick={this.handleClose}>
-                  Close
-                </Button>
-                <Button variant="primary" onClick={this.handleClose} type="submit">
-                  Add Store
-                </Button>
-              </Modal.Footer>
+              <Form.Group controlId="exampleForm.ControlInput2">
+                <Form.Label>WhatsApp Number</Form.Label>
+                  <PhoneInput
+                    name="whatsapp"
+                    flags={flags}
+                    placeholder="Enter WhatsApp number"
+                    country= "ZA"
+                    value={ this.state.whatsapp || '' }
+                    onChange={ whatsapp => this.setState({ whatsapp }) }
+                    />
+              </Form.Group>
+              <Form.Group controlId="exampleForm.ControlInput2">
+                <Form.Label>Description</Form.Label>
+                <Form.Control name="description" as="textarea" rows="3"  value={this.state.description || ''} onChange={this.onChange} type="text" placeholder="Let people know what your store is about" />
+              </Form.Group>
+              <Button block variant="primary" className="btnCreate" onClick={this.handleClose} type="submit">
+                Create your store
+              </Button>
+              <Button block variant="secondary" className="btnCancel" onClick={this.handleClose}>
+                Cancel
+              </Button>
               </Form>
           </Modal.Body>
         </Modal>

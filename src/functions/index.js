@@ -12,6 +12,17 @@ const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
 const admin = require('firebase-admin');
 admin.initializeApp();
 
+exports.createProfile = functions.auth.user().onCreate((user) => {
+
+  const userObject = {
+     username : '',
+     email : '',
+  };
+
+  return admin.firestore().doc('users/'+user.uid).set(userObject);
+
+});
+
 exports.onItemsCreated = functions.firestore.document('items/{itemId}').onCreate((snap, context) => {
   // Get the note document
   const item = snap.data();

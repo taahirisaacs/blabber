@@ -85,7 +85,7 @@ class ItemsAuth extends Component {
 
 }
 
-  componentWillMount(){
+  componentDidMount(){
     this.setState({ loading: true })
     const itemkey = this.props.match.params.itemid;
     const db = firebase.firestore();
@@ -341,7 +341,7 @@ class ItemsNonAuth extends Component {
                           <h2 className="titleInner">{items[key].name}</h2>
                           <span className="pricing">R{items[key].price}</span>
 
-                          <Button block className="storebtn" href={`https://wa.me/27${stores.whatsapp}/?text=New%20TinyTrader%C2%AE%20Request%0A%0AItem%3A%20${items[key].name}%0APrice%3A%20R${items[key].price}%0AMy%20Name%3A%20`}>{items[key].cta}</Button>
+                          <Button block className="storebtn" href={`https://wa.me/${stores.whatsapp}/?text=New%20TinyTrader%C2%AE%20Request%0A%0AItem%3A%20${items[key].name}%0APrice%3A%20R${items[key].price}%0AMy%20Name%3A%20`}>{items[key].cta}</Button>
                           <CopyToClipboard block className="storebtn copy_link" text={`${itemUrl}`} onCopy={() => this.setState({copied: true})}>
                             <Button>{this.state.copied ? <span>Copied.</span> : <span>Copy Item URL</span>}</Button>
                           </CopyToClipboard>
