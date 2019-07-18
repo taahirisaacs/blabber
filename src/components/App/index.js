@@ -15,6 +15,8 @@ import LandingPage from '../Landing';
 import LandingCat from '../Landing/filterCategories';
 import FilterFood from '../Landing/filterFood';
 import FilterClothing from '../Landing/filterClothing';
+import Blog from '../Landing/filterBlog';
+import BlogSingle from '../Landing/filterBlogSingle';
 import FilterElec from '../Landing/filterElec';
 import FilterCars from '../Landing/filterCars';
 import FilterServices from '../Landing/filterServices';
@@ -59,6 +61,8 @@ const App = () => (
           <Row className="mx-0 px-0">
             <Col md={{span:'6', offset:'3'}} className="mx-auto px-0">
             <Route exact path={ROUTES.LANDING} component={LandingPage} />
+            <Route exact path={ROUTES.BLOG} component={Blog} />
+            <Route exact path={ROUTES.BLOG_SINGLE} component={BlogSingle} />
             <Route exact path={ROUTES.LANDING_CAT} component={LandingCat} />
             <Route exact path={ROUTES.FILT_FOOD} component={FilterFood} />
             <Route exact path={ROUTES.FILT_CLOTHING} component={FilterClothing} />

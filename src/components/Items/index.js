@@ -4,6 +4,7 @@ import { NavLink, Link } from 'react-router-dom';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import FooterNavigation from '../Navigation/footer';
 import TextTruncate from 'react-text-truncate';
+import {Helmet} from "react-helmet";
 
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -321,9 +322,13 @@ class ItemsNonAuth extends Component {
 
         const { items, stores, storesId, loading, userWhatsapp } = this.state;
         const itemUrl = window.location.href;
-
+        console.log(items);
         return (
           <Col xs={12}>
+            <Helmet>
+              <meta charSet="utf-8" />
+              <title>TinyTrader | Find micro & home-based businesses near you.</title>
+            </Helmet>
             {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
             <ul style={{marginTop:`20px`}}>
               {Object.keys(items).map((key, index) => {

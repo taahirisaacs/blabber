@@ -4,6 +4,7 @@ import { compose } from 'recompose';
 import { LoginLink } from '../SignIn';
 import Uploader from './../Uploader';
 import {Image} from 'cloudinary-react';
+import {Helmet} from "react-helmet";
 
 import AlgoliaPlaces from 'algolia-places-react';
 
@@ -22,6 +23,11 @@ import * as ROUTES from '../../constants/routes';
 
 const SignUpPage = () => (
   <Row className="mx-0">
+    <Helmet>
+      <meta charSet="utf-8" />
+      <title>Login / Sign Up | TinyTrader</title>
+      <meta name="description" content="Login or Sign Up for TinyTrader using your WhatsApp number. No Passwords. No forms." />
+    </Helmet>
     <Col xs={{span:'10', offset:'1'}}>
       <h1 className="pageTitle">Login or Sign Up using your WhatsApp number</h1>
       <SignUpForm />

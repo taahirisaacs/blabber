@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
+import {Helmet} from "react-helmet";
 
 import Typography from '@material-ui/core/Typography';
 import Uploader from './../Uploader';
@@ -131,8 +132,12 @@ class filterCategories extends Component {
 
         return (
             <Container fluid style={{paddingTop:`10px`}}>
-
-              <h3 className="landingPitch">A free online marketplace connecting consumers with micro & home-based businesses via WhatsApp.</h3>
+              <Helmet>
+                <meta charSet="utf-8" />
+                <title>TinyTrader | Find micro & home-based businesses near you.</title>
+                <meta name="description" content="A free online marketplace connecting people with micro & home-based businesses via WhatsApp." />
+              </Helmet>
+              <h3 className="landingPitch">A free online marketplace connecting people with micro & home-based businesses via WhatsApp.</h3>
               <h1 className="landingTitle">Find micro & home-based businesses near you:</h1>
               <Form className="homeSearch">
 

@@ -4,6 +4,7 @@ import { compose } from 'recompose';
 import Uploader from './../Uploader';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import TextTruncate from 'react-text-truncate';
+import {Helmet} from "react-helmet";
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -112,6 +113,11 @@ class StoresPageNonAuth extends Component {
     return (
 
       <Col >
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>{`${storeName}`} | TinyTrader</title>
+          <meta name="description" content={`${storeDesc}`} />
+        </Helmet>
         {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
         <ul>
           <li key={storeId} index={storeId} className="messages" >
