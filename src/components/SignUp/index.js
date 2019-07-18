@@ -13,7 +13,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-import firebaseui from 'firebaseui';
+import * as firebaseui from 'firebaseui';
 import app from 'firebase/app';
 import firebase from 'firebase/app';
 import { withFirebase } from '../Firebase';

@@ -60,28 +60,15 @@ const App = () => (
         <Container fluid className="px-0 pb-5 mb-2">
           <Row className="mx-0 px-0">
             <Col md={{span:'6', offset:'3'}} className="mx-auto px-0">
-            <Route exact path={ROUTES.LANDING} component={LandingPage} />
             <Route exact path={ROUTES.BLOG} component={Blog} />
             <Route exact path={ROUTES.BLOG_SINGLE} component={BlogSingle} />
             <Route exact path={ROUTES.LANDING_CAT} component={LandingCat} />
-            <Route exact path={ROUTES.FILT_FOOD} component={FilterFood} />
-            <Route exact path={ROUTES.FILT_CLOTHING} component={FilterClothing} />
-            <Route exact path={ROUTES.FILT_ELEC} component={FilterElec} />
-            <Route exact path={ROUTES.FILT_CAR} component={FilterCars} />
-            <Route exact path={ROUTES.FILT_SERVICES} component={FilterServices} />
-            <Route path={ROUTES.ORDERS} component={Orders} />
-            <Route path={ROUTES.EXPLORE} component={LandingCat} />
             <Route path={ROUTES.SETTINGS} component={Settings} />
             <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-            <Route path="/carlsberg" component={VideoPage} />
-            <Route path={ROUTES.BETA} component={BetaListPage} />
-            <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
-            <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
             <Route path={ROUTES.HOME} component={HomePage}/>
             <Route path={ROUTES.ACCOUNT} component={AccountPage} />
             <Route path={ROUTES.ADMIN} component={AdminPage} />
             <Route path={ROUTES.NEWITEM} component={NewItem} />
-            <Route path="/blob/:dataId" component={BlobPage} />
             <ScrollToTop path={"/search"} component={Search} />
             <Route exact path="/store/:userid/:uid" component={Profile} />
             <Route exact path="/items/:storeid/:itemid" component={Items} />
