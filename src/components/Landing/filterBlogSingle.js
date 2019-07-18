@@ -63,9 +63,10 @@ class filterBlogSingle extends Component {
             <Container fluid style={{paddingTop:`10px`}}>
               <Helmet>
                 <meta charSet="utf-8" />
-                <title>{`${posts.title}`} | TinyBlog by TinyTrader</title>
+                <title>{`${posts.title}`} | TinyBlog</title>
               </Helmet>
               {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
+              
               <h1 className="landingBlogTitle">{posts.title}</h1>
               <h3 className="pageSubTitleCat">posted <Moment fromNow>{posts.createdAt}</Moment></h3>
                 <div className="chatBlock">

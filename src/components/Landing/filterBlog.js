@@ -65,7 +65,8 @@ class filterBlog extends Component {
                 <title>TinyBlog for micro-businesses by TinyTrader</title>
                 <meta name="description" content="A collection of posts & resources for micro & home-based businesses." />
               </Helmet>
-              <h1 className="landingTitle">TinyBlog ✍🏼</h1>
+                <h3 className="landingPitch">A collection of posts & resources for micro & home-based businesses.</h3>
+              <h1 className="landingBlogTitle">TinyBlog ✍🏼</h1>
               {loading && <div style={{textAlign:`center`,}}><Spinner animation="grow" variant="light" /></div>}
               {Object.keys(posts).map((post, index) => {
                 return (

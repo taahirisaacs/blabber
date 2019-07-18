@@ -1008,6 +1008,7 @@ h1.landingTitle {
     color: #2d3540;
     margin: 5px auto 20px;
 }
+
 h3.landingPitch {
     font-size: 17px;
     text-align: center;
@@ -1039,6 +1040,11 @@ h3.landingPitch {
 }
 a.chatLink {
   color: #3a414c;
+}
+a.chatLink {
+    color: #3a414c;
+    display: block;
+    margin-top: 40px;
 }
 h1.landingBlogTitle {
     font-size: 1.6rem;
